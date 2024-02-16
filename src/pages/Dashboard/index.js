@@ -12,23 +12,23 @@ const Dashboard = () => {
                 <Sidebar />
                 <div className='p-10 w-full '>
                     <div className='md:flex lg:flex-row md:gap-[40px] lg:gap-[40px] flex-col gap-[20px] items-start mb-10'>
-                        <button className='py-[40px] px-[30px] bg-white w-full'>
-                            <div className='flex items-center justify-between  mb-2'>
-                                <h1 className='text-[22px] font-medium'>Pasien</h1>
-                            </div>
-                            <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Tambah dan Edit Data Pasien</p>
-                        </button>
-                        <button className='py-[40px] px-[30px] bg-white w-full'>
+                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
                             <div className='flex items-center justify-between  mb-2'>
                                 <h1 className='text-[22px] font-medium'>Rekam Medis</h1>
                             </div>
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Lihat data dan rekam medis pasien</p>
                         </button>
-                        <button className='py-[40px] px-[30px] bg-white w-full'>
+                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
                             <div className='flex items-center justify-between  mb-2'>
                                 <h1 className='text-[22px] font-medium'>Reservasi</h1>
                             </div>
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Reservasi pasien</p>
+                        </button>
+                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
+                            <div className='flex items-center justify-between  mb-2'>
+                                <h1 className='text-[22px] font-medium'>Pembayaran</h1>
+                            </div>
+                            <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Lihat dan edit status pembayaran</p>
                         </button>
                     </div>
                     <h1 className='text-2xl text-slate-black font-medium'>Data Kunjungan Pasien Februari 2023</h1>

@@ -52,3 +52,9 @@ rect:hover {
   font-size: 6pt;
   font-weight:normal;
 }
+
+.Odontogram {
+  text-align: center;
+  padding: 5px;
+  height: 220px;
+}
