@@ -31,24 +31,24 @@ const Dashboard = () => {
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Lihat dan edit status pembayaran</p>
                         </button>
                     </div>
-                    <h1 className='text-2xl text-slate-black font-medium'>Data Kunjungan Pasien Februari 2023</h1>
+                    <h1 className='text-2xl text-slate-black font-medium'>Data Kunjungan Pasien</h1>
                     <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
                         <table className='w-full space-y-[10px]'>
                             <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                 <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
                                     <h1 className='text-black text-xs font-semibold'>No Registrasi</h1>
                                 </div>
-                                <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
+                                <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
+                                    <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
                                 </div>
                                 <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Dokter</h1>
+                                    <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                 </div>
                                 <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
                                     <h1 className='text-black text-xs font-semibold'>Layanan</h1>
                                 </div>
                                 <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
+                                    <h1 className='text-black text-xs font-semibold'>Catatan Perawatan</h1>
                                 </div>
                                 <div className='flex items-center justify-center gap-[15px] w-full'>
                                     <h1 className='text-black text-xs font-semibold'>Action</h1>
@@ -58,25 +58,20 @@ const Dashboard = () => {
                                 <div className='min-w-[100px] max-w-[100px]'>
                                     <h1 className='text-[#0B63F8] text-xs font-[600]'>#A1242161</h1>
                                 </div>
+                                <div className='min-w-[150px] max-w-[150px]'>
+                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>9 September 2024</h1>
+                                </div>
                                 <div className='min-w-[220px] max-w-[220px]'>
                                     <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Muh Rizieq Fazlulrahman Djafar</h1>
                                 </div>
                                 <div className='min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Diptya Bagus Sumantry</h1>
+                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Cabut Gigi, Pasang Behel</h1>
                                 </div>
                                 <div className='min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>KB IUD Pasang</h1>
+                                    <h1 className='w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'>Lihat Catatan Perawatan</h1>
                                 </div>
-                                <div className='min-w-[220px] max-w-[220px]'>
-                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>9 September 2002</h1>
-                                </div>
-                                <div className='w-full flex items-center justify-center gap-[5px]'>
-                                    <button className='w-[29px] h-[29px] bg-[#CEDFEA] rounded-[9px] flex items-center justify-center'>
-                                        <AiOutlineEye className='text-[#003049]'/>
-                                    </button>
-                                    <button className='w-[29px] h-[29px] bg-[#CEDFEA] rounded-[9px] flex items-center justify-center'>
-                                        <HiOutlinePencil className='text-[#003049]'/>
-                                    </button>
+                                <div className='w-full space-x-2'>
+                                    <button className='w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Detail </button>
                                 </div>
                             </div>
                         </table>
