@@ -3,6 +3,7 @@ import Sidebar from '../../components/Sidebar'
 import { AiOutlineEye } from "react-icons/ai";
 import { HiOutlinePencil } from "react-icons/hi";
 import Navbar from '../../components/Navbar';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
@@ -12,24 +13,24 @@ const Dashboard = () => {
                 <Sidebar />
                 <div className='p-10 w-full '>
                     <div className='md:flex lg:flex-row md:gap-[40px] lg:gap-[40px] flex-col gap-[20px] items-start mb-10'>
-                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
+                        <Link to={'/rekam-medis'} className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
                             <div className='flex items-center justify-between  mb-2'>
                                 <h1 className='text-[22px] font-medium'>Rekam Medis</h1>
                             </div>
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Lihat data dan rekam medis pasien</p>
-                        </button>
-                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
+                        </Link>
+                        <Link to={'/rekam-medis/create'} className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
                             <div className='flex items-center justify-between  mb-2'>
                                 <h1 className='text-[22px] font-medium'>Reservasi</h1>
                             </div>
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Reservasi pasien</p>
-                        </button>
-                        <button className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
+                        </Link>
+                        <Link to={'/payment'} className='py-[40px] px-[30px] bg-white w-full border-2 shadow-sm'>
                             <div className='flex items-center justify-between  mb-2'>
                                 <h1 className='text-[22px] font-medium'>Pembayaran</h1>
                             </div>
                             <p className='w-[280px] opacity-40 text-black text-sm text-start font-normal'>Lihat dan edit status pembayaran</p>
-                        </button>
+                        </Link>
                     </div>
                     <h1 className='text-2xl text-slate-black font-medium'>Data Kunjungan Pasien</h1>
                     <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
