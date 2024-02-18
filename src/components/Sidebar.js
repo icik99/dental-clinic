@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { IoHomeOutline } from "react-icons/io5";
+import { MdPeopleOutline, MdPayment, MdOutlineFeaturedPlayList } from "react-icons/md";
 
 const Sidebar = () => {
     const [display, setDisplay] = useState(true)
@@ -18,20 +20,24 @@ const Sidebar = () => {
                 <h1 className="text-blue-800 text-2xl font-medium mb-[64px]">Sinar Akbar Dental Clinic</h1>
                 <div className='space-y-[10px] mb-20'>
 
-                    <Link to={'/dashboard'} className={`${location.pathname === '/dashboard' && 'border-blue-600 border-l-4 text-blue-600'} flex text-slate-500 font-[450] text-[16px] text-start gap-[15px] px-4 py-2 w-full`}>
+                    <Link to={'/dashboard'} className={`${location.pathname === '/dashboard' && 'border-blue-600 border-l-4 text-blue-600'} grid grid-cols-4 justify-start items-center font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                            <IoHomeOutline />
                             <h1 className={`text-base  hover:text-blue-600`}>Dashboard</h1>
                     </Link>
 
-                    <Link to={'/pasien'} className={`${location.pathname === '/pasien' && 'border-blue-600 border-l-4 text-blue-600'} flex text-slate-500 font-[450] text-[16px] text-start gap-[15px] px-4 py-2 w-full`}>
+                    <Link to={'/pasien'} className={`${location.pathname === '/pasien' && 'border-blue-600 border-l-4 text-blue-600'} grid grid-cols-4 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                        <MdPeopleOutline />
                         <h1 className={`hover:text-blue-600 text-base`}>Pasien</h1>
                     </Link>
 
-                    <Link to={'/payment'} className={`${location.pathname === '/payment' && 'border-blue-600 border-l-4 text-blue-600'} flex text-slate-500 font-[450] text-[16px] text-start gap-[15px] px-4 py-2 w-full`}>
+                    <Link to={'/payment'} className={`${location.pathname === '/payment' && 'border-blue-600 border-l-4 text-blue-600'} grid grid-cols-4 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                        <MdPayment />
                         <h1 className={`hover:text-blue-600 text-base`}>Pembayaran</h1>
                     </Link>
 
 
-                    <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'border-blue-600 border-l-4 text-blue-600'} flex text-slate-500 font-[450] text-[16px] text-start gap-[15px] px-4 py-2 w-full`}>
+                    <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'border-blue-600 border-l-4 text-blue-600'} grid grid-cols-4 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                        <MdOutlineFeaturedPlayList />
                         <h1 className={`hover:text-blue-600 text-base`}>Layanan</h1>
                     </Link>
 
