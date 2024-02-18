@@ -8,14 +8,28 @@ import CreateRekamMedis from './pages/RekamMedis/Create';
 import UpdateRekamMedis from './pages/RekamMedis/Update';
 import Payment from './pages/Payment';
 import Invoice from './pages/Payment/Invoice';
+import { Toaster } from 'react-hot-toast';
+import Pasien from './pages/Pasien';
+import Layanan from './pages/Layanan';
+import CreatePasien from './pages/Pasien/Create';
+import UpdatePasien from './pages/Pasien/Update';
 
 function App() {
   return (
     <div className="font-poppins">
+
+      <Toaster
+          position="top-center"
+          reverseOrder={true}
+      />
       <Routes>
-        <Route name='Dashboard' path="/" element={<Dashboard/>}/>
-        <Route name='Login' path="/login" element={<LoginPage/>}/>
+        <Route name='Dashboard' path="/dashboard" element={<Dashboard/>}/>
+        <Route name='Login' path="/" element={<LoginPage/>}/>
         <Route name='Payment' path="/payment" element={<Payment/>}/>
+        <Route name='Pasien' path="/pasien" element={<Pasien/>}/>
+        <Route name='Create Pasien' path="/pasien/create" element={<CreatePasien/>}/>
+        <Route name='Update Pasien' path="/pasien/update" element={<UpdatePasien/>}/>
+        <Route name='Layanan' path="/layanan" element={<Layanan/>}/>
         <Route name='Invoice' path="/payment/invoice" element={<Invoice/>}/>
         <Route name='Rekam Medis' path="/rekam-medis" element={<RekamMedis/>}/>
         <Route name='Create Rekam Medis' path="/rekam-medis/create" element={<CreateRekamMedis/>}/>
