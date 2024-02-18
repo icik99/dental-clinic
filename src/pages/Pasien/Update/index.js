@@ -57,7 +57,8 @@ export default function UpdatePasien() {
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Jenis Kelamin</h1>
-                            <select className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
+                            <select onChange={(e) => setJenisKelamin(e.target.value)} className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
+                                <option value="">Pilih Jenis Kelamin</option>
                                 <option value="Laki-Laki">Laki-Laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>

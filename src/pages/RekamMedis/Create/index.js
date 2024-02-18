@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
 import Odontogram from '../../../components/Odontogram/Odontogram'
 import { MdDelete } from "react-icons/md";
@@ -23,6 +23,7 @@ export default function CreateRekamMedis() {
     const [diagnosa, setDiagnosa] = useState()
     const [terapi, setTerapi] = useState()
     const [keterangan, setKeterangan] = useState()
+    const [dataLayanan, setDataLayanan] = useState([])
 
     const createRekamMedis = async () => {
         try {
@@ -56,6 +57,16 @@ export default function CreateRekamMedis() {
         }
     }
 
+    const getLayanan = async () => {
+        try {
+            const response = await Api.GetLayanan(localStorage.getItem('token'))
+            console.log(response.data.data)
+            setDataLayanan(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     const initialServices = [
         { id: 1, name: 'Cabut Gigi', price: 300000 },
@@ -63,8 +74,8 @@ export default function CreateRekamMedis() {
         { id: 3, name: 'Tambal Gigi', price: 500000 },
     ];
     const handleServiceChange = (serviceId, action) => {
-        const selectedService = initialServices.find(service => service.id === serviceId);
-    
+        const selectedService = dataLayanan.find(service => service.id === serviceId);
+        console.log(selectedService, 'selectedService')
         if (action === 'add') {
         setSelectedServices([...selectedServices, selectedService]);
         } else if (action === 'delete') {
@@ -72,7 +83,10 @@ export default function CreateRekamMedis() {
         setSelectedServices(updatedServices);
         }
     };
-    console.log(selectedServices, 'selected')
+
+    useEffect(() => {
+        getLayanan()
+    },[])
 
     return (
         <div>
@@ -86,7 +100,35 @@ export default function CreateRekamMedis() {
                                 <h1 className='font-medium'>Tanggal</h1>
                                 <input onChange={(e) => setTanggal(e.target.value)} type="date" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
                             </div>
-                           
+                            <div className='text-sm w-full gap-3 space-y-4'>
+                                <div className='w-full space-y-2 mb-4'>
+                                    <h1 className='font-medium'>Layanan</h1>
+                                    <select
+                                    className='w-full border shadow-md px-2 outline-none py-2 rounded-md'
+                                    onChange={(e) => handleServiceChange(e.target.value, 'add')}
+                                    >
+                                    <option disabled selected value="">Pilih Layanan...</option>
+                                    {dataLayanan.map(service => (
+                                        <option key={service.id} value={service.id}>{service.name}</option>
+                                    ))}
+                                    </select>
+                                </div>
+                                <div className='flex flex-row items-start gap-3'>
+                                    {selectedServices.map(service => (
+                                        <div key={service.id} className='px-6 py-2 w-full gap-10 rounded-md space-y-2 bg-slate-200 flex items-center'>
+                                            <div>
+                                                <h1>{service.name}</h1>
+                                                <h2 className='font-medium'>Rp. {service.price.toLocaleString()}</h2>
+                                            </div>
+                                            <div className='flex items-center justify-center gap-1'>
+                                                <button className='p-2 border rounded-md bg-red-700 text-white text-lg' onClick={() => handleServiceChange(service.id, 'delete')} >
+                                                    <MdDelete />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
                                 <Odontogram />
