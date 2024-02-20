@@ -59,34 +59,33 @@ function Tooth({ number, positionX, positionY, onChange }) {
     // Done SubMenu
     const doneSubMenu = (place, value) => {
         return {
-            'Cavity': () => {
+            'Berlubang': () => {
                 dispatch(carie(place, value));
             },
-            'Cavities All': () => dispatch(carie('all', value)),
-            'Absent': () => dispatch(extract(value)),
-            'Crown': () => dispatch(crown(value)),
+            'Semua Berlubang': () => dispatch(carie('all', value)),
+            'Tidak ada Gigi': () => dispatch(extract(value)),
+            'Gigi Mahkota': () => dispatch(crown(value)),
         }
     }
 
     // Todo SubMenu
     const todoSubMenu = (place, value) => {
         return {
-            'Cavity': () => dispatch(carie(place, value)),
-            'Cavities All': () => dispatch(carie('all', value)),
-            'Absent': () => dispatch(extract(value)),
-            'Crown': () => dispatch(crown(value)),
-            'Filtered Out': () => dispatch(filter(value)),
-            'Fractured': () => dispatch(fracture(value)),
+            'Berlubang': () => dispatch(carie(place, value)),
+            'Semua Berlubang': () => dispatch(carie('all', value)),
+            'Tidak ada Gigi': () => dispatch(extract(value)),
+            'Gigi Mahkota': () => dispatch(crown(value)),
+            'Gigi Menyaring': () => dispatch(filter(value)),
+            'Patah': () => dispatch(fracture(value)),
         }
     }
 
     // Main ContextMenu
     const menuConfig = (place) => {
         return {
-            'Done': doneSubMenu(place, 1),
             'To Do': todoSubMenu(place, 2),
             'JSX line': <hr></hr>,
-            'Clear All': () => dispatch(clear()),
+            'Hapus Semua': () => dispatch(clear()),
         }
     };
 

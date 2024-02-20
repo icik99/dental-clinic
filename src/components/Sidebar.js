@@ -7,6 +7,7 @@ const Sidebar = () => {
     const [display, setDisplay] = useState(true)
     const navigate = useNavigate()
     const location = useLocation()
+    const role = 'Petugas'
 
     const Logout = async() => {
         localStorage.removeItem('token')

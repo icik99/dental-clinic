@@ -2,16 +2,53 @@ import React, { useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import { Link, useNavigate } from 'react-router-dom'
 import ModalDelete from '../../components/ModalDelete'
+import Modal from '../../components/Modal'
 
 export default function Pasien() {
     const navigate = useNavigate()
     const [deletePasien, setDeletePasien] = useState(false)
+    const [detailPasien, setDetailPasien] = useState(false)
+    const role = 'dokter'
 
     const hapusPasien = async () => {
 
     }
   return (
     <div>
+        <Modal 
+            activeModal={detailPasien}
+            title={`Detail Pasien`}
+            buttonClose={ () => setDetailPasien(!detailPasien)}
+            width={'832px'}
+            content= {
+                <div className=' w-full space-y-[40px]'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[12px] font-semibold'>
+
+                        <div className='grid grid-cols-12 mx-auto'>
+                            <div className='col-span-3'>
+                                <h1>Nama</h1>
+                                <h1>Jenis Kelamin</h1>
+                                <h1>Tempat Tanggal Lahir</h1>
+                                <h1>Alamat</h1>
+                                <h1>Pekerjaan</h1>
+                                <h1>No Telepon</h1>
+                                <h1>Alergi / Riwayat Penyakit</h1>
+                            </div>
+                            <div className='col-span-9'>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                                <h1>: Lorem ipsum dolor sit amet.</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                }
+        />
         <ModalDelete
             activeModal={deletePasien}
             buttonClose={() => setDeletePasien(!deletePasien)}
@@ -47,7 +84,13 @@ export default function Pasien() {
                                         <h1 className='text-[#0B63F8] text-xs font-[600]'>000001</h1>
                                     </div>
                                     <div className='min-w-[300px] max-w-[300px]'>
-                                        <button onClick={() => navigate('/rekam-medis')} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-blue-700'>Muh Rizieq Fazlurahman</button>
+                                        {role === 'dokter' ? (
+                                            <button onClick={() => navigate('/rekam-medis')} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-blue-700'>Muh Rizieq Fazlurahman</button>
+
+                                        ) : (
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1 '>Muh Rizieq Fazlurahman</h1>
+
+                                        )}
                                     </div>
                                     <div className='min-w-[250px] max-w-[250px]'>
                                         <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Lorem ipsum dolor sit amet.</h1>
@@ -56,6 +99,7 @@ export default function Pasien() {
                                         <h1 className='text-[#737373]  text-xs font-semibold line'>Lorem ipsum dolor sit amet.</h1>
                                     </div>
                                     <div className='w-full space-x-2'>
+                                        <button onClick={() => setDetailPasien(!detailPasien)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Detail</button>
                                         <button onClick={() => navigate('update')}  className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
                                         <button onClick={() => setDeletePasien(!deletePasien)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
                                     </div>

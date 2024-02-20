@@ -27,7 +27,6 @@ function getArray(start, end) {
     for (var i = start; i <= end; i++) {
         list.push(i);
     }
-
     return list;
 }
 
