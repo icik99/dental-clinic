@@ -36,8 +36,8 @@ class Api {
         })
     }
     // Pasien
-    static GetPasien(token, keyword) {
-        let path = `patient`;
+    static GetPasien(token, keyword, page) {
+        let path = `patient?searach=${keyword}&page=${page}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -90,6 +90,15 @@ class Api {
     // Rekam Medis
     static GetRekamMedisByPatient(token, id) {
         let path = `rekam-medis/patient/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+    static GetRekamMedis(token, id) {
+        let path = `rekam-medis`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {

@@ -123,8 +123,8 @@ export default function Payment() {
                                         <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
                                     </div>
                                     <div className='w-full space-x-2'>
-                                        <button onClick={() => openEditPayment(item.id)} className='w-[100px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Edit Status </button>
-                                        <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Cetak invoice </button>
+                                        <button onClick={() => openEditPayment(item.id)} className={`${item.status === '0' ? 'bg-slate-600' : 'bg-slate-300' } w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                        <button  onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={`${item.status === '0' ? 'bg-slate-300' : 'bg-slate-600' } w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
                                     </div>
                                 </div>
                             ))}

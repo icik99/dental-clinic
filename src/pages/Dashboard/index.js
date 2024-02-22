@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import Api from "../../Api";
 import Odontogram from "../../components/Odontogram/Odontogram";
+import moment from "moment";
 
 const Dashboard = () => {
   const [dataRekamMedis, setDataRekamMedis] = useState("");
@@ -14,6 +15,10 @@ const Dashboard = () => {
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
   const [refresh, setRefresh] = useState(false);
+
+  const formatServiceNames = (param) => {
+    return param.map(service => service.name).join(', ');
+  };
 
   const getRekamMedis = async () => {
     try {
@@ -27,9 +32,7 @@ const Dashboard = () => {
   const openDetailRekamMedis = async (id) => {
     setDetailRekamMedis(!detailRekamMedis);
     try {
-      const response = await Api.GetRekamMedisById(
-        localStorage.getItem("token"),
-        id
+      const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id
       );
       setDataDetailRekamMedis(response.data.data);
       console.log(response, "detail");
@@ -40,8 +43,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getRekamMedis();
-    setRefresh(false);
-  }, [refresh]);
+  }, []);
 
   const navigate = useNavigate();
   return (
@@ -119,8 +121,8 @@ const Dashboard = () => {
                   </h1>
                   <h1>
                     :{" "}
-                    {dataDetailRekamMedis.hasil
-                      ? dataDetailRekamMedis.hasil
+                    {dataDetailRekamMedis.service
+                      ? formatServiceNames(dataDetailRekamMedis.service)
                       : "-"}
                   </h1>
                 </div>
@@ -128,7 +130,7 @@ const Dashboard = () => {
 
               <div className="text-sm border-2 w-full rounded-md p-3 mt-5">
                 <h1 className="mb-3 text-[12px] font-medium">Odontogram:</h1>
-                <Odontogram />
+                {/* <Odontogram /> */}
               </div>
             </div>
           </div>
@@ -194,7 +196,7 @@ const Dashboard = () => {
                       Nama Pasien
                     </h1>
                   </div>
-                  <div className="flex items-center gap-[15px] min-w-[220px] max-w-[220px]">
+                  <div className="flex items-center gap-[15px] min-w-[300px] max-w-[300px]">
                     <h1 className="text-black text-xs font-semibold">
                       Layanan
                     </h1>
@@ -220,7 +222,7 @@ const Dashboard = () => {
                     </div>
                     <div className="min-w-[150px] max-w-[150px]">
                       <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        {item.date}
+                        {moment(item.date).format('DD MMMM YYYY')}
                       </h1>
                     </div>
                     <div className="min-w-[220px] max-w-[220px]">
@@ -228,7 +230,7 @@ const Dashboard = () => {
                         {item.fullname}
                       </h1>
                     </div>
-                    <div className="min-w-[220px] max-w-[220px]">
+                    <div className="min-w-[300px] max-w-[300px]">
                       <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
                         {item.hasil}
                       </h1>

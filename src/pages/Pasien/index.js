@@ -5,11 +5,16 @@ import ModalDelete from '../../components/ModalDelete'
 import Modal from '../../components/Modal'
 import Api from '../../Api'
 import toast from 'react-hot-toast'
+import Pagination from '../../components/Pagination'
+import { BiSearch } from "react-icons/bi";
+import { debounce } from 'lodash'
 
 export default function Pasien() {
     const navigate = useNavigate()
     const [deletePasien, setDeletePasien] = useState(false)
     const [detailPasien, setDetailPasien] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState('')
     const [pasienId, setPasienId] = useState('')
     const [dataPasien, setDataPasien] = useState('')
     const [dataDetailPasien, setDataDetailPasien] = useState('')
@@ -18,13 +23,28 @@ export default function Pasien() {
 
     const getPasien = async () => {
         try {
-            const response = await Api.GetPasien(localStorage.getItem('token'))
+            const response = await Api.GetPasien(localStorage.getItem('token'), '', currentPage)
             setDataPasien(response.data.data.data)
+            setTotalPages(response.data.data.totalPages)
             console.log(response)
         } catch (error) {
             console.log(error)
         }
     }
+
+    const handleSearchName = (e) => {
+        const searchName = e.target.value
+        debouncedSearchName(searchName)
+    }
+    const debouncedSearchName = debounce(async(name) => {
+        try {
+            const response = await Api.GetPasien(localStorage.getItem('token'), name, currentPage)
+            setDataPasien(response.data.data.data)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }, 300)
 
     const openDetailPasien = async (id) => {
         setDetailPasien(!detailPasien)
@@ -54,6 +74,29 @@ export default function Pasien() {
         setDeletePasien(!deletePasien)
         setRefresh(true)
     }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setRefresh(true)
+    };
+    
+    const handlePrevChange = () => {
+        if(currentPage === 1) {
+            setCurrentPage(1)
+        } else {
+            setCurrentPage(currentPage - 1);
+        }
+        setRefresh(true)
+    };
+    
+    const handleNextChange = () => {
+        if(currentPage === totalPages) {
+            setCurrentPage(totalPages)
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
+        setRefresh(true)
+    };
 
     useEffect(() => {
         getPasien()
@@ -107,7 +150,14 @@ export default function Pasien() {
                     <div className='w-full p-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
                             <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pasien</h1>
-                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Pasien</Link>
+                            <div className='flex items-center'>
+                                <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Pasien</Link>
+                                <div className='relative'>
+                                    <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                                    <input onChange={handleSearchName} placeholder='Search...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                </div>
+
+                            </div>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[300px] max-w-[300px]'>
@@ -148,6 +198,13 @@ export default function Pasien() {
                                     </div>
                                 ))}
                             </table>
+                            <Pagination
+                                currentPage={currentPage} 
+                                totalPages={totalPages} 
+                                onPageChange={handlePageChange}
+                                onPrevChange={handlePrevChange}
+                                onNextChange={handleNextChange}
+                            />
                         </div>
                     </div>
                 </div>

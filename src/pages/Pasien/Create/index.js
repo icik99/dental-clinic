@@ -30,11 +30,9 @@ export default function CreatePasien() {
                 phone: telepon,
                 history_illness: alergi
             }
-            console.log(data, 'data')
             const response = await Api.CreatePasien(localStorage.getItem('token'), data)
             toast.success('Berhasil Create Pasien')
-            // navigate('/pasien')
-            console.log(response)
+            navigate('/pasien')
         } catch (error) {
             console.log(error)
             toast.error('Gagal Create Pasien')
