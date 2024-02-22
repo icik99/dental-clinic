@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
-import Odontogram from '../../../components/Odontogram/Odontogram'
 import { MdDelete } from "react-icons/md";
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -71,7 +70,7 @@ export default function UpdateRekamMedis() {
                             </div>
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
-                                <Odontogram />
+                                {/* <Odontogram /> */}
                             </div>
 
                             <div className='text-sm space-y-2'>

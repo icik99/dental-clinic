@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
-import { AiOutlineEye } from "react-icons/ai";
-import { HiOutlinePencil } from "react-icons/hi";
-import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import Api from "../../Api";
-import Odontogram from "../../components/Odontogram/Odontogram";
 import moment from "moment";
 
 const Dashboard = () => {
@@ -15,7 +11,7 @@ const Dashboard = () => {
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
   const [refresh, setRefresh] = useState(false);
-
+  const navigate = useNavigate()
   const formatServiceNames = (param) => {
     return param.map(service => service.name).join(', ');
   };
@@ -45,7 +41,6 @@ const Dashboard = () => {
     getRekamMedis();
   }, []);
 
-  const navigate = useNavigate();
   return (
     <div>
       <Modal
@@ -236,9 +231,9 @@ const Dashboard = () => {
                       </h1>
                     </div>
                     <div className="min-w-[220px] max-w-[220px]">
-                      <h1 className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
+                      <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
                         Lihat Catatan Perawatan
-                      </h1>
+                      </button>
                     </div>
                     <div className="w-full space-x-2">
                       <button

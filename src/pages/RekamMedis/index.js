@@ -2,19 +2,26 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Modal from '../../components/Modal';
 import ModalDelete from '../../components/ModalDelete';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Api from '../../Api';
-import Odontogram from '../../components/Odontogram/Odontogram';
+import Odontogram from '../../components/NewOdontogram/odontogram';
 import moment from 'moment';
+import toast from 'react-hot-toast';
+import { OdontogramGambar } from '../../assets';
 
 export default function RekamMedis() {
+    
     const [detailRekamMedis, setDetailRekamMedis] = useState(false)
     const params = useLocation()
     const [hapusRekamMedis, setHapusRekamMedis] = useState(false)
     const [dataRekamMedis, setDataRekamMedis] = useState('')
     const [dataServiceRekamMedis, setDataServiceRekamMedis] = useState('')
     const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState('')
+    const [dataOdontogram, setDataOdontogram] = useState([])
+    const [idRekamMedis, setIdRekamMedis] = useState('')
+    const [refresh, setRefresh] = useState('')
     const navigate = useNavigate()
+
 
 
     const getRekamMedis = async () => {
@@ -34,12 +41,27 @@ export default function RekamMedis() {
             const response = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
             console.log(response, 'detail')
             setDataDetailRekamMedis(response.data.data)
+            setDataOdontogram(response.data.data.odontogram)
+
         } catch (error) {
             console.log(error)
         }
     }
     const deleteRekamMedis = async () => {
+        try {
+            const response = await Api.DeleteRekamMedis(localStorage.getItem('token'), idRekamMedis)
+            toast.success('Success Delete Rekam Medis')
+            setRefresh(true)
+            setHapusRekamMedis(!hapusRekamMedis)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
+    const actionDeleteRekamMedis = async (id) => {
+        setIdRekamMedis(id)
+        setHapusRekamMedis(!hapusRekamMedis)
+        setRefresh(true)
     }
 
     const formatServiceNames = (param) => {
@@ -48,7 +70,8 @@ export default function RekamMedis() {
 
     useEffect(() => {
         getRekamMedis()
-    }, [])
+        setRefresh(false)
+    }, [refresh])
 
     return (
         <div>
@@ -80,11 +103,56 @@ export default function RekamMedis() {
                                 <h1>: {dataDetailRekamMedis.service ? formatServiceNames(dataDetailRekamMedis.service) : '-'}</h1>
                             </div>
                         </div>
+                            <div>
+                                <h1 className='mt-5 text-lg'>Keterangan Odontogram</h1> 
+                                <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
+                                <div className='mt-5'>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th className='border p-2'>No</th>
+                                                    <th className='border p-2'>Nomer Gigi</th>
+                                                    <th className='border p-2'>Keterangan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {dataOdontogram.map((item, idx) => (
+                                                    <tr key={idx}>
+                                                        <td className='border p-2'>{idx+1}</td>
+                                                        <td className='border p-2'>{item.nomorGigi}</td>
+                                                        <td className='border p-2'>{item.label}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
 
-                        <div className='text-sm border-2 w-full rounded-md p-3 mt-5'>
+                        {/* <div className='text-sm border-2 w-full rounded-md p-3 mt-5'>
                             <h1 className='mb-3 text-[12px] font-medium'>Odontogram:</h1>
-                            {/* <Odontogram /> */}
-                        </div>
+                            <div className='p-2'>
+                            <Odontogram
+                                    tooth={(labelT, zoneT, idT) => {
+                                        setDataOdontogram((oldArray) => [
+                                        ...oldArray,
+                                        {
+                                            label: labelT,
+                                            nomorGigi: zoneT,
+                                            id: idT,
+                                        },
+                                        ]);
+                                    }}
+                                    rtooth={(id) => {
+                                        setDataOdontogram((current) =>
+                                            current.filter((obj) => {
+                                            return obj.id !== id;
+                                            })
+                                        );
+                                    }}
+                                    initialState={dataOdontogram}
+                                    />
+                            </div>
+                        </div> */}
                     </div>
 
                 </div>
@@ -137,7 +205,7 @@ export default function RekamMedis() {
                                         </div>
                                         <div className='w-full space-x-2'>
                                             <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Detail </button>
-                                            <button onClick={() => setHapusRekamMedis(!hapusRekamMedis)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Hapus</button>
+                                            <button onClick={() => actionDeleteRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Hapus</button>
                                         </div>
                                     </div>
                                 ))}

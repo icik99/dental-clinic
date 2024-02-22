@@ -68,7 +68,7 @@ export default function Pasien() {
             toast.error('Gagal Delete Pasien')
         }
     }
-
+    
     const actionHapusPasien = async (id) => {
         setPasienId(id)
         setDeletePasien(!deletePasien)
@@ -150,7 +150,7 @@ export default function Pasien() {
                     <div className='w-full p-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
                             <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pasien</h1>
-                            <div className='flex items-center'>
+                            <div className='flex items-center justify-between'>
                                 <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Pasien</Link>
                                 <div className='relative'>
                                     <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>

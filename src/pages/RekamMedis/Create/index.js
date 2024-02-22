@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
-import Odontogram from '../../../components/Odontogram/Odontogram'
 import { MdDelete } from "react-icons/md";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
-import useOdontogramStore from '../../../store/OdontogramStore';
+import OdontogramOld from '../../../components/NewOdontogram/odontogram';
 
 export default function CreateRekamMedis() {
-    const { odontogramState } = useOdontogramStore();
+    const [dataOdontogram, setDataOdontogram] = useState([]);
+    console.log(dataOdontogram, 'dataClicked')
+
     const params = useLocation()
     const navigate = useNavigate()
     const [selectedServices, setSelectedServices] = useState([]);
     // create state
     const [tanggal, setTanggal] = useState()
-    const [nama, setNama] = useState()
-    const [jenisKelamin, setJenisKelamin] = useState()
-    const [tempatLahir, setTempatLahir] = useState()
-    const [tanggalLahir, setTanggalLahir] = useState()
-    const [alamat, setAlamat] = useState()
-    const [pekerjaan, setPekerjaan] = useState()
-    const [telepon, setTelepon] = useState()
-    const [alergi, setAlergi] = useState()
-    const [namaKK, setNamaKK] = useState()
     const [diagnosa, setDiagnosa] = useState()
     const [terapi, setTerapi] = useState()
     const [keterangan, setKeterangan] = useState()
@@ -38,12 +30,12 @@ export default function CreateRekamMedis() {
                 diagnosis: diagnosa,
                 therapy: terapi,
                 description: keterangan,
-                // odontogram: odontogramState
+                odontogram: dataOdontogram
             }
             console.log(data, 'data')
             const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
             toast.success('Berhasil Create Rekam Medis')
-            navigate('/rekam-medis')
+            navigate(-1)
         } catch (error) {
             console.log(error)
             toast.error('Gagal Create Rekam Medis')
@@ -60,12 +52,6 @@ export default function CreateRekamMedis() {
         }
     }
 
-
-    const initialServices = [
-        { id: 1, name: 'Cabut Gigi', price: 300000 },
-        { id: 2, name: 'Pasang Behel', price: 400000 },
-        { id: 3, name: 'Tambal Gigi', price: 500000 },
-    ];
     const handleServiceChange = (serviceId, action) => {
         const selectedService = dataLayanan.find(service => service.id === serviceId);
         console.log(selectedService, 'selectedService')
@@ -78,7 +64,6 @@ export default function CreateRekamMedis() {
     };
 
     useEffect(() => {
-        // console.log(odontogramState, 'state Odontogram')
         getLayanan()
     },[])
 
@@ -126,6 +111,27 @@ export default function CreateRekamMedis() {
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
                                 {/* <Odontogram/> */}
+                                <div>
+                                <OdontogramOld
+                                    tooth={(labelT, zoneT, idT) => {
+                                        setDataOdontogram((oldArray) => [
+                                        ...oldArray,
+                                        {
+                                            label: labelT,
+                                            nomorGigi: zoneT,
+                                            id: idT,
+                                        },
+                                        ]);
+                                    }}
+                                    rtooth={(id) => {
+                                        setDataOdontogram((current) =>
+                                            current.filter((obj) => {
+                                            return obj.id !== id;
+                                            })
+                                        );
+                                    }}
+                                    />
+                                </div>
                             </div>
 
                             <div className='text-sm space-y-2'>
