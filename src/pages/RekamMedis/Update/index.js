@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
 import Odontogram from '../../../components/Odontogram/Odontogram'
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
 export default function UpdateRekamMedis() {
     const navigate = useNavigate()
+    const params = useLocation()
     const [selectedServices, setSelectedServices] = useState([]);
     const initialServices = [
         { id: 1, name: 'Cabut Gigi', price: 300000 },
@@ -89,7 +90,7 @@ export default function UpdateRekamMedis() {
                             </div>
 
                             <div className='space-x-5 pt-7'>
-                                <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
+                                <button onClick={() => navigate(-1, )} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
                                     Cancel
                                 </button>
                                 <button className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>

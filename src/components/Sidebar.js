@@ -1,22 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { IoHomeOutline } from "react-icons/io5";
 import { MdPeopleOutline, MdPayment, MdOutlineFeaturedPlayList } from "react-icons/md";
+import Api from '../Api';
 
 const Sidebar = () => {
     const [display, setDisplay] = useState(true)
     const navigate = useNavigate()
     const location = useLocation()
-    const role = 'Petugas'
+    const [role, setRole] = useState()
+
+    const getFetch = async () => {
+        try {
+            const response = await Api.Fetch(localStorage.getItem('token'))
+        } catch (error) {
+            navigate('/')
+        }
+    }
 
     const Logout = async() => {
         localStorage.removeItem('token')
         navigate('/')
     }
 
+    useEffect(() => {
+        getFetch()
+    }, [])
+
     return (
         <>
-            <div className={`hidden lg:block py-[55px] h-screen bg-white sticky ${display ? 'w-[230px] px-[29px]' : 'w-[124px] px-[45px]'} transition-all duration-1000 ease-in-out`}>
+            <div className={`block lg:block  py-[55px] h-screen bg-white sticky ${display ? 'w-[230px] px-[29px]' : 'w-[230px] px-[45px]'} transition-all duration-1000 ease-in-out`}>
                 
                 <h1 className="text-blue-800 text-2xl font-medium mb-[64px]">Sinar Akbar Dental Clinic</h1>
                 <div className='space-y-[10px] mb-20'>

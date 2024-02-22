@@ -18,11 +18,10 @@ export default function CreatePasien() {
     const [telepon, setTelepon] = useState()
     const [alergi, setAlergi] = useState()
 
-    const createRekamMedis = async () => {
+    const createPasien = async () => {
         try {
             const data = {
-                date: tanggal,
-                name: nama,
+                fullname: nama,
                 place_birth: tempatLahir,
                 date_birth: tanggalLahir,
                 gender: jenisKelamin,
@@ -32,12 +31,13 @@ export default function CreatePasien() {
                 history_illness: alergi
             }
             console.log(data, 'data')
-            const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
-            toast.success('Berhasil Create Rekam Medis')
-            navigate('/rekam-medis')
+            const response = await Api.CreatePasien(localStorage.getItem('token'), data)
+            toast.success('Berhasil Create Pasien')
+            // navigate('/pasien')
+            console.log(response)
         } catch (error) {
             console.log(error)
-            toast.error('Gagal Create Rekam Medis')
+            toast.error('Gagal Create Pasien')
         }
     }
   return (
@@ -48,10 +48,6 @@ export default function CreatePasien() {
                 <div className='w-full p-10'>
                     <div className='space-y-[20px] w-full p-5 bg-white border-2 rounded-lg'>
                     <h1 className='text-2xl text-slate-black font-medium mb-[20px]'>Create Pasien</h1>
-                        <div className='text-sm space-y-2'>
-                            <h1 className='font-medium'>Tanggal</h1>
-                            <input onChange={(e) => setTanggal(e.target.value)} type="date" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
-                        </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Nama</h1>
                             <input onChange={(e) => setNama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
@@ -93,7 +89,7 @@ export default function CreatePasien() {
                             <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
                                 Cancel
                             </button>
-                            <button onClick={createRekamMedis} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
+                            <button onClick={createPasien} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
                                 Create
                             </button>
                         </div>

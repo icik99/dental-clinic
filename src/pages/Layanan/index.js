@@ -18,7 +18,21 @@ export default function Layanan() {
     const [dataLayanan, setDataLayanan] = useState('')
 
     const hapusLayanan = async () => {
+        try {
+            const response = await Api.DeleteLayanan(localStorage.getItem('token'), idLayanan)
+            toast.success('Sukses Delete Layanan')
+            setDeleteLayanan(!deleteLayanan)
+            setRefresh(true)
+        } catch (error) {
+            console.log(error)
+            toast.error('Gagal Delete Layanan')
+        }
+    }
 
+    const actionHapusLayanan = async (id) => {
+        setIdLayanan(id)
+        setDeleteLayanan(!deleteLayanan)
+        setRefresh(true)
     }
 
     const tambahLayanan = async () => {
@@ -41,6 +55,7 @@ export default function Layanan() {
     const getLayanan = async () => {
         try {
             const response = await Api.GetLayanan(localStorage.getItem('token'))
+            console.log('data', response.data)
             setDataLayanan(response.data.data)
         } catch (error) {
             console.log(error)
@@ -52,8 +67,28 @@ export default function Layanan() {
         setIdLayanan(id)
         try {
             const response = await Api.GetLayananById(localStorage.getItem('token'), id)
+            setKodeLayanan(response.data.data.code)
+            setNamaLayanan(response.data.data.name)
+            setHargaLayanan(response.data.data.price)
+            console.log(response, 'byId')
         } catch (error) {
             
+        }
+    }
+
+    const updateLayanan = async () => {
+        try {
+            const data ={
+                code: kodeLayanan,
+                name: namaLayanan,
+                price: hargaLayanan
+            }
+            const response = await Api.UpdateLayanan(localStorage.getItem('token'), data, idLayanan)
+            toast.success('Success Edit Layanan')
+            setRefresh(true)
+            setEditLayanan(!editLayanan)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -109,20 +144,20 @@ export default function Layanan() {
                     <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-medium space-y-[20px]'>
                         <div className='flex items-center'>
                             <h1 className='w-1/5'>Kode Layanan</h1>
-                            <input onChange={(e) => setKodeLayanan(e.target.value)} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Kode Layanan...' />
+                            <input  onChange={(e) => setKodeLayanan(e.target.value)} value={kodeLayanan} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Kode Layanan...' />
                         </div>
                         <div className='flex items-center'>
                             <h1 className='w-1/5'>Nama Layanan</h1>
-                            <input onChange={(e) => setNamaLayanan(e.target.value)} value={namaLayanan} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Nama Layanan...' />
+                            <input  onChange={(e) => setNamaLayanan(e.target.value)} value={namaLayanan} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Nama Layanan...' />
                         </div>
                         <div className='flex items-center'>
                             <h1 className='w-1/5'>Tarif (Rp.)</h1>
-                            <input onChange={(e) => setHargaLayanan(e.target.value)} value={hargaLayanan} type="number" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Tarif Layanan...' />
+                            <input  onChange={(e) => setHargaLayanan(e.target.value)} value={hargaLayanan} type="number" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Tarif Layanan...' />
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
                         <button onClick={() => setEditLayanan(!editLayanan)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                        <button onClick={updateLayanan} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
                     </div>
 
                 </div>
@@ -162,8 +197,8 @@ export default function Layanan() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.price}</h1>
                                         </div>
                                         <div className='w-full space-x-2'>
-                                            <button onClick={() => setEditLayanan(!editLayanan)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
-                                            <button onClick={() => setDeleteLayanan(!deleteLayanan)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
+                                            <button onClick={() => openEditLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
+                                            <button onClick={() => actionHapusLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
                                         </div>
                                     </div>
                                 ))}

@@ -21,7 +21,7 @@ export default function Payment() {
             console.log(response)
             setDataPayment(response.data.data)
         } catch (error) {
-            
+            console.log(error)   
         }
     }
 
@@ -124,7 +124,7 @@ export default function Payment() {
                                     </div>
                                     <div className='w-full space-x-2'>
                                         <button onClick={() => openEditPayment(item.id)} className='w-[100px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Edit Status </button>
-                                        <button onClick={() => navigate('/payment/invoice')} className='w-[100px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Cetak invoice </button>
+                                        <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Cetak invoice </button>
                                     </div>
                                 </div>
                             ))}

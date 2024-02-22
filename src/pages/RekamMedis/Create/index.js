@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
 import Odontogram from '../../../components/Odontogram/Odontogram'
 import { MdDelete } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
+import useOdontogramStore from '../../../store/OdontogramStore';
 
 export default function CreateRekamMedis() {
+    const { odontogramState } = useOdontogramStore();
+    const params = useLocation()
     const navigate = useNavigate()
     const [selectedServices, setSelectedServices] = useState([]);
     // create state
@@ -25,27 +28,17 @@ export default function CreateRekamMedis() {
     const [keterangan, setKeterangan] = useState()
     const [dataLayanan, setDataLayanan] = useState([])
 
+
     const createRekamMedis = async () => {
         try {
             const data = {
                 date: tanggal,
-                name: nama,
-                place_birth: tempatLahir,
-                date_birth: tanggalLahir,
-                gender: jenisKelamin,
-                address: alamat,
-                work: pekerjaan,
-                phone: telepon,
-                history_illness: alergi,
+                patient_id: params.state.idPasien,
                 service : selectedServices,
                 diagnosis: diagnosa,
                 therapy: terapi,
-                status: 'proses',
                 description: keterangan,
-                // odontogram:{
-                //     oke: masuk,
-                //     sip: ya
-                // }
+                // odontogram: odontogramState
             }
             console.log(data, 'data')
             const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
@@ -61,7 +54,7 @@ export default function CreateRekamMedis() {
         try {
             const response = await Api.GetLayanan(localStorage.getItem('token'))
             console.log(response.data.data)
-            setDataLayanan(response.data.data)
+            setDataLayanan(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
         }
@@ -85,6 +78,7 @@ export default function CreateRekamMedis() {
     };
 
     useEffect(() => {
+        // console.log(odontogramState, 'state Odontogram')
         getLayanan()
     },[])
 
@@ -131,7 +125,7 @@ export default function CreateRekamMedis() {
                             </div>
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
-                                <Odontogram />
+                                {/* <Odontogram/> */}
                             </div>
 
                             <div className='text-sm space-y-2'>

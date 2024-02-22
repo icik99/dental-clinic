@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../../components/Sidebar'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
 
 export default function UpdatePasien() {
     const navigate = useNavigate()
+    const params = useLocation()
     // create state
     const [tanggal, setTanggal] = useState()
     const [nama, setNama] = useState()
@@ -17,11 +18,26 @@ export default function UpdatePasien() {
     const [telepon, setTelepon] = useState()
     const [alergi, setAlergi] = useState()
 
-    const createRekamMedis = async () => {
+    const getPasienById = async () => {
+        try {
+            const response = await Api.GetPasienById(localStorage.getItem('token'), params.state.idPasien)
+            setNama(response.data.data.fullname)
+            setJenisKelamin(response.data.data.gender)
+            setTempatLahir(response.data.data.place_birth)
+            setTanggalLahir(response.data.data.date_birth)
+            setAlamat(response.data.data.address)
+            setPekerjaan(response.data.data.work)
+            setTelepon(response.data.data.phone)
+            setAlergi(response.data.data.history_illness)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updatePasien = async () => {
         try {
             const data = {
-                date: tanggal,
-                name: nama,
+                fullname: nama,
                 place_birth: tempatLahir,
                 date_birth: tanggalLahir,
                 gender: jenisKelamin,
@@ -31,14 +47,25 @@ export default function UpdatePasien() {
                 history_illness: alergi
             }
             console.log(data, 'data')
-            const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
-            toast.success('Berhasil Create Rekam Medis')
-            navigate('/rekam-medis')
+            const response = await Api.UpdatePasien(localStorage.getItem('token'), data, params.state.idPasien)
+            toast.success('Berhasil Update Pasien')
+            navigate('/pasien')
         } catch (error) {
             console.log(error)
-            toast.error('Gagal Create Rekam Medis')
+            toast.error('Gagal Update Pasien')
         }
     }
+
+    useEffect(() => {
+        getPasienById()
+    }, [])
+
+    // if (!nama) {
+    //     return(
+    //         <h1 className='h-screen flex text-2xl font-medium'>Loading...</h1>
+    //     )
+    // }
+
   return (
     <div>
         <div className='min-h-screen bg-[#F2F2F2]'>
@@ -48,16 +75,12 @@ export default function UpdatePasien() {
                     <div className='space-y-[20px] w-full p-5 bg-white border-2 rounded-lg'>
                     <h1 className='text-2xl text-slate-black font-medium mb-[20px]'>Edit Pasien</h1>
                         <div className='text-sm space-y-2'>
-                            <h1 className='font-medium'>Tanggal</h1>
-                            <input onChange={(e) => setTanggal(e.target.value)} type="date" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
-                        </div>
-                        <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Nama</h1>
-                            <input onChange={(e) => setNama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
+                            <input value={nama} onChange={(e) => setNama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Jenis Kelamin</h1>
-                            <select onChange={(e) => setJenisKelamin(e.target.value)} className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
+                            <select onChange={(e) => setJenisKelamin(e.target.value)} value={jenisKelamin} className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
                                 <option value="">Pilih Jenis Kelamin</option>
                                 <option value="Laki-Laki">Laki-Laki</option>
                                 <option value="Perempuan">Perempuan</option>
@@ -66,33 +89,32 @@ export default function UpdatePasien() {
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Tempat Tanggal Lahir</h1>
                             <div className='flex items-center gap-7'>
-                                <input onChange={(e) => setTempatLahir(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Tempat....'/>
-                                <input onChange={(e) => setTanggalLahir(e.target.value)} type="date" className='w-1/3 border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Tempat, Tanggal Lahir....'/>
-
+                                <input value={tempatLahir} onChange={(e) => setTempatLahir(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Tempat....'/>
+                                <input value={tanggalLahir} onChange={(e) => setTanggalLahir(e.target.value)} type="date" className='w-1/3 border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Tempat, Tanggal Lahir....'/>
                             </div>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Alamat</h1>
-                            <input onChange={(e) => setAlamat(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat....'/>
+                            <input value={alamat} onChange={(e) => setAlamat(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat....'/>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Pekerjaan</h1>
-                            <input onChange={(e) => setPekerjaan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Pekerjaan....'/>
+                            <input value={pekerjaan} onChange={(e) => setPekerjaan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Pekerjaan....'/>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>No Hp/Telepon</h1>
-                            <input onChange={(e) => setTelepon(e.target.value)} type="number" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='No Hp/Telepon....'/>
+                            <input value={telepon} onChange={(e) => setTelepon(e.target.value)} type="number" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='No Hp/Telepon....'/>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Alergi / Riwayat Penyakit</h1>
-                            <input onChange={(e) => setAlergi(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alergi / Riwayat Penyakit....'/>
+                            <input value={alergi} onChange={(e) => setAlergi(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alergi / Riwayat Penyakit....'/>
                         </div>
 
                         <div className='space-x-5 pt-7'>
                             <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
                                 Cancel
                             </button>
-                            <button onClick={createRekamMedis} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
+                            <button onClick={updatePasien} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
                                 Create
                             </button>
                         </div>

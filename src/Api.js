@@ -26,8 +26,70 @@ class Api {
         })
     }
 
-    static GetRekamMedis(token, keyword) {
-        let path = `rekam-medis`;
+    static Fetch(token) {
+        let path = `fetch`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+    // Pasien
+    static GetPasien(token, keyword) {
+        let path = `patient`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+    static GetPasienById(token, id) {
+        let path = `patient/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+
+    static CreatePasien(token, data) {
+        let path = `patient`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'POST',
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+
+    static UpdatePasien(token, data, id) {
+        let path = `patient/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'PUT',
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+    
+    static DeletePasien(token, id) {
+        let path = `patient/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+
+    // Rekam Medis
+    static GetRekamMedisByPatient(token, id) {
+        let path = `rekam-medis/patient/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -67,7 +129,7 @@ class Api {
         })
     }
     
-    static DeleteRelawan(token, id) {
+    static DeleteRekamMedis(token, id) {
         let path = `rekam-medis/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'DELETE',
@@ -76,6 +138,8 @@ class Api {
             },
         })
     }
+
+    // Payment
 
     static GetPayment(token, keyword) {
         let path = `invoice`;
@@ -130,7 +194,7 @@ class Api {
     }
 
     static GetLayananById(token, id) {
-        let path = `layanan?layananId=${id}`;
+        let path = `medicine/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
