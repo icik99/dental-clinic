@@ -5,9 +5,6 @@ import Modal from '../../components/Modal'
 import ModalDelete from '../../components/ModalDelete'
 import Api from '../../Api'
 import toast from 'react-hot-toast'
-import { debounce } from "lodash";
-import { BiSearch } from "react-icons/bi";
-import Pagination from "../../components/Pagination";
 
 export default function Layanan() {
     const [addLayanan, setAddLayanan] = useState(false)
@@ -19,8 +16,6 @@ export default function Layanan() {
     const [idLayanan, setIdLayanan] = useState()
     const [refresh, setRefresh] = useState(false)
     const [dataLayanan, setDataLayanan] = useState('')
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState("");
 
     const hapusLayanan = async () => {
         try {
@@ -59,34 +54,13 @@ export default function Layanan() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(
-              localStorage.getItem("token"),
-              "",
-              currentPage
-            );
+            const response = await Api.GetLayanan(localStorage.getItem('token'))
             console.log('data', response.data)
             setDataLayanan(response.data.data)
-            setTotalPages(response.data.totalPages)
         } catch (error) {
             console.log(error)
         }
     }
-    const handleSearchName = (e) => {
-      const searchName = e.target.value;
-      debouncedSearchName(searchName);
-    };
-    const debouncedSearchName = debounce(async (name) => {
-      try {
-        const response = await Api.GetLayanan(
-          localStorage.getItem("token"),
-          name,
-          currentPage
-        );
-        setDataLayanan(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }, 300);
 
     const openEditLayanan = async (id) => {
         setEditLayanan(!editLayanan)
@@ -118,29 +92,6 @@ export default function Layanan() {
         }
     }
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-        setRefresh(true)
-    };
-    
-    const handlePrevChange = () => {
-        if(currentPage === 1) {
-            setCurrentPage(1)
-        } else {
-            setCurrentPage(currentPage - 1);
-        }
-        setRefresh(true)
-    };
-    
-    const handleNextChange = () => {
-        if(currentPage === totalPages) {
-            setCurrentPage(totalPages)
-        } else {
-            setCurrentPage(currentPage + 1);
-        }
-        setRefresh(true)
-    };
-
     useEffect(() => {
         getLayanan()
         setRefresh(false)
@@ -148,216 +99,114 @@ export default function Layanan() {
 
   return (
     <div>
-      <ModalDelete
-        activeModal={deleteLayanan}
-        buttonClose={() => setDeleteLayanan(!deleteLayanan)}
-        submitButton={hapusLayanan}
-      />
-      <Modal
-        activeModal={addLayanan}
-        title={"Tambah Layanan"}
-        buttonClose={() => setAddLayanan(!addLayanan)}
-        width={"832px"}
-        content={
-          <div className=" w-full space-y-[40px]">
-            <div className="bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-medium space-y-[20px]">
-              <div className="flex items-center">
-                <h1 className="w-1/5">Kode Layanan</h1>
-                <input
-                  onChange={(e) => setKodeLayanan(e.target.value)}
-                  type="text"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Kode Layanan..."
-                />
-              </div>
-              <div className="flex items-center">
-                <h1 className="w-1/5">Nama Layanan</h1>
-                <input
-                  onChange={(e) => setNamaLayanan(e.target.value)}
-                  type="text"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Nama Layanan..."
-                />
-              </div>
-              <div className="flex items-center">
-                <h1 className="w-1/5">Tarif (Rp.)</h1>
-                <input
-                  onChange={(e) => setHargaLayanan(e.target.value)}
-                  type="number"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Tarif Layanan..."
-                />
-              </div>
-            </div>
-            <div className="ml-[560px] flex items-start justify-end gap-3 w-1/4">
-              <button
-                onClick={() => setAddLayanan(!addLayanan)}
-                className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={tambahLayanan}
-                className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg"
-              >
-                Create
-              </button>
-            </div>
-          </div>
-        }
-      />
+        <ModalDelete
+            activeModal={deleteLayanan}
+            buttonClose={() => setDeleteLayanan(!deleteLayanan)}
+            submitButton={hapusLayanan}
+        />
+        <Modal 
+            activeModal={addLayanan}
+            title={'Tambah Layanan'}
+            buttonClose={ () => setAddLayanan(!addLayanan)}
+            width={'832px'}
+            content= {
+                <div className=' w-full space-y-[40px]'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-medium space-y-[20px]'>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Kode Layanan</h1>
+                            <input onChange={(e) => setKodeLayanan(e.target.value)} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Kode Layanan...' />
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Nama Layanan</h1>
+                            <input onChange={(e) => setNamaLayanan(e.target.value)} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Nama Layanan...' />
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Tarif (Rp.)</h1>
+                            <input  onChange={(e) => setHargaLayanan(e.target.value)} type="number" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Tarif Layanan...' />
+                        </div>
+                    </div>
+                    <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
+                        <button onClick={() => setAddLayanan(!addLayanan)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
+                        <button onClick={tambahLayanan} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Create</button>
+                    </div>
 
-      <Modal
-        activeModal={editLayanan}
-        title={"Edit Layanan"}
-        buttonClose={() => setEditLayanan(!editLayanan)}
-        width={"832px"}
-        content={
-          <div className=" w-full space-y-[40px]">
-            <div className="bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-medium space-y-[20px]">
-              <div className="flex items-center">
-                <h1 className="w-1/5">Kode Layanan</h1>
-                <input
-                  onChange={(e) => setKodeLayanan(e.target.value)}
-                  value={kodeLayanan}
-                  type="text"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Kode Layanan..."
-                />
-              </div>
-              <div className="flex items-center">
-                <h1 className="w-1/5">Nama Layanan</h1>
-                <input
-                  onChange={(e) => setNamaLayanan(e.target.value)}
-                  value={namaLayanan}
-                  type="text"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Nama Layanan..."
-                />
-              </div>
-              <div className="flex items-center">
-                <h1 className="w-1/5">Tarif (Rp.)</h1>
-                <input
-                  onChange={(e) => setHargaLayanan(e.target.value)}
-                  value={hargaLayanan}
-                  type="number"
-                  className="px-4 py-2 border rounded-md outline-none w-full"
-                  placeholder="Tarif Layanan..."
-                />
-              </div>
-            </div>
-            <div className="ml-[560px] flex items-start justify-end gap-3 w-1/4">
-              <button
-                onClick={() => setEditLayanan(!editLayanan)}
-                className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={updateLayanan}
-                className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        }
-      />
-      <div className="min-h-screen bg-[#F2F2F2]">
-        <div className="flex w-full">
-          <Sidebar />
-          <div className="w-full p-10">
-            <div className="border-2 bg-white rounded-lg p-10 space-y-[20px]">
-              <h1 className="text-2xl text-slate-black font-medium mb-[40px]">
-                Layanan
-              </h1>
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={() => setAddLayanan(!addLayanan)}
-                  className="px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white"
-                >
-                  Tambah Layanan Baru
-                </button>
-                <div className="relative">
-                  <BiSearch className="absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg" />
-                  <input
-                    onChange={handleSearchName}
-                    placeholder="Search..."
-                    className="h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]"
-                  />
                 </div>
-              </div>
-              <table className="w-full space-y-[10px]">
-                <div className="flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]">
-                  <div className="flex items-center gap-[15px] min-w-[200px] max-w-[200px]">
-                    <h1 className="text-black text-xs font-semibold">
-                      Kode Layanan
-                    </h1>
-                  </div>
-                  <div className="flex items-center gap-[15px] min-w-[500px] max-w-[500px]">
-                    <h1 className="text-black text-xs font-semibold">
-                      Nama Layanan
-                    </h1>
-                  </div>
-                  <div className="flex items-center gap-[15px] min-w-[100px] max-w-[100px]">
-                    <h1 className="text-black text-xs font-semibold">Harga</h1>
-                  </div>
-                  <div className=" w-full flex items-center justify-center">
-                    <h1 className="text-black text-xs text-center font-semibold">
-                      Action
-                    </h1>
-                  </div>
+            }
+        />
+
+        <Modal 
+            activeModal={editLayanan}
+            title={'Edit Layanan'}
+            buttonClose={ () => setEditLayanan(!editLayanan)}
+            width={'832px'}
+            content= {
+                <div className=' w-full space-y-[40px]'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-medium space-y-[20px]'>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Kode Layanan</h1>
+                            <input  onChange={(e) => setKodeLayanan(e.target.value)} value={kodeLayanan} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Kode Layanan...' />
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Nama Layanan</h1>
+                            <input  onChange={(e) => setNamaLayanan(e.target.value)} value={namaLayanan} type="text" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Nama Layanan...' />
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/5'>Tarif (Rp.)</h1>
+                            <input  onChange={(e) => setHargaLayanan(e.target.value)} value={hargaLayanan} type="number" className='px-4 py-2 border rounded-md outline-none w-full' placeholder='Tarif Layanan...' />
+                        </div>
+                    </div>
+                    <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
+                        <button onClick={() => setEditLayanan(!editLayanan)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
+                        <button onClick={updateLayanan} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                    </div>
+
                 </div>
-                {Object.values(dataLayanan).map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t"
-                  >
-                    <div className="min-w-[200px] max-w-[200px]">
-                      <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        {item.code}
-                      </h1>
+            }
+        />
+        <div className='min-h-screen bg-[#F2F2F2]'>
+                <div className='flex w-full'>
+                    <Sidebar />
+                    <div className='w-full p-10'>
+                        <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
+                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Layanan</h1>
+                            <button onClick={() => setAddLayanan(!addLayanan)} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>Tambah Layanan Baru</button>
+                            <table className='w-full space-y-[10px]'>
+                                <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Kode Layanan</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[500px] max-w-[500px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Nama Layanan</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Harga</h1>
+                                    </div>
+                                    <div className=' w-full flex items-center justify-center'>
+                                        <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
+                                    </div>
+                                </div>
+                                {Object.values(dataLayanan).map((item, idx) => (
+                                    <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
+                                        <div className='min-w-[200px] max-w-[200px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.code}</h1>
+                                        </div>
+                                        <div className='min-w-[500px] max-w-[500px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.name}</h1>
+                                        </div>
+                                        <div className='min-w-[100px] max-w-[100px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.price}</h1>
+                                        </div>
+                                        <div className='w-full space-x-2'>
+                                            <button onClick={() => openEditLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
+                                            <button onClick={() => actionHapusLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </table>
+                        </div>
                     </div>
-                    <div className="min-w-[500px] max-w-[500px]">
-                      <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        {item.name}
-                      </h1>
-                    </div>
-                    <div className="min-w-[100px] max-w-[100px]">
-                      <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        Rp. {item.price}
-                      </h1>
-                    </div>
-                    <div className="w-full space-x-2">
-                      <button
-                        onClick={() => openEditLayanan(item.id)}
-                        className="w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white"
-                      >
-                        {" "}
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => actionHapusLayanan(item.id)}
-                        className="w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white"
-                      >
-                        {" "}
-                        Hapus
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </table>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                onPrevChange={handlePrevChange}
-                onNextChange={handleNextChange}
-              />
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
     </div>
-  );
+  )
 }

@@ -4,9 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import Api from "../../Api";
 import moment from "moment";
-import { debounce } from "lodash";
-import { BiSearch } from "react-icons/bi";
-import Pagination from "../../components/Pagination";
 
 const Dashboard = () => {
   const [dataRekamMedis, setDataRekamMedis] = useState("");
@@ -14,23 +11,16 @@ const Dashboard = () => {
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
   const [refresh, setRefresh] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const formatServiceNames = (param) => {
-    return param.map((service) => service.name).join(", ");
+    return param.map(service => service.name).join(', ');
   };
 
   const getRekamMedis = async () => {
     try {
-      const response = await Api.GetRekamMedis(
-        localStorage.getItem("token"),
-        "",
-        currentPage
-      );
+      const response = await Api.GetRekamMedis(localStorage.getItem("token"));
       console.log(response, "response rekam medis");
       setDataRekamMedis(response.data.data);
-      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
     }
@@ -38,9 +28,7 @@ const Dashboard = () => {
   const openDetailRekamMedis = async (id) => {
     setDetailRekamMedis(!detailRekamMedis);
     try {
-      const response = await Api.GetRekamMedisById(
-        localStorage.getItem("token"),
-        id
+      const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id
       );
       setDataDetailRekamMedis(response.data.data);
       console.log(response, "detail");
@@ -48,50 +36,10 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-  const handleSearchName = (e) => {
-    const searchName = e.target.value;
-    debouncedSearchName(searchName);
-  };
-  const debouncedSearchName = debounce(async (name) => {
-    try {
-      const response = await Api.GetRekamMedis(
-        localStorage.getItem("token"),
-        name,
-        currentPage
-      );
-      setDataRekamMedis(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }, 300);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    setRefresh(true);
-  };
-
-  const handlePrevChange = () => {
-    if (currentPage === 1) {
-      setCurrentPage(1);
-    } else {
-      setCurrentPage(currentPage - 1);
-    }
-    setRefresh(true);
-  };
-
-  const handleNextChange = () => {
-    if (currentPage === totalPages) {
-      setCurrentPage(totalPages);
-    } else {
-      setCurrentPage(currentPage + 1);
-    }
-    setRefresh(true);
-  };
 
   useEffect(() => {
     getRekamMedis();
-    setRefresh(false);
-  }, [refresh]);
+  }, []);
 
   return (
     <div>
@@ -225,16 +173,6 @@ const Dashboard = () => {
             <h1 className="text-2xl text-slate-black font-medium">
               Data Kunjungan Pasien
             </h1>
-            <div className="flex items-center justify-end">
-              <div className="relative">
-                <BiSearch className="absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg" />
-                <input
-                  onChange={handleSearchName}
-                  placeholder="Search..."
-                  className="h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]"
-                />
-              </div>
-            </div>
             <div className="mt-[44px] overflow-auto scrollbar-hide bg-white">
               <table className="w-full space-y-[10px]">
                 <div className="flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]">
@@ -279,7 +217,7 @@ const Dashboard = () => {
                     </div>
                     <div className="min-w-[150px] max-w-[150px]">
                       <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        {moment(item.date).format("DD MMMM YYYY")}
+                        {moment(item.date).format('DD MMMM YYYY')}
                       </h1>
                     </div>
                     <div className="min-w-[220px] max-w-[220px]">
@@ -293,17 +231,7 @@ const Dashboard = () => {
                       </h1>
                     </div>
                     <div className="min-w-[220px] max-w-[220px]">
-                      <button
-                        onClick={() =>
-                          navigate("/rekam-medis", {
-                            state: {
-                              idPasien: item.id,
-                              namaPasien: item.fullname,
-                            },
-                          })
-                        }
-                        className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]"
-                      >
+                      <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
                         Lihat Catatan Perawatan
                       </button>
                     </div>
@@ -319,15 +247,6 @@ const Dashboard = () => {
                   </div>
                 ))}
               </table>
-              <div className="px-10">
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                  onPrevChange={handlePrevChange}
-                  onNextChange={handleNextChange}
-                />
-              </div>
             </div>
           </div>
         </div>
