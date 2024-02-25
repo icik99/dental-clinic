@@ -97,8 +97,8 @@ class Api {
             }
         })
     }
-    static GetRekamMedis(token, id) {
-        let path = `rekam-medis`;
+    static GetRekamMedis(token, keyword, page) {
+        let path = `rekam-medis?search=${keyword}&page=${page}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -150,8 +150,8 @@ class Api {
 
     // Payment
 
-    static GetPayment(token, keyword) {
-        let path = `invoice`;
+    static GetPayment(token, keyword, page) {
+        let path = `invoice?search=${keyword}&page=${page}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {

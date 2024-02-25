@@ -154,7 +154,7 @@ export default function Pasien() {
                                 <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Pasien</Link>
                                 <div className='relative'>
                                     <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                    <input onChange={handleSearchName} placeholder='Search...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                    <input onChange={handleSearchName} placeholder='Search by Name or Phone...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                 </div>
 
                             </div>
@@ -190,7 +190,7 @@ export default function Pasien() {
                                         <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                             <h1 className='text-[#737373]  text-xs font-semibold line'>{item.phone}</h1>
                                         </div>
-                                        <div className='w-full space-x-2'>
+                                        <div className='w-full space-x-2 flex items-center justify-center'>
                                             <button onClick={() => openDetailPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Detail</button>
                                             <button onClick={() => navigate('update', {state: {idPasien: item.id}})}  className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
                                             <button onClick={() => actionHapusPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>

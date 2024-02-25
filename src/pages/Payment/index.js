@@ -6,6 +6,9 @@ import { HiOutlinePencil } from 'react-icons/hi'
 import Modal from '../../components/Modal'
 import Api from '../../Api'
 import toast from 'react-hot-toast'
+import Pagination from '../../components/Pagination'
+import { BiSearch } from 'react-icons/bi'
+import { debounce } from 'lodash'
 
 export default function Payment() {
     const navigate = useNavigate()
@@ -14,16 +17,54 @@ export default function Payment() {
     const [dataPayment, setDataPayment] = useState([])
     const [status, setStatus] = useState()
     const [refresh, setRefresh] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState('')
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setRefresh(true)
+    };
+    
+    const handlePrevChange = () => {
+        if(currentPage === 1) {
+            setCurrentPage(1)
+        } else {
+            setCurrentPage(currentPage - 1);
+        }
+        setRefresh(true)
+    };
+    
+    const handleNextChange = () => {
+        if(currentPage === totalPages) {
+            setCurrentPage(totalPages)
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
+        setRefresh(true)
+    };
 
     const getPayment = async () => {
         try {
-            const response  = await Api.GetPayment(localStorage.getItem('token'))
-            console.log(response)
+            const response  = await Api.GetPayment(localStorage.getItem('token'), '', '')
+            console.log('data', response)
             setDataPayment(response.data.data)
         } catch (error) {
             console.log(error)   
         }
     }
+
+    const handleSearchName = (e) => {
+        const searchName = e.target.value
+        debouncedSearchName(searchName)
+    }
+    const debouncedSearchName = debounce(async(name) => {
+        try {
+            const response = await Api.GetPayment(localStorage.getItem('token'), name, currentPage)
+            setDataPayment(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }, 300)
 
     const openEditPayment = async (id) => {
         setIdPayment(id)
@@ -31,7 +72,6 @@ export default function Payment() {
         try {
             const response = await Api.GetPaymentById(localStorage.getItem('token'), id)
             setStatus(response.data.data[0].status)
-            console.log(response, 'detailPayment')
         } catch (error) {
             console.log(error)
         }
@@ -89,19 +129,23 @@ export default function Payment() {
                 <div className='w-full p-10'>
                     <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
                         <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pembayaran</h1>
+                        <div className='relative'>
+                            <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                            <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                        </div>
                         <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
                         <table className='w-full space-y-[10px]'>
                             <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                 <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                     <h1 className='text-black text-xs font-semibold'>No Transaksi</h1>
                                 </div>
-                                <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
+                                <div className='flex items-center gap-[15px] min-w-[300px] max-w-[300px]'>
                                     <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                 </div>
-                                <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
+                                <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
                                     <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                 </div>
-                                <div className='flex items-center gap-[15px] min-w-[220px] max-w-[220px]'>
+                                <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                     <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                 </div>
                                 <div className=' w-full flex items-center justify-center'>
@@ -113,22 +157,39 @@ export default function Payment() {
                                     <div className='min-w-[150px] max-w-[150px]'>
                                         <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.invoice ? item.invoice : '-'}</h1>
                                     </div>
-                                    <div className='min-w-[220px] max-w-[220px]'>
+                                    <div className='min-w-[300px] max-w-[300px]'>
                                         <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
                                     </div>
-                                    <div className='min-w-[220px] max-w-[220px]'>
-                                        <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.total_payment ? item.total_payment : '-'}</h1>
+                                    <div className='min-w-[200px] max-w-[200px]'>
+                                        <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
                                     </div>
-                                    <div className='min-w-[220px] max-w-[220px]'>
+                                    <div className='min-w-[150px] max-w-[150px]'>
                                         <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
                                     </div>
-                                    <div className='w-full space-x-2'>
-                                        <button onClick={() => openEditPayment(item.id)} className={`${item.status === '0' ? 'bg-slate-600' : 'bg-slate-300' } w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
-                                        <button  onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={`${item.status === '0' ? 'bg-slate-300' : 'bg-slate-600' } w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                    <div className='w-full space-x-2 flex items-center justify-center'>
+                                        {item.status === '0' ? (
+                                            <>
+                                                <button onClick={() => openEditPayment(item.id)} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button disabled onClick={() => openEditPayment(item.id)} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                            </>
+                                        )}
+                                        
                                     </div>
                                 </div>
                             ))}
                         </table>
+                        <Pagination
+                            currentPage={1} 
+                            totalPages={20} 
+                            onPageChange={handlePageChange}
+                            onPrevChange={handlePrevChange}
+                            onNextChange={handleNextChange}
+                        />
                     </div>
                     </div>
                 </div>

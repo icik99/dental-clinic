@@ -19,7 +19,6 @@ const Dashboard = () => {
   const getRekamMedis = async () => {
     try {
       const response = await Api.GetRekamMedis(localStorage.getItem("token"));
-      console.log(response, "response rekam medis");
       setDataRekamMedis(response.data.data);
     } catch (error) {
       console.log(error);
@@ -196,7 +195,7 @@ const Dashboard = () => {
                       Layanan
                     </h1>
                   </div>
-                  <div className="flex items-center gap-[15px] min-w-[220px] max-w-[220px]">
+                  <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
                     <h1 className="text-black text-xs font-semibold">
                       Catatan Perawatan
                     </h1>
@@ -230,18 +229,16 @@ const Dashboard = () => {
                         {item.hasil}
                       </h1>
                     </div>
-                    <div className="min-w-[220px] max-w-[220px]">
+                    <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
                       <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
                         Lihat Catatan Perawatan
                       </button>
                     </div>
-                    <div className="w-full space-x-2">
+                    <div className="w-full space-x-2 flex justify-center items-center">
                       <button
                         onClick={() => openDetailRekamMedis(item.id)}
                         className="w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]"
-                      >
-                        {" "}
-                        Detail{" "}
+                      >Detail
                       </button>
                     </div>
                   </div>
