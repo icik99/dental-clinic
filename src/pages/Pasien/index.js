@@ -24,8 +24,9 @@ export default function Pasien() {
     const getPasien = async () => {
         try {
             const response = await Api.GetPasien(localStorage.getItem('token'), '', currentPage)
-            setDataPasien(response.data.data.data)
-            setTotalPages(response.data.data.totalPages)
+            setDataPasien(response.data.data)
+            setTotalPages(response.data.totalPages)
+            setCurrentPage(parseInt(response.data.currentPages, 10))
             console.log(response)
         } catch (error) {
             console.log(error)
@@ -39,7 +40,7 @@ export default function Pasien() {
     const debouncedSearchName = debounce(async(name) => {
         try {
             const response = await Api.GetPasien(localStorage.getItem('token'), name, currentPage)
-            setDataPasien(response.data.data.data)
+            setDataPasien(response.data.data)
 
         } catch (error) {
             console.log(error)

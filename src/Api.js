@@ -3,7 +3,8 @@ import request from "./utils/request";
 class Api {
 
     static urlAPI() {
-        return process.env.REACT_APP_BACKEND_URL
+        // return process.env.REACT_APP_BACKEND_URL
+        return process.env.REACT_APP_BACKEND_PROD_URL
     }
 
     // Begin :: Auth
@@ -15,6 +16,13 @@ class Api {
                 username,
                 password,
             },
+        })
+    }
+    static Register(data) {
+        let path = 'register';
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'POST',
+            data
         })
     }
 
@@ -37,7 +45,7 @@ class Api {
     }
     // Pasien
     static GetPasien(token, keyword, page) {
-        let path = `patient?searach=${keyword}&page=${page}`;
+        let path = `patient?search=${keyword}&page=${page}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {

@@ -58,8 +58,9 @@ export default function RekamMedis() {
         try {
             if(params.state === null){
                 const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage);
-                console.log(response, 'res')
                 setDataRekamMedis(response.data.data);
+                setCurrentPage(parseInt(response.data.currentPages, 10))
+                setTotalPages(response.data.totalPages)
                 setDataServiceRekamMedis(response.data.data.service)
             } else {
                 const response = await Api.GetRekamMedisByPatient(localStorage.getItem('token'), params.state.idPasien)
@@ -332,8 +333,8 @@ export default function RekamMedis() {
                             </table>
                             {params.state === null && (
                                 <Pagination
-                                    currentPage={1} 
-                                    totalPages={20} 
+                                    currentPage={currentPage} 
+                                    totalPages={totalPages} 
                                     onPageChange={handlePageChange}
                                     onPrevChange={handlePrevChange}
                                     onNextChange={handleNextChange}

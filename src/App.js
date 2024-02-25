@@ -13,6 +13,7 @@ import Pasien from './pages/Pasien';
 import Layanan from './pages/Layanan';
 import CreatePasien from './pages/Pasien/Create';
 import UpdatePasien from './pages/Pasien/Update';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route name='Dashboard' path="/dashboard" element={<Dashboard/>}/>
         <Route name='Login' path="/" element={<LoginPage/>}/>
+        <Route name='Register' path="/register" element={<Register/>}/>
         <Route name='Payment' path="/payment" element={<Payment/>}/>
         <Route name='Pasien' path="/pasien" element={<Pasien/>}/>
         <Route name='Create Pasien' path="/pasien/create" element={<CreatePasien/>}/>

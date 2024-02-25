@@ -18,7 +18,8 @@ const Dashboard = () => {
 
   const getRekamMedis = async () => {
     try {
-      const response = await Api.GetRekamMedis(localStorage.getItem("token"));
+      const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
+      console.log(response)
       setDataRekamMedis(response.data.data);
     } catch (error) {
       console.log(error);
@@ -27,10 +28,9 @@ const Dashboard = () => {
   const openDetailRekamMedis = async (id) => {
     setDetailRekamMedis(!detailRekamMedis);
     try {
-      const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id
-      );
+      const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id);
+      console.log('detail', response)
       setDataDetailRekamMedis(response.data.data);
-      console.log(response, "detail");
     } catch (error) {
       console.log(error);
     }
@@ -230,7 +230,7 @@ const Dashboard = () => {
                       </h1>
                     </div>
                     <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
-                      <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
+                      <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
                         Lihat Catatan Perawatan
                       </button>
                     </div>

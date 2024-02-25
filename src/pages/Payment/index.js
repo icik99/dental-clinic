@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import { Link, useNavigate } from 'react-router-dom'
-import { AiOutlineEye } from 'react-icons/ai'
-import { HiOutlinePencil } from 'react-icons/hi'
 import Modal from '../../components/Modal'
 import Api from '../../Api'
 import toast from 'react-hot-toast'
@@ -45,8 +43,10 @@ export default function Payment() {
 
     const getPayment = async () => {
         try {
-            const response  = await Api.GetPayment(localStorage.getItem('token'), '', '')
-            console.log('data', response)
+            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage)
+            console.log(response)
+            setCurrentPage(parseInt(response.data.currentPages, 10))
+            setTotalPages(response.data.totalPages)
             setDataPayment(response.data.data)
         } catch (error) {
             console.log(error)   
@@ -61,6 +61,8 @@ export default function Payment() {
         try {
             const response = await Api.GetPayment(localStorage.getItem('token'), name, currentPage)
             setDataPayment(response.data.data)
+            setCurrentPage(response.data.currentPages)
+            setTotalPages(response.data.totalPages)
         } catch (error) {
             console.log(error)
         }
@@ -184,8 +186,8 @@ export default function Payment() {
                             ))}
                         </table>
                         <Pagination
-                            currentPage={1} 
-                            totalPages={20} 
+                            currentPage={currentPage} 
+                            totalPages={totalPages} 
                             onPageChange={handlePageChange}
                             onPrevChange={handlePrevChange}
                             onNextChange={handleNextChange}
