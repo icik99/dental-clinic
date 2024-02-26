@@ -92,24 +92,25 @@ export default function RekamMedis() {
 
     const exportToExcel = () => {
         // Sample data array
-        const dataRekamMedis = dataExport;
+        const dataExport = dataRekamMedis;
 
         // Define custom headers for each table
-        const Headers = ['Employee Name', 'Date', 'Check In', 'Location Check In', 'Check Out', 'Location Check Out', 'Duration'];
+        const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan'];
 
         // Create modified data arrays with custom headers
-        const jobGrade = dataRekamMedis.map(({ user, createdAt, time_checkin, time_checkout, latitude_checkin, longtitude_checkin, latitude_checkout, longtitude_checkout }) => ({
-            'Employee Name': user ? user.fullname : '-',
-            'Date': moment(createdAt).format('DD MMMM YYYY'),
-            'Check In': time_checkin ? moment(time_checkin).format('hh:mm') : '-',
-            'Location Check In': latitude_checkin && longtitude_checkin ? latitude_checkin + ',' + longtitude_checkin : '-',
-            'Check Out': time_checkout ? moment(time_checkout).format('hh:mm') : '-',
-            'Location Check Out': latitude_checkout && longtitude_checkout ? latitude_checkout + ',' + longtitude_checkout : '-',
-            // 'Duration': time_checkin && time_checkout ? duration(time_checkin, time_checkout) : '-'
+        const rekamMedis = dataRekamMedis.map(({ fullname, date, gender, phone, diagnosis, therapy, description, hasil}) => ({
+            'Employee Name': fullname ? fullname : '-',
+            'Date': moment(date).format('DD MMMM YYYY'),
+            'Jenis Kelamin': gender ? gender : '-',
+            'Nomor Telepon': phone? phone : '-',
+            'Diagnosis': diagnosis? diagnosis : '-',
+            'Terapi': therapy? therapy : '-',
+            'Keterangan': description? description : '-',
+            'Layanan': hasil? hasil : '-',
         }));
 
         // Create a new worksheet for each table
-        const worksheetGrade = XLSX.utils.json_to_sheet(jobGrade, { header: Headers });
+        const worksheetGrade = XLSX.utils.json_to_sheet(rekamMedis, { header: Headers });
 
         // Create a new workbook
         const workbook = XLSX.utils.book_new();
@@ -196,30 +197,30 @@ export default function RekamMedis() {
                                 <h1>: {dataDetailRekamMedis.service ? formatServiceNames(dataDetailRekamMedis.service) : '-'}</h1>
                             </div>
                         </div>
-                            <div>
-                                <h1 className='mt-5 text-lg'>Keterangan Odontogram</h1> 
-                                <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
-                                <div className='mt-5'>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th className='border p-2'>No</th>
-                                                    <th className='border p-2'>Nomer Gigi</th>
-                                                    <th className='border p-2'>Keterangan</th>
+                        <div>
+                            <h1 className='mt-5 text-lg'>Keterangan Odontogram</h1> 
+                            <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
+                            <div className='mt-5'>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th className='border p-2'>No</th>
+                                                <th className='border p-2'>Nomer Gigi</th>
+                                                <th className='border p-2'>Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {dataOdontogram.map((item, idx) => (
+                                                <tr key={idx}>
+                                                    <td className='border p-2'>{idx+1}</td>
+                                                    <td className='border p-2'>{item.nomorGigi}</td>
+                                                    <td className='border p-2'>{item.label}</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                {dataOdontogram.map((item, idx) => (
-                                                    <tr key={idx}>
-                                                        <td className='border p-2'>{idx+1}</td>
-                                                        <td className='border p-2'>{item.nomorGigi}</td>
-                                                        <td className='border p-2'>{item.label}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                            </div>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
 
                         {/* <div className='text-sm border-2 w-full rounded-md p-3 mt-5'>
                             <h1 className='mb-3 text-[12px] font-medium'>Odontogram:</h1>
@@ -269,7 +270,7 @@ export default function RekamMedis() {
                                             <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
                                             <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
-                                        <button className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
+                                        <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
                                             <FaFileExport className='text-blue-700 font-extrabold'/>
                                             <h1 className='text-sm'>Export Data</h1>
                                         </button>

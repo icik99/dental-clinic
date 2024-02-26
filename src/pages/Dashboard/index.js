@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import Api from "../../Api";
 import moment from "moment";
+import { OdontogramGambar } from "../../assets";
 
 const Dashboard = () => {
   const [dataRekamMedis, setDataRekamMedis] = useState("");
   const [detailRekamMedis, setDetailRekamMedis] = useState(false);
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
+  const [dataOdontogram, setDataOdontogram] = useState([])
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate()
   const formatServiceNames = (param) => {
@@ -31,6 +33,7 @@ const Dashboard = () => {
       const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id);
       console.log('detail', response)
       setDataDetailRekamMedis(response.data.data);
+      setDataOdontogram(response.data.data.odontogram)
     } catch (error) {
       console.log(error);
     }
@@ -122,9 +125,29 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="text-sm border-2 w-full rounded-md p-3 mt-5">
-                <h1 className="mb-3 text-[12px] font-medium">Odontogram:</h1>
-                {/* <Odontogram /> */}
+              <div>
+                  <h1 className='mt-5 text-lg'>Keterangan Odontogram</h1> 
+                  <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
+                  <div className='mt-5'>
+                          <table>
+                              <thead>
+                                  <tr>
+                                      <th className='border p-2'>No</th>
+                                      <th className='border p-2'>Nomer Gigi</th>
+                                      <th className='border p-2'>Keterangan</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {dataOdontogram.map((item, idx) => (
+                                      <tr key={idx}>
+                                          <td className='border p-2'>{idx+1}</td>
+                                          <td className='border p-2'>{item.nomorGigi}</td>
+                                          <td className='border p-2'>{item.label}</td>
+                                      </tr>
+                                  ))}
+                              </tbody>
+                          </table>
+                      </div>
               </div>
             </div>
           </div>

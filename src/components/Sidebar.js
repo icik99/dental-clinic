@@ -15,7 +15,6 @@ const Sidebar = () => {
         try {
             const response = await Api.Fetch(localStorage.getItem('token'))
             localStorage.setItem('role', response.data.role)
-            console.log(response, 'fetch')
         } catch (error) {
             navigate('/')
         }
