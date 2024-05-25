@@ -5,15 +5,23 @@ import Modal from "../../components/Modal";
 import Api from "../../Api";
 import moment from "moment";
 import { OdontogramGambar } from "../../assets";
+import { BiSearch } from "react-icons/bi";
+import { debounce } from "lodash";
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
 
 const Dashboard = () => {
-  const [dataRekamMedis, setDataRekamMedis] = useState("");
+  const [dataRekamMedis, setDataRekamMedis] = useState([]);
   const [detailRekamMedis, setDetailRekamMedis] = useState(false);
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
   const [dataOdontogram, setDataOdontogram] = useState([])
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
   const [refresh, setRefresh] = useState(false);
+  const [patientStats, setPatientStats] = useState([]);
   const navigate = useNavigate()
+
   const formatServiceNames = (param) => {
     return param.map(service => service.name).join(', ');
   };
@@ -23,10 +31,36 @@ const Dashboard = () => {
       const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
       console.log(response)
       setDataRekamMedis(response.data.data);
+      aggregatePatientData(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleSearchName = (e) => {
+    const searchName = e.target.value
+    debouncedSearchName(searchName)
+  }
+
+  const debouncedSearchName = debounce(async(name) => {
+    try {
+      const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, '')
+      setDataRekamMedis(response.data.data);
+      aggregatePatientData(response.data.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }, 300)
+
+  const aggregatePatientData = (data) => {
+    const monthlyData = Array(12).fill(0);
+    data.forEach(record => {
+      const month = moment(record.date).month();
+      monthlyData[month]++;
+    });
+    setPatientStats(monthlyData);
+  };
+
   const openDetailRekamMedis = async (id) => {
     setDetailRekamMedis(!detailRekamMedis);
     try {
@@ -42,6 +76,22 @@ const Dashboard = () => {
   useEffect(() => {
     getRekamMedis();
   }, []);
+
+  const chartData = {
+    labels: [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ],
+    datasets: [
+      {
+        label: 'Total Patients',
+        data: patientStats,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <div>
@@ -155,7 +205,9 @@ const Dashboard = () => {
       />
       <div className="min-h-screen bg-[#F2F2F2]">
         <div className="flex w-full">
-          <Sidebar />
+          <div className="w-fit">
+            <Sidebar />
+          </div>
           <div className="p-10 w-full ">
             <div className="md:flex lg:flex-row md:gap-[40px] lg:gap-[40px] flex-col gap-[20px] items-start mb-10">
               <Link
@@ -173,29 +225,79 @@ const Dashboard = () => {
                 onClick={() => setModalAlert(!modalAlert)}
                 className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
               >
-                <div className="flex items-center justify-between  mb-2">
-                  <h1 className="text-[22px] font-medium">Reservasi</h1>
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-[22px] font-medium">Tambah Pasien</h1>
                 </div>
                 <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
-                  Reservasi pasien
+                  Tambah data pasien baru
                 </p>
               </button>
-              <Link
-                to={"/payment"}
+              {/* <Link
+                to={"/odontogram"}
                 className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
               >
-                <div className="flex items-center justify-between  mb-2">
-                  <h1 className="text-[22px] font-medium">Pembayaran</h1>
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-[22px] font-medium">Odontogram</h1>
                 </div>
                 <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
-                  Lihat dan edit status pembayaran
+                  Mengetahui kondisi dan rekam gigi pasien
                 </p>
-              </Link>
+              </Link> */}
             </div>
-            <h1 className="text-2xl text-slate-black font-medium">
-              Data Kunjungan Pasien
-            </h1>
-            <div className="mt-[44px] overflow-auto scrollbar-hide bg-white">
+            <div className="flex items-center justify-between gap-10">
+                <div className="w-full">
+                    <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl mb-10" >
+                        <div className="flex items-center justify-between  mb-2">
+                          <h1 className="text-[22px]  font-semibold">Total Pasien</h1>
+                        </div>
+                        <p className="w-[full]  text-sm text-start font-semibold">
+                          Pasien yang telah terdaftar sebanyak ... orang
+                        </p>
+                    </div>
+                    <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl" >
+                        <div className="flex items-center justify-between  mb-2">
+                          <h1 className="text-[22px]  font-semibold">Total Rekam Medis</h1>
+                        </div>
+                        <p className="w-[full]  text-sm text-start font-semibold">
+                          Rekam Medis yang terdata ada sebanyak ... rekam medis
+                        </p>
+                    </div>
+                </div>
+                <div className="bg-white border-2 p-6 rounded shadow-sm w-full">
+                  <h1 className="font-medium text-[22px] mb-4">Total Pasien per Bulan</h1>
+                  <Bar data={chartData} />
+                </div>
+            </div>
+            <div className='flex items-center justify-between mt-[20px]'>
+                <h1 className="text-2xl text-slate-black font-medium">   Data Kunjungan Pasien </h1>
+                <div className="flex items-center justify-end gap-10 ">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
+                      <label className="block text-sm font-medium text-gray-700">Start</label>
+                      <input
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <label className="block text-sm font-medium text-gray-700">End</label>
+                      <input
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                  </div>
+                  <div className='relative'>
+                      <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                      <input onChange={handleSearchName} placeholder='Search by Name or Phone...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                  </div>
+                </div>
+            </div>
+            <div className="mt-[20px] overflow-auto scrollbar-hide bg-white">
               <table className="w-full space-y-[10px]">
                 <div className="flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]">
                   <div className="flex items-center gap-[15px] min-w-[100px] max-w-[100px]">

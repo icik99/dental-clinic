@@ -41,27 +41,53 @@ const Sidebar = () => {
                             <h1 className={`text-base  hover:text-blue-600`}>Dashboard</h1>
                     </Link>
 
-                    <Link to={'/pasien'} className={`${location.pathname === '/pasien' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
-                        <MdPeopleOutline />
-                        <h1 className={`hover:text-blue-600 text-base`}>Pasien</h1>
-                    </Link>
-                    {localStorage.getItem('role') === 'admin' && (
+                    {localStorage.getItem('role') === 'Petugas Pendaftaran' && (
+                        <Link to={'/pasien'} className={`${location.pathname === '/pasien' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                            <MdPeopleOutline />
+                            <h1 className={`hover:text-blue-600 text-base`}>Pasien</h1>
+                        </Link>
+                    )}
+
+                    {localStorage.getItem('role') === 'Petugas Rekam Medis' && (
                         <Link to={'/rekam-medis'} className={`${location.pathname === '/rekam-medis' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
                             <CiMedicalClipboard />
                             <h1 className={`hover:text-blue-600 text-base`}>Rekam Medis</h1>
                         </Link>
                     )}
 
-                    <Link to={'/payment'} className={`${location.pathname === '/payment' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
-                        <MdPayment />
-                        <h1 className={`hover:text-blue-600 text-base`}>Pembayaran</h1>
-                    </Link>
+
+                    {localStorage.getItem('role') === 'admin' && (
+                        <>
+                            <Link to={'/pasien'} className={`${location.pathname === '/pasien' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <MdPeopleOutline />
+                                <h1 className={`hover:text-blue-600 text-base`}>Pasien</h1>
+                            </Link>
+                            <Link to={'/rekam-medis'} className={`${location.pathname === '/rekam-medis' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <CiMedicalClipboard />
+                                <h1 className={`hover:text-blue-600 text-base`}>Rekam Medis</h1>
+                            </Link>
+
+                            <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <MdOutlineFeaturedPlayList />
+                                <h1 className={`hover:text-blue-600 text-base`}>Layanan</h1>
+                            </Link>
+                            <Link to={'/payment'} className={`${location.pathname === '/payment' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <MdPayment />
+                                <h1 className={`hover:text-blue-600 text-base`}>Pembayaran</h1>
+                            </Link>
+                        </>
+                    )}
+
+                    {localStorage.getItem('role') === 'Petugas Kasir' && (
+                        <Link to={'/payment'} className={`${location.pathname === '/payment' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                            <MdPayment />
+                            <h1 className={`hover:text-blue-600 text-base`}>Pembayaran</h1>
+                        </Link>
+                    ) }
 
 
-                    <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'border-blue-600 border-l-4 text-blue-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
-                        <MdOutlineFeaturedPlayList />
-                        <h1 className={`hover:text-blue-600 text-base`}>Layanan</h1>
-                    </Link>
+
+                    
 
                 </div>
 

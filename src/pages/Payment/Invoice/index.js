@@ -82,8 +82,6 @@ export default function Invoice() {
                 <img className='w-40 h-20 -rotate-12' src={Lunas} alt="" />
             </div>
         </div>
-
-        
     </>
   )
 }

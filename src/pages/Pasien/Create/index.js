@@ -17,6 +17,16 @@ export default function CreatePasien() {
     const [pekerjaan, setPekerjaan] = useState()
     const [telepon, setTelepon] = useState()
     const [alergi, setAlergi] = useState()
+    const [nik, setNik] = useState()
+    const [agama, setAgama] = useState()
+    const [namaIbuKandung, setNamaIbuKandung] = useState()
+    const [alamatKtp, setAlamatKtp] = useState()
+    const [kecamatan, setKecamatan] = useState()
+    const [kelurahan, setKelurahan] = useState()
+    const [kota, setKota] = useState()
+    const [kodePos, setKodePos] = useState()
+    const [rt, setRt] = useState()
+    const [rw, setRw] = useState()
 
     const createPasien = async () => {
         try {
@@ -28,14 +38,24 @@ export default function CreatePasien() {
                 address: alamat,
                 work: pekerjaan,
                 phone: telepon,
-                history_illness: alergi
+                history_illness: alergi,
+                // nik: nik,
+                // namaIbuKandung: namaIbuKandung,
+                // agama: agama,
+                // alamatKTP: alamatKtp,
+                // kecamatan: kecamatan,
+                // kelurahan: kelurahan,
+                // kota: kota,
+                // kodePos: kodePos,
+                // rt: rt,
+                // rw: rw
             }
             const response = await Api.CreatePasien(localStorage.getItem('token'), data)
             toast.success('Berhasil Create Pasien')
             navigate('/pasien')
         } catch (error) {
             console.log(error)
-            toast.error('Gagal Create Pasien')
+            toast.error(error.response.data.message ? error.response.data.message : 'Gagal Create Pasien')
         }
     }
   return (
@@ -47,8 +67,12 @@ export default function CreatePasien() {
                     <div className='space-y-[20px] w-full p-5 bg-white border-2 rounded-lg'>
                     <h1 className='text-2xl text-slate-black font-medium mb-[20px]'>Create Pasien</h1>
                         <div className='text-sm space-y-2'>
-                            <h1 className='font-medium'>Nama</h1>
+                            <h1 className='font-medium'>Nama Lengkap</h1>
                             <input onChange={(e) => setNama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>NIK</h1>
+                            <input onChange={(e) => setNik(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nik....'/>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Jenis Kelamin</h1>
@@ -67,8 +91,50 @@ export default function CreatePasien() {
                             </div>
                         </div>
                         <div className='text-sm space-y-2'>
-                            <h1 className='font-medium'>Alamat</h1>
+                            <h1 className='font-medium'>Agama</h1>
+                            <input onChange={(e) => setAgama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Agama....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Nama Ibu Kandung</h1>
+                            <input onChange={(e) => setNamaIbuKandung(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Ibu Kandung....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Alamat KTP</h1>
+                            <input onChange={(e) => setAlamatKtp(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat KTP....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Alamat Domisili</h1>
                             <input onChange={(e) => setAlamat(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat....'/>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>RT</h1>
+                                <input onChange={(e) => setRt(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rt....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>RW</h1>
+                                <input onChange={(e) => setRw(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rw....'/>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kelurahan / Desa </h1>
+                                <input onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kecamatan</h1>
+                                <input onChange={(e) => setKecamatan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'/>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kota</h1>
+                                <input onChange={(e) => setKota(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kode Pos</h1>
+                                <input onChange={(e) => setKodePos(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kode Pos....'/>
+                            </div>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Pekerjaan</h1>

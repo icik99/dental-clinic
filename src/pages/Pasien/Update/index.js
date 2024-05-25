@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 export default function UpdatePasien() {
     const navigate = useNavigate()
     const params = useLocation()
-    // create state
+    // update state
     const [tanggal, setTanggal] = useState()
     const [nama, setNama] = useState()
     const [jenisKelamin, setJenisKelamin] = useState()
@@ -17,6 +17,17 @@ export default function UpdatePasien() {
     const [pekerjaan, setPekerjaan] = useState()
     const [telepon, setTelepon] = useState()
     const [alergi, setAlergi] = useState()
+    const [nik, setNik] = useState()
+    const [agama, setAgama] = useState()
+    const [namaIbuKandung, setNamaIbuKandung] = useState()
+    const [alamatKtp, setAlamatKtp] = useState()
+    const [kecamatan, setKecamatan] = useState()
+    const [kelurahan, setKelurahan] = useState()
+    const [kota, setKota] = useState()
+    const [kodePos, setKodePos] = useState()
+    const [rt, setRt] = useState()
+    const [rw, setRw] = useState()
+    
 
     const getPasienById = async () => {
         try {
@@ -29,6 +40,16 @@ export default function UpdatePasien() {
             setPekerjaan(response.data.data.work)
             setTelepon(response.data.data.phone)
             setAlergi(response.data.data.history_illness)
+            setNik(response.data.data.nik)
+            setNamaIbuKandung(response.data.data.namaIbuKandung)
+            setAgama(response.data.data.agama)
+            setAlamatKtp(response.data.data.alamatKtp)
+            setKecamatan(response.data.data.kecamatan)
+            setKelurahan(response.data.data.kelurahan)
+            setKota(response.data.data.kota)
+            setKodePos(response.data.data.kodePos)
+            setRt(response.data.data.rt)
+            setRw(response.data.data.rw)
         } catch (error) {
             console.log(error)
         }
@@ -44,7 +65,17 @@ export default function UpdatePasien() {
                 address: alamat,
                 work: pekerjaan,
                 phone: telepon,
-                history_illness: alergi
+                history_illness: alergi,
+                nik: nik,
+                namaIbuKandung: namaIbuKandung,
+                agama: agama,
+                alamatKTP: alamatKtp,
+                kecamatan: kecamatan,
+                kelurahan: kelurahan,
+                kota: kota,
+                kodePos: kodePos,
+                rt: rt,
+                rw: rw
             }
             console.log(data, 'data')
             const response = await Api.UpdatePasien(localStorage.getItem('token'), data, params.state.idPasien)
@@ -79,6 +110,10 @@ export default function UpdatePasien() {
                             <input value={nama} onChange={(e) => setNama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
                         </div>
                         <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>NIK</h1>
+                            <input value={nik} onChange={(e) => setNik(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nik....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Jenis Kelamin</h1>
                             <select onChange={(e) => setJenisKelamin(e.target.value)} value={jenisKelamin} className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
                                 <option value="">Pilih Jenis Kelamin</option>
@@ -94,8 +129,50 @@ export default function UpdatePasien() {
                             </div>
                         </div>
                         <div className='text-sm space-y-2'>
-                            <h1 className='font-medium'>Alamat</h1>
+                            <h1 className='font-medium'>Agama</h1>
+                            <input value={agama} onChange={(e) => setAgama(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Agama....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Nama Ibu Kandung</h1>
+                            <input value={namaIbuKandung} onChange={(e) => setNamaIbuKandung(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Ibu Kandung....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Alamat KTP</h1>
+                            <input value={alamatKtp} onChange={(e) => setAlamatKtp(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat KTP....'/>
+                        </div>
+                        <div className='text-sm space-y-2'>
+                            <h1 className='font-medium'>Alamat Domisili</h1>
                             <input value={alamat} onChange={(e) => setAlamat(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat....'/>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>RT</h1>
+                                <input value={rt} onChange={(e) => setRt(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rt....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>RW</h1>
+                                <input value={rw} onChange={(e) => setRw(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rw....'/>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kelurahan / Desa </h1>
+                                <input value={kelurahan} onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kecamatan</h1>
+                                <input value={kecamatan} onChange={(e) => setKecamatan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'/>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kota</h1>
+                                <input value={kota} onChange={(e) => setKota(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'/>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kode Pos</h1>
+                                <input value={kodePos} onChange={(e) => setKodePos(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kode Pos....'/>
+                            </div>
                         </div>
                         <div className='text-sm space-y-2'>
                             <h1 className='font-medium'>Pekerjaan</h1>
@@ -115,7 +192,7 @@ export default function UpdatePasien() {
                                 Cancel
                             </button>
                             <button onClick={updatePasien} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
-                                Create
+                                Save
                             </button>
                         </div>
                     </div>

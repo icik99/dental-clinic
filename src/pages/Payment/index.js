@@ -17,6 +17,13 @@ export default function Payment() {
     const [refresh, setRefresh] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState('')
+    const [nominalBayar, setNominalBayar] = useState('')
+
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -107,7 +114,7 @@ export default function Payment() {
             width={'832px'}
             content= {
                 <div className=' w-full space-y-[40px]'>
-                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-semibold'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-semibold space-y-3'>
                         <div className='flex items-center'>
                             <h1 className='w-1/2'>Status Pembayaran</h1>
                             <select value={status} onChange={(e) => setStatus(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
@@ -115,6 +122,10 @@ export default function Payment() {
                                 <option value="0">Belum Lunas</option>
                                 <option value="1">Lunas</option>
                             </select>
+                        </div>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/2'>Nominal Bayar</h1>
+                            <input value={nominalBayar} onChange={(e) => setNominalBayar(e.target.value)} className='px-4 py-2 border rounded-md  w-full' placeholder='Rp....'/>
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
@@ -128,71 +139,121 @@ export default function Payment() {
         <div className='min-h-screen bg-[#F2F2F2]'>
             <div className='flex w-full'>
                 <Sidebar />
-                <div className='w-full p-10'>
-                    <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                        <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pembayaran</h1>
-                        <div className='relative'>
-                            <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                            <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
-                        </div>
-                        <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
-                        <table className='w-full space-y-[10px]'>
-                            <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
-                                <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
-                                    <h1 className='text-black text-xs font-semibold'>No Transaksi</h1>
-                                </div>
-                                <div className='flex items-center gap-[15px] min-w-[300px] max-w-[300px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
-                                </div>
-                                <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
-                                </div>
-                                <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
-                                    <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
-                                </div>
-                                <div className=' w-full flex items-center justify-center'>
-                                    <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
-                                </div>
+                <div className='w-full p-10 '>
+                    <div className='space-y-4'>
+                        <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
+                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pembayaran</h1>
+                            <div className='relative'>
+                                <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                                <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                             </div>
-                            {Object.values(dataPayment).map((item, idx) => (
-                                <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
-                                    <div className='min-w-[150px] max-w-[150px]'>
-                                        <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.invoice ? item.invoice : '-'}</h1>
+                            <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
+                            <table className='w-full space-y-[10px]'>
+                                <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
+                                        <h1 className='text-black text-xs font-semibold'>No Transaksi</h1>
                                     </div>
-                                    <div className='min-w-[300px] max-w-[300px]'>
-                                        <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
+                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                     </div>
-                                    <div className='min-w-[200px] max-w-[200px]'>
-                                        <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
+                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                     </div>
-                                    <div className='min-w-[150px] max-w-[150px]'>
-                                        <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
+                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                     </div>
-                                    <div className='w-full space-x-2 flex items-center justify-center'>
-                                        {item.status === '0' ? (
-                                            <>
-                                                <button onClick={() => openEditPayment(item.id)} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
-                                                <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <button disabled onClick={() => openEditPayment(item.id)} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
-                                                <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                            </>
-                                        )}
-                                        
+                                    <div className=' w-full flex items-center justify-center'>
+                                        <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
                                     </div>
                                 </div>
-                            ))}
-                        </table>
-                        <Pagination
-                            currentPage={currentPage} 
-                            totalPages={totalPages} 
-                            onPageChange={handlePageChange}
-                            onPrevChange={handlePrevChange}
-                            onNextChange={handleNextChange}
-                        />
-                    </div>
+                                {Object.values(dataPayment).map((item, idx) => (
+                                    <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
+                                        <div className='min-w-[150px] max-w-[150px]'>
+                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.invoice ? item.invoice : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[200px] max-w-[200px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[200px] max-w-[200px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[150px] max-w-[150px]'>
+                                            <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
+                                        </div>
+                                        <div className='w-full space-x-2 flex items-center justify-center'>
+                                            {item.status === '0' ? (
+                                                <>
+                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                </>
+                                                
+                                            )}
+                                            <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
+                                            
+                                        </div>
+                                    </div>
+                                ))}
+                            </table>
+                            <Pagination
+                                currentPage={currentPage} 
+                                totalPages={totalPages} 
+                                onPageChange={handlePageChange}
+                                onPrevChange={handlePrevChange}
+                                onNextChange={handleNextChange}
+                            />
+                        </div>
+                        </div>
+                        <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
+                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekapitulasi Biaya Pemeriksaan</h1>
+                            <div className='flex items-center gap-4'>
+                                <h1 className='font-semibold'>Tanggal Pemeriksaan</h1>
+                                <input type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
+                                <h1 className='font-semibold'>s/d</h1>
+                                <input type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
+                            </div>
+                            <div>
+                                <h1 className='font-semibold mb-2'>Pilih Pasien</h1>
+                                <select value={status} onChange={(e) => setStatus(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
+                                    <option value="">Pilih Pasien...</option>
+                                    <option value="0">Belum Lunas</option>
+                                    <option value="1">Lunas</option>
+                                </select>
+                            </div>
+                            <div className="flex flex-col space-y-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Action</label>
+                                    <div className="mt-2 space-y-2">
+                                    <div className="flex items-center">
+                                        <input
+                                        type="radio"
+                                        id="excel"
+                                        name="option"
+                                        value="excel"
+                                        checked={selectedOption === 'excel'}
+                                        onChange={handleOptionChange}
+                                        className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                        />
+                                        <label htmlFor="excel" className="ml-3 block text-sm font-medium text-gray-700">
+                                        Export to Excel
+                                        </label>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <div className='space-x-5 pt-7 flex items-center justify-end'>
+                                <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
+                                    Cancel
+                                </button>
+                                <button onClick={''} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
+                                    Rekap
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

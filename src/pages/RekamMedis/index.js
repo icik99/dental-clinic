@@ -80,6 +80,7 @@ export default function RekamMedis() {
         if(params.state === null){
             try {
                 const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, currentPage)
+                console.log(response, 'searchResult')
                 setDataRekamMedis(response.data.data);
                 setDataServiceRekamMedis(response.data.data.service)
             } catch (error) {
@@ -268,7 +269,7 @@ export default function RekamMedis() {
                                     <div className='flex items-center justify-between gap-2'>
                                         <div className='relative'>
                                             <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                            <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
                                         <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
                                             <FaFileExport className='text-blue-700 font-extrabold'/>
@@ -284,7 +285,7 @@ export default function RekamMedis() {
                                         <h1 className='text-black text-xs font-semibold'>No Rekam Medis</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[110px] max-w-[110px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
+                                        <h1 className='text-black text-xs font-semibold'>Tanggal Periksa</h1>
                                     </div>
                                     {params.state === null && (
                                         <div className='flex items-center gap-[15px] min-w-[250px] max-w-[250px]'>
