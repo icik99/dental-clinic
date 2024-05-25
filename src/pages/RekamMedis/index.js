@@ -21,11 +21,13 @@ export default function RekamMedis() {
     const params = useLocation()
     const [hapusRekamMedis, setHapusRekamMedis] = useState(false)
     const [dataRekamMedis, setDataRekamMedis] = useState('')
+    const [koreksiRekamMedis, setKoreksiRekamMedis] = useState(false)
     const [dataServiceRekamMedis, setDataServiceRekamMedis] = useState('')
     const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState('')
     const [dataOdontogram, setDataOdontogram] = useState([])
     const [idRekamMedis, setIdRekamMedis] = useState('')
     const [refresh, setRefresh] = useState('')
+    const [revisiRekamMedis, setRevisiRekamMedis] = useState('')
     const navigate = useNavigate()
 
     const [currentPage, setCurrentPage] = useState(1)
@@ -153,6 +155,30 @@ export default function RekamMedis() {
         }
     }
 
+    const openCatatanRekamMedis = async (id) => {
+        setKoreksiRekamMedis(!koreksiRekamMedis)
+        setIdRekamMedis(id)
+        try {
+            const res = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
+            setRevisiRekamMedis(res.data.data.revisi)
+            setDataDetailRekamMedis(res.data.data)
+
+        } catch (error) {
+            console.log(error)
+        
+        }
+    }
+
+    const catatanRekamMedis = async () => {
+        try {
+            const res = await Api.UpdateRekamMedis(localStorage.getItem('token'), idRekamMedis)
+            toast.success('Sukses Tambah Catatan')
+        } catch (error) {
+            console.log(error)
+            toast.error('Gagal Tambah Catatan')
+        }
+    }
+
     const actionDeleteRekamMedis = async (id) => {
         setIdRekamMedis(id)
         setHapusRekamMedis(!hapusRekamMedis)
@@ -193,12 +219,14 @@ export default function RekamMedis() {
                                 <h1>Terapi</h1>
                                 <h1>Keterangan</h1>
                                 <h1>Layanan</h1>
+                                <h1>Catatan Koreksi</h1>
                             </div>
                             <div className='col-span-9'>
                                 <h1>: {dataDetailRekamMedis.diagnosis ? dataDetailRekamMedis.diagnosis : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.therapy ? dataDetailRekamMedis.therapy : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.description ? dataDetailRekamMedis.description : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.service ? formatServiceNames(dataDetailRekamMedis.service) : '-'}</h1>
+                                <h1>: {dataDetailRekamMedis.correction ? dataDetailRekamMedis.correction : '-'}</h1>
                             </div>
                         </div>
                         <div>
@@ -256,6 +284,27 @@ export default function RekamMedis() {
                 </div>
                 }
             />
+            <Modal 
+            activeModal={koreksiRekamMedis}
+            title={`Catatan Koreksi ${dataDetailRekamMedis?.fullname}`}
+            buttonClose={ () => setKoreksiRekamMedis(!koreksiRekamMedis)}
+            width={'832px'}
+            content= {
+                <div className=' w-full space-y-[40px]'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px]  text-[#737373] text-[12px] font-semibold'>
+                        <div className='flex items-center'>
+                            <h1 className='w-1/2'>Catatan Koreksi</h1>
+                            <textarea rows={4} value={revisiRekamMedis}  onChange={(e) => setRevisiRekamMedis(e.target.value)} className='px-4 py-2 border rounded-md  w-full' />
+                        </div>
+                    </div>
+                    <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
+                        <button onClick={() => setKoreksiRekamMedis(!koreksiRekamMedis)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
+                        <button onClick={catatanRekamMedis} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                    </div>
+
+                </div>
+                }
+            />
             <ModalDelete
                 activeModal={hapusRekamMedis}
                 buttonClose={() => setHapusRekamMedis(!hapusRekamMedis)}
@@ -272,16 +321,16 @@ export default function RekamMedis() {
 
                                 {params.state === null ? (
                                     <div className='flex items-center justify-between gap-2'>
-                                        <div className='relative'>
-                                            <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
-                                        </div>
                                         <div className='flex items-center justify-end gap-3'>
-                                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Record</Link>
+                                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Rekam Medis</Link>
                                             <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
                                                 <FaFileExport className='text-blue-700 font-extrabold'/>
                                                 <h1 className='text-sm'>Export Data</h1>
                                             </button>
+                                        </div>
+                                        <div className='relative'>
+                                            <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
 
                                     </div>
@@ -300,14 +349,14 @@ export default function RekamMedis() {
                                         <h1 className='text-black text-xs font-semibold'>Tanggal Periksa</h1>
                                     </div>
                                     {params.state === null && (
-                                        <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                        <div className='flex items-center gap-[15px] min-w-[170px] max-w-[170px]'>
                                             <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                         </div>
                                     )}
                                     <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
                                         <h1 className='text-black text-xs font-semibold'>Layanan</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                         <h1 className='text-black text-xs font-semibold'>Keterangan</h1>
                                     </div>
                                     <div className=' w-full flex items-center justify-center'>
@@ -326,7 +375,7 @@ export default function RekamMedis() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.date? moment(item.date).format('DD MMMM YYYY') : '-' }</h1>
                                         </div>
                                         {params.state === null && (
-                                            <div className='min-w-[200px] max-w-[200px]'>
+                                            <div className='min-w-[170px] max-w-[170px]'>
                                                 <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname? item.fullname : '-' }</h1>
                                             </div>
                                         )}
@@ -338,12 +387,13 @@ export default function RekamMedis() {
                                                 <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{formatServiceNames(item.service)}</h1>
                                             )}
                                         </div>
-                                        <div className='min-w-[200px] max-w-[200px]'>
+                                        <div className='min-w-[150px] max-w-[150px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.description? item.description : '-' }</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
                                             <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Detail </button>
                                             <button onClick={() => actionDeleteRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Hapus</button>
+                                            <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Koreksi</button>
                                         </div>
                                     </div>
                                 ))}

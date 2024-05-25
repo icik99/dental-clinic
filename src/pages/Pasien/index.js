@@ -204,10 +204,10 @@ export default function Pasien() {
                                 {Object.values(dataPasien).map((item, idx) =>(
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>idPasien</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.noRmPasien? item.noRmPasien : '-'}</h1>
                                         </div>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Nik</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.nik? item.nik : '-'}</h1>
                                         </div>
                                         <div className='min-w-[200px] max-w-[200px]'>
                                         {localStorage.getItem('role') === 'Petugas Pendaftaran' ? (
