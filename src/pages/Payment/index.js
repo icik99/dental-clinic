@@ -150,16 +150,19 @@ export default function Payment() {
                             <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
-                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
                                         <h1 className='text-black text-xs font-semibold'>No Transaksi</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
                                         <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Pelayanan</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
                                         <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                     </div>
                                     <div className=' w-full flex items-center justify-center'>
@@ -168,16 +171,19 @@ export default function Payment() {
                                 </div>
                                 {Object.values(dataPayment).map((item, idx) => (
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
-                                        <div className='min-w-[150px] max-w-[150px]'>
+                                        <div className='min-w-[100px] max-w-[100px]'>
                                             <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.invoice ? item.invoice : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[200px] max-w-[200px]'>
+                                        <div className='min-w-[180px] max-w-[180px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[200px] max-w-[200px]'>
+                                        <div className='min-w-[180px] max-w-[180px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.service ? item.service : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[150px] max-w-[150px]'>
+                                        <div className='min-w-[120px] max-w-[120px]'>
                                             <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
@@ -208,7 +214,7 @@ export default function Payment() {
                             />
                         </div>
                         </div>
-                        <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
+                        <div className='border-2 bg-white rounded-lg p-10 space-y-[40px]'>
                             <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekapitulasi Biaya Pemeriksaan</h1>
                             <div className='flex items-center gap-4'>
                                 <h1 className='font-semibold'>Tanggal Pemeriksaan</h1>
@@ -246,9 +252,6 @@ export default function Payment() {
                                 </div>
                                 </div>
                             <div className='space-x-5 pt-7 flex items-center justify-end'>
-                                <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
-                                    Cancel
-                                </button>
                                 <button onClick={''} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
                                     Rekap
                                 </button>
