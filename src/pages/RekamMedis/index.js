@@ -177,7 +177,7 @@ export default function RekamMedis() {
             width={'832px'}
             content= {
                 <div className=' w-full space-y-[40px]'>
-                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[12px] font-semibold'>
+                    <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px]  text-[#737373] text-[12px] font-semibold'>
                         <div className='font-bold text mb-5 space-y-1 pb-2 border-b-2'>
                             <h1>No Rekam Medis : {dataDetailRekamMedis.number_regristation ? dataDetailRekamMedis.number_regristation : '-'}</h1>
                             <h1>Nama Pasien : {dataDetailRekamMedis.fullname ? dataDetailRekamMedis.fullname : '-'}</h1>
@@ -263,7 +263,9 @@ export default function RekamMedis() {
             />
             <div className='min-h-screen bg-[#F2F2F2] w-full'>
                 <div className='flex w-full'>
-                    <Sidebar />
+                    <div className='w-fit'>
+                        <Sidebar />
+                    </div>
                     <div className='w-full p-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
                             <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekam Medis {params.state? params.state.namaPasien : 'Pasien'}</h1>
@@ -286,20 +288,23 @@ export default function RekamMedis() {
                                 ) : (
                                     <button onClick={() => navigate('create', {state: {idPasien: params.state.idPasien}})} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Record</button>
                                 )}
-                            <table className='w-full space-y-[10px]'>
+                            <table className='w-full space-y-[10px] '>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
                                         <h1 className='text-black text-xs font-semibold'>No Rekam Medis</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                        <h1 className='text-black text-xs font-semibold'>NIK</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[110px] max-w-[110px]'>
                                         <h1 className='text-black text-xs font-semibold'>Tanggal Periksa</h1>
                                     </div>
                                     {params.state === null && (
-                                        <div className='flex items-center gap-[15px] min-w-[250px] max-w-[250px]'>
+                                        <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
                                             <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                         </div>
                                     )}
-                                    <div className='flex items-center gap-[15px] min-w-[250px] max-w-[250px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
                                         <h1 className='text-black text-xs font-semibold'>Layanan</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
@@ -312,26 +317,29 @@ export default function RekamMedis() {
                                 {Object.values(dataRekamMedis).map((item, idx) => (
                                     <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item? item.number_regristation : '-' }</h1>
+                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.number_regristation? item.number_regristation : '-' }</h1>
+                                        </div>
+                                        <div className='min-w-[100px] max-w-[100px]'>
+                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.nik? item.nik : '-' }</h1>
                                         </div>
                                         <div className='min-w-[110px] max-w-[110px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item? moment(item.date).format('DD MMMM YYYY') : '-' }</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.date? moment(item.date).format('DD MMMM YYYY') : '-' }</h1>
                                         </div>
                                         {params.state === null && (
-                                            <div className='min-w-[250px] max-w-[250px]'>
-                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item? item.fullname : '-' }</h1>
+                                            <div className='min-w-[200px] max-w-[200px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname? item.fullname : '-' }</h1>
                                             </div>
                                         )}
-                                        <div className='min-w-[250px] max-w-[250px]'>
+                                        <div className='min-w-[200px] max-w-[200px]'>
                                             {params.state === null ? (
-                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item? item.hasil : '-'}</h1>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.hasil? item.hasil : '-'}</h1>
 
                                             ) : (
                                                 <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{formatServiceNames(item.service)}</h1>
                                             )}
                                         </div>
                                         <div className='min-w-[200px] max-w-[200px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item? item.description : '-' }</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.description? item.description : '-' }</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
                                             <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Detail </button>
