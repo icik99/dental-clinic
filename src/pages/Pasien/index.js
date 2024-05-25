@@ -210,13 +210,12 @@ export default function Pasien() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Nik</h1>
                                         </div>
                                         <div className='min-w-[200px] max-w-[200px]'>
-                                            {role === 'dokter' || role === 'Petugas Rekam Medis' ? (
-                                                <button onClick={() => navigate('/rekam-medis', {state: {idPasien: item.id, namaPasien: item.fullname}})} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-blue-700'>{item.fullname}</button>
-
-                                            ) : (
-                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1 '>{item.fullname}</h1>
-
-                                            )}
+                                        {localStorage.getItem('role') === 'Petugas Pendaftaran' ? (
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1 '>{item.fullname}</h1>
+                                            
+                                        ) : (
+                                            <button onClick={() => navigate('/rekam-medis', {state: {idPasien: item.id, namaPasien: item.fullname}})} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-blue-700'>{item.fullname}</button>
+                                        )}
                                         </div>
                                         <div className='min-w-[100px] max-w-[100px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.gender}</h1>

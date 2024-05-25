@@ -22,6 +22,7 @@ const Sidebar = () => {
 
     const Logout = async() => {
         localStorage.removeItem('token')
+        localStorage.removeItem('role')
         navigate('/')
     }
 

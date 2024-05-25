@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import Modal from '../../components/Modal';
 import ModalDelete from '../../components/ModalDelete';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Api from '../../Api';
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
@@ -178,10 +178,13 @@ export default function RekamMedis() {
             content= {
                 <div className=' w-full space-y-[40px]'>
                     <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[12px] font-semibold'>
-                        <div className='font-bold text mb-5 space-y-2'>
+                        <div className='font-bold text mb-5 space-y-1 pb-2 border-b-2'>
                             <h1>No Rekam Medis : {dataDetailRekamMedis.number_regristation ? dataDetailRekamMedis.number_regristation : '-'}</h1>
-                            <h1 className='col-span-3'>Tanggal: {dataDetailRekamMedis.date ? dataDetailRekamMedis.date : '-'}</h1>
-                            <hr className='border-1'/>
+                            <h1>Nama Pasien : {dataDetailRekamMedis.fullname ? dataDetailRekamMedis.fullname : '-'}</h1>
+                            <h1>Alamat KTP : {dataDetailRekamMedis.address ? dataDetailRekamMedis.address : '-'}</h1>
+                            <h1>Jenis Kelamin : {dataDetailRekamMedis.gender ? dataDetailRekamMedis.gender : '-'}</h1>
+                            <h1>No Telepon : {dataDetailRekamMedis.phone ? dataDetailRekamMedis.phone : '-'}</h1>
+                            <h1 className='col-span-3'>Tanggal Periksa: {dataDetailRekamMedis.date ? dataDetailRekamMedis.date : '-'}</h1>
                         </div>
 
                         <div className='grid grid-cols-12 mx-auto'>
@@ -263,7 +266,7 @@ export default function RekamMedis() {
                     <Sidebar />
                     <div className='w-full p-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekam Medis {params.state? params.state.namaPasien : 'Semua Pasien'}</h1>
+                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekam Medis {params.state? params.state.namaPasien : 'Pasien'}</h1>
 
                                 {params.state === null ? (
                                     <div className='flex items-center justify-between gap-2'>
@@ -271,10 +274,14 @@ export default function RekamMedis() {
                                             <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
                                             <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
-                                        <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
-                                            <FaFileExport className='text-blue-700 font-extrabold'/>
-                                            <h1 className='text-sm'>Export Data</h1>
-                                        </button>
+                                        <div className='flex items-center justify-end gap-3'>
+                                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Record</Link>
+                                            <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
+                                                <FaFileExport className='text-blue-700 font-extrabold'/>
+                                                <h1 className='text-sm'>Export Data</h1>
+                                            </button>
+                                        </div>
+
                                     </div>
                                 ) : (
                                     <button onClick={() => navigate('create', {state: {idPasien: params.state.idPasien}})} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Record</button>

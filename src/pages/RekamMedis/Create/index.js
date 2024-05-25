@@ -19,13 +19,15 @@ export default function CreateRekamMedis() {
     const [terapi, setTerapi] = useState()
     const [keterangan, setKeterangan] = useState()
     const [dataLayanan, setDataLayanan] = useState([])
+    const [idPasien, setIdPasien] = useState('')
+    const [dataPasien, setDataPasien] = useState('')
 
 
     const createRekamMedis = async () => {
         try {
             const data = {
                 date: tanggal,
-                patient_id: params.state.idPasien,
+                patient_id: params.state ? params.state.idPasien : idPasien,
                 service : selectedServices,
                 diagnosis: diagnosa,
                 therapy: terapi,
@@ -52,6 +54,16 @@ export default function CreateRekamMedis() {
         }
     }
 
+    const getPasien = async () => {
+        try {
+            const res = await Api.GetPasien(localStorage.getItem('token'), '', '')
+            setDataPasien(res.data.data)
+            console.log(res, 'dataPasien')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleServiceChange = (serviceId, action) => {
         const selectedService = dataLayanan.find(service => service.id === serviceId);
         console.log(selectedService, 'selectedService')
@@ -65,6 +77,7 @@ export default function CreateRekamMedis() {
 
     useEffect(() => {
         getLayanan()
+        getPasien()
     },[])
 
     return (
@@ -75,9 +88,20 @@ export default function CreateRekamMedis() {
                     <div className='w-full p-10'>
                         <div className='space-y-[20px] w-full p-5 bg-white border-2 rounded-lg'>
                         <h1 className='text-2xl text-slate-black font-medium mb-[20px]'>Create Rekam Medis</h1>
+                            {params.state === null && (
+                                <div className='text-sm space-y-2'>
+                                    <h1 className='font-medium'>Nama Pasien</h1>
+                                    <select onChange={(e) => setIdPasien(e.target.value)} className='w-full border outline-none shadow-md px-2 py-2 rounded-md'>
+                                        <option value="">Select Pasien...</option>
+                                        {Object.values(dataPasien).map((item, idx) => (
+                                            <option key={idx} value={item.id}>{item.fullname}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )}
                             <div className='text-sm space-y-2'>
                                 <h1 className='font-medium'>Tanggal</h1>
-                                <input onChange={(e) => setTanggal(e.target.value)} type="date" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama Pasien....'/>
+                                <input onChange={(e) => setTanggal(e.target.value)} type="date" className='w-full border outline-none shadow-md px-2 py-2 rounded-md'/>
                             </div>
                             <div className='text-sm w-full gap-3 space-y-4'>
                                 <div className='w-full space-y-2 mb-4'>
