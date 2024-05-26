@@ -64,10 +64,12 @@ export default function RekamMedis() {
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
                 setDataServiceRekamMedis(response.data.data.service)
+                console.log(dataRekamMedis, 'dataRekam Medis')
             } else {
                 const response = await Api.GetRekamMedisByPatient(localStorage.getItem('token'), params.state.idPasien)
                 setDataRekamMedis(response.data.data)
                 setDataServiceRekamMedis(response.data.data.service)
+                console.log(dataRekamMedis, 'dataRekam Medis')
             }
         } catch (error) {
             console.log(error)
@@ -160,7 +162,8 @@ export default function RekamMedis() {
         setIdRekamMedis(id)
         try {
             const res = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
-            setRevisiRekamMedis(res.data.data.revisi)
+            console.log(res, 'databyid Koreksi')
+            setRevisiRekamMedis(res.data.data.koreksi)
             setDataDetailRekamMedis(res.data.data)
 
         } catch (error) {
@@ -171,8 +174,12 @@ export default function RekamMedis() {
 
     const catatanRekamMedis = async () => {
         try {
-            const res = await Api.UpdateRekamMedis(localStorage.getItem('token'), idRekamMedis)
+            const data = {
+                koreksi: revisiRekamMedis
+            }
+            const res = await Api.UpdateKoreksiRekamMedis(localStorage.getItem('token'), data, idRekamMedis)
             toast.success('Sukses Tambah Catatan')
+            setKoreksiRekamMedis(!koreksiRekamMedis)
         } catch (error) {
             console.log(error)
             toast.error('Gagal Tambah Catatan')
@@ -219,6 +226,7 @@ export default function RekamMedis() {
                                 <h1>Terapi</h1>
                                 <h1>Keterangan</h1>
                                 <h1>Layanan</h1>
+                                <h1>Obat</h1>
                                 <h1>Catatan Koreksi</h1>
                             </div>
                             <div className='col-span-9'>
@@ -226,7 +234,8 @@ export default function RekamMedis() {
                                 <h1>: {dataDetailRekamMedis.therapy ? dataDetailRekamMedis.therapy : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.description ? dataDetailRekamMedis.description : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.service ? formatServiceNames(dataDetailRekamMedis.service) : '-'}</h1>
-                                <h1>: {dataDetailRekamMedis.correction ? dataDetailRekamMedis.correction : '-'}</h1>
+                                <h1>: {dataDetailRekamMedis.obat ? formatServiceNames(dataDetailRekamMedis.obat) : '-'}</h1>
+                                <h1>: {dataDetailRekamMedis.koreksi ? dataDetailRekamMedis.koreksi : '-'}</h1>
                             </div>
                         </div>
                         <div>
@@ -310,7 +319,7 @@ export default function RekamMedis() {
                 buttonClose={() => setHapusRekamMedis(!hapusRekamMedis)}
                 submitButton={deleteRekamMedis}
             />
-            <div className='min-h-screen bg-[#F2F2F2] w-full'>
+            <div className='min-h-screen bg-[#F2F2F2] w-full overflow-auto'>
                 <div className='flex w-full'>
                     <div className='w-fit'>
                         <Sidebar />
@@ -330,7 +339,7 @@ export default function RekamMedis() {
                                         </div>
                                         <div className='relative'>
                                             <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Telephone...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
 
                                     </div>
@@ -340,16 +349,16 @@ export default function RekamMedis() {
                             <table className='w-full space-y-[10px] '>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
-                                        <h1 className='text-black text-xs font-semibold'>No Rekam Medis</h1>
+                                        <h1 className='text-black text-xs font-semibold'>No. Rekam Medis</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                         <h1 className='text-black text-xs font-semibold'>NIK</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[110px] max-w-[110px]'>
                                         <h1 className='text-black text-xs font-semibold'>Tanggal Periksa</h1>
                                     </div>
                                     {params.state === null && (
-                                        <div className='flex items-center gap-[15px] min-w-[170px] max-w-[170px]'>
+                                        <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                             <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                         </div>
                                     )}
@@ -368,14 +377,14 @@ export default function RekamMedis() {
                                         <div className='min-w-[100px] max-w-[100px]'>
                                             <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.number_regristation? item.number_regristation : '-' }</h1>
                                         </div>
-                                        <div className='min-w-[100px] max-w-[100px]'>
+                                        <div className='min-w-[150px] max-w-[150px]'>
                                             <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.nik? item.nik : '-' }</h1>
                                         </div>
                                         <div className='min-w-[110px] max-w-[110px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.date? moment(item.date).format('DD MMMM YYYY') : '-' }</h1>
                                         </div>
                                         {params.state === null && (
-                                            <div className='min-w-[170px] max-w-[170px]'>
+                                            <div className='min-w-[150px] max-w-[150px]'>
                                                 <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname? item.fullname : '-' }</h1>
                                             </div>
                                         )}

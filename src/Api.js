@@ -145,6 +145,17 @@ class Api {
             },
         })
     }
+
+    static UpdateKoreksiRekamMedis(token, data, id) {
+        let path = `rekam-medis-koreksi/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'PUT',
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
     
     static DeleteRekamMedis(token, id) {
         let path = `rekam-medis/${id}`;
@@ -158,7 +169,7 @@ class Api {
 
     // Payment
 
-    static GetPayment(token, keyword, page) {
+    static GetPayment(token, keyword, page, startDate, endDate) {
         let path = `invoice?search=${keyword}&page=${page}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
@@ -232,6 +243,47 @@ class Api {
     }
 
     static DeleteLayanan(token, id) {
+        let path = `medicine/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+
+    static GetObat(token, keyword) {
+        let path = `medicine`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+
+    static GetObatById(token, id) {
+        let path = `medicine/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+
+    static UpdateObat(token, data, id) {
+        let path = `medicine/${id}`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'PUT',
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+
+    static DeleteObat(token, id) {
         let path = `medicine/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'DELETE',

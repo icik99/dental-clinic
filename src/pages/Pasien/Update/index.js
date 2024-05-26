@@ -43,7 +43,7 @@ export default function UpdatePasien() {
             setNik(response.data.data.nik)
             setNamaIbuKandung(response.data.data.namaIbuKandung)
             setAgama(response.data.data.agama)
-            setAlamatKtp(response.data.data.alamatKtp)
+            setAlamatKtp(response.data.data.alamatKTP)
             setKecamatan(response.data.data.kecamatan)
             setKelurahan(response.data.data.kelurahan)
             setKota(response.data.data.kota)

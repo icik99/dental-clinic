@@ -320,11 +320,13 @@ const Dashboard = () => {
                       Layanan
                     </h1>
                   </div>
-                  <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
-                    <h1 className="text-black text-xs font-semibold">
-                      Catatan Perawatan
-                    </h1>
-                  </div>
+                  {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
+                    <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
+                      <h1 className="text-black text-xs font-semibold">
+                        Catatan Perawatan
+                      </h1>
+                    </div>
+                  )}
                   <div className="flex items-center justify-center gap-[15px] w-full">
                     <h1 className="text-black text-xs font-semibold">Action</h1>
                   </div>
@@ -354,11 +356,13 @@ const Dashboard = () => {
                         {item.hasil}
                       </h1>
                     </div>
-                    <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
-                      <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
-                        Lihat Catatan Perawatan
-                      </button>
-                    </div>
+                    {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
+                      <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
+                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
+                          Lihat Catatan Perawatan
+                        </button>
+                      </div>
+                    )}
                     <div className="w-full space-x-2 flex justify-center items-center">
                       <button
                         onClick={() => openDetailRekamMedis(item.id)}

@@ -39,16 +39,16 @@ export default function CreatePasien() {
                 work: pekerjaan,
                 phone: telepon,
                 history_illness: alergi,
-                // nik: nik,
-                // namaIbuKandung: namaIbuKandung,
-                // agama: agama,
-                // alamatKTP: alamatKtp,
-                // kecamatan: kecamatan,
-                // kelurahan: kelurahan,
-                // kota: kota,
-                // kodePos: kodePos,
-                // rt: rt,
-                // rw: rw
+                nik: nik,
+                namaIbuKandung: namaIbuKandung,
+                agama: agama,
+                alamatKTP: alamatKtp,
+                kecamatan: kecamatan,
+                kelurahan: kelurahan,
+                kota: kota,
+                kodePos: kodePos,
+                rt: rt,
+                rw: rw
             }
             const response = await Api.CreatePasien(localStorage.getItem('token'), data)
             toast.success('Berhasil Create Pasien')

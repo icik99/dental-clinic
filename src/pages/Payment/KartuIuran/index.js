@@ -10,7 +10,7 @@ export default function KartuIuran() {
     
         const options = {
             margin: 10,
-            filename: 'invoice.pdf',
+            filename: 'kartu Iuran .pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -48,9 +48,9 @@ export default function KartuIuran() {
                 <div>
                     <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2 mb-2' onClick={generatePDF}>Download PDF</button>
                 </div>
-                <div>
+                {/* <div>
                     <button className='mx-auto bg-blue-600 text-white font-semibold px-4 py-2 mb-2 ml-2' onClick={printPage}>Klik Untuk Print Kartu Iuran</button>
-                </div>
+                </div> */}
             </div>
             <div  className='mx-20 p-10 border-4 rounded-xl'>
                 <div id='pdf-content'>
@@ -64,9 +64,9 @@ export default function KartuIuran() {
                         </div>
                     </div>
                     <div className='mt-5  text-lg font-semibold'>
-                        <h1>No. Rekam Medis Pasien: {dataInvoice?.noRmPasien}</h1>
-                        <h1>Nama Pasien: {dataInvoice?.fullname}</h1>
-                        <h1>Alamat: {dataInvoice?.address}</h1>
+                        <h1>No. Rekam Medis Pasien: <span className='font-normal'> {dataInvoice?.noRm}</span></h1>
+                        <h1>Nama Pasien: <span className='font-normal'>{dataInvoice?.fullname}</span></h1>
+                        <h1>Alamat: <span className='font-normal'>{dataInvoice?.address}</span></h1>
                     </div>
                     <div>
                         <table className='w-full mt-6'>

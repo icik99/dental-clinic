@@ -41,7 +41,6 @@ export default function Pasien() {
         try {
             const response = await Api.GetPasien(localStorage.getItem('token'), name, currentPage)
             setDataPasien(response.data.data)
-
         } catch (error) {
             console.log(error)
         }
@@ -142,7 +141,7 @@ export default function Pasien() {
                                 <h1>: {dataDetailPasien? dataDetailPasien.namaIbuKandung : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.gender : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.place_birth : '-'}, {dataDetailPasien.date_birth}</h1>
-                                <h1>: {dataDetailPasien? dataDetailPasien.alamatKtp : '-'}</h1>
+                                <h1>: {dataDetailPasien? dataDetailPasien.alamatKTP : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.address : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.kota : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.kecamatan : '-'}</h1>
@@ -185,7 +184,7 @@ export default function Pasien() {
                                     <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
                                         <h1 className='text-black text-xs font-semibold'>No. Rm Pasien</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                         <h1 className='text-black text-xs font-semibold'>NIK</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
@@ -204,10 +203,10 @@ export default function Pasien() {
                                 {Object.values(dataPasien).map((item, idx) =>(
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.noRmPasien? item.noRmPasien : '-'}</h1>
+                                            <h1 className='text-[#0B63F8] text-xs font-[600] line-clamp-1'>{item.number_regristation? item.number_regristation : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.nik? item.nik : '-'}</h1>
+                                        <div className='min-w-[150px] max-w-[150px]'>
+                                            <h1 className='text-[#0B63F8] text-xs font-[600] line-clamp-1'>{item.nik? item.nik : '-'}</h1>
                                         </div>
                                         <div className='min-w-[200px] max-w-[200px]'>
                                         {localStorage.getItem('role') === 'Petugas Pendaftaran' ? (

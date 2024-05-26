@@ -13,12 +13,14 @@ export default function CreateRekamMedis() {
     const params = useLocation()
     const navigate = useNavigate()
     const [selectedServices, setSelectedServices] = useState([]);
+    const [selectedObatServices, setSelectedObatServices] = useState([]);
     // create state
     const [tanggal, setTanggal] = useState()
     const [diagnosa, setDiagnosa] = useState()
     const [terapi, setTerapi] = useState()
     const [keterangan, setKeterangan] = useState()
     const [dataLayanan, setDataLayanan] = useState([])
+    const [dataObat, setDataObat] = useState([])
     const [idPasien, setIdPasien] = useState('')
     const [dataPasien, setDataPasien] = useState('')
 
@@ -29,6 +31,7 @@ export default function CreateRekamMedis() {
                 date: tanggal,
                 patient_id: params.state ? params.state.idPasien : idPasien,
                 service : selectedServices,
+                obat : selectedObatServices,
                 diagnosis: diagnosa,
                 therapy: terapi,
                 description: keterangan,
@@ -49,6 +52,16 @@ export default function CreateRekamMedis() {
             const response = await Api.GetLayanan(localStorage.getItem('token'))
             console.log(response.data.data)
             setDataLayanan(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getObat = async () => {
+        try {
+            const response = await Api.GetObat(localStorage.getItem('token'))
+            console.log(response.data.data)
+            setDataObat(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
         }
@@ -75,9 +88,21 @@ export default function CreateRekamMedis() {
         }
     };
 
+    const handleServiceObatChange = (serviceId, action) => {
+        const selectedObatService = dataObat.find(service => service.id === serviceId);
+        console.log(selectedObatService, 'selectedObatService')
+        if (action === 'add') {
+        setSelectedObatServices([...selectedObatServices, selectedObatService]);
+        } else if (action === 'delete') {
+        const updatedServices = selectedObatServices.filter(service => service.id !== serviceId);
+        setSelectedObatServices(updatedServices);
+        }
+    };
+
     useEffect(() => {
         getLayanan()
         getPasien()
+        getObat()
     },[])
 
     return (
@@ -118,6 +143,35 @@ export default function CreateRekamMedis() {
                                 </div>
                                 <div className='flex flex-row items-start gap-3'>
                                     {selectedServices.map(service => (
+                                        <div key={service.id} className='px-6 py-2 w-full gap-10 rounded-md space-y-2 bg-slate-200 flex items-center'>
+                                            <div>
+                                                <h1>{service.name}</h1>
+                                                <h2 className='font-medium'>Rp. {service.price.toLocaleString()}</h2>
+                                            </div>
+                                            <div className='flex items-center justify-center gap-1'>
+                                                <button className='p-2 border rounded-md bg-red-700 text-white text-lg' onClick={() => handleServiceChange(service.id, 'delete')} >
+                                                    <MdDelete />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className='text-sm w-full gap-3 space-y-4'>
+                                <div className='w-full space-y-2 mb-4'>
+                                    <h1 className='font-medium'>Obat</h1>
+                                    <select
+                                    className='w-full border shadow-md px-2 outline-none py-2 rounded-md'
+                                    onChange={(e) => handleServiceObatChange(e.target.value, 'add')}
+                                    >
+                                    <option disabled selected value="">Pilih Obat...</option>
+                                    {dataObat.map(service => (
+                                        <option key={service.id} value={service.id}>{service.name}</option>
+                                    ))}
+                                    </select>
+                                </div>
+                                <div className='flex flex-row items-start gap-3'>
+                                    {selectedObatServices.map(service => (
                                         <div key={service.id} className='px-6 py-2 w-full gap-10 rounded-md space-y-2 bg-slate-200 flex items-center'>
                                             <div>
                                                 <h1>{service.name}</h1>

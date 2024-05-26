@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../../components/Sidebar'
 import { Link, useNavigate } from 'react-router-dom'
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
+
 import Modal from '../../components/Modal'
 import Api from '../../Api'
 import toast from 'react-hot-toast'
 import Pagination from '../../components/Pagination'
 import { BiSearch } from 'react-icons/bi'
 import { debounce } from 'lodash'
+import moment from 'moment'
 
 export default function Payment() {
     const navigate = useNavigate()
@@ -18,6 +22,7 @@ export default function Payment() {
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState('')
     const [nominalBayar, setNominalBayar] = useState('')
+    const [dataPasien, setDataPasiem] = useState('')
 
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -57,6 +62,15 @@ export default function Payment() {
             setDataPayment(response.data.data)
         } catch (error) {
             console.log(error)   
+        }
+    }
+
+    const getPasien = async () => {
+        try {
+            const res = await Api.GetPasien(localStorage.getItem('token'), '', '')
+            setDataPasiem(res.data.data)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -100,9 +114,50 @@ export default function Payment() {
         }
     }
 
+    const exportToExcel = () => {
+        // Sample data array
+        const dataExport = dataPayment;
+
+        // Define custom headers for each table
+        const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan'];
+
+        // Create modified data arrays with custom headers
+        const rekamMedis = dataPayment.map(({ fullname, date, gender, phone, diagnosis, therapy, description, hasil}) => ({
+            'Employee Name': fullname ? fullname : '-',
+            'Date': moment(date).format('DD MMMM YYYY'),
+            'Jenis Kelamin': gender ? gender : '-',
+            'Nomor Telepon': phone? phone : '-',
+            'Diagnosis': diagnosis? diagnosis : '-',
+            'Terapi': therapy? therapy : '-',
+            'Keterangan': description? description : '-',
+            'Layanan': hasil? hasil : '-',
+        }));
+
+        // Create a new worksheet for each table
+        const worksheetGrade = XLSX.utils.json_to_sheet(rekamMedis, { header: Headers });
+
+        // Create a new workbook
+        const workbook = XLSX.utils.book_new();
+
+        // Add the worksheets to the workbook
+        XLSX.utils.book_append_sheet(workbook, worksheetGrade, 'Rekam Medis');
+        // Generate Excel file buffer
+        const excelBuffer = XLSX.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
+        });
+
+        // Convert buffer to Blob
+        const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // Save the Excel file using FileSaver.js
+        saveAs(excelBlob, 'Rekam Medis.xlsx');
+    };
+
     useEffect(() => {
         getPayment()
         setRefresh(false)
+        getPasien()
     }, [refresh])
 
   return (
@@ -136,9 +191,11 @@ export default function Payment() {
                 </div>
             }
         />
-        <div className='min-h-screen bg-[#F2F2F2]'>
+        <div className='min-h-screen bg-[#F2F2F2] overflow-auto'>
             <div className='flex w-full'>
-                <Sidebar />
+                <div className='w-fit'>
+                    <Sidebar />
+                </div>
                 <div className='w-full p-10 '>
                     <div className='space-y-4'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
@@ -158,6 +215,9 @@ export default function Payment() {
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
                                         <h1 className='text-black text-xs font-semibold'>Pelayanan</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Obat</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
@@ -179,6 +239,9 @@ export default function Payment() {
                                         </div>
                                         <div className='min-w-[180px] max-w-[180px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.service ? item.service : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[180px] max-w-[180px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? item.obat : '-'}</h1>
                                         </div>
                                         <div className='min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
@@ -226,8 +289,9 @@ export default function Payment() {
                                 <h1 className='font-semibold mb-2'>Pilih Pasien</h1>
                                 <select value={status} onChange={(e) => setStatus(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
                                     <option value="">Pilih Pasien...</option>
-                                    <option value="0">Belum Lunas</option>
-                                    <option value="1">Lunas</option>
+                                    {Object.values(dataPasien).map((item, idx) => (
+                                        <option value={item.id}>{item.fullname}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className="flex flex-col space-y-4">
