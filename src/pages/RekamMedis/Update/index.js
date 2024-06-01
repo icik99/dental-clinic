@@ -89,10 +89,10 @@ export default function UpdateRekamMedis() {
                             </div>
 
                             <div className='space-x-5 pt-7'>
-                                <button onClick={() => navigate(-1, )} className='py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg'>
+                                <button onClick={() => navigate(-1, )} className='py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg'>
                                     Cancel
                                 </button>
-                                <button className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
+                                <button className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
                                     Create
                                 </button>
                             </div>

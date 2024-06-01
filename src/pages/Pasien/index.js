@@ -171,9 +171,9 @@ export default function Pasien() {
                     </div>
                     <div className='w-full p-10 '>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pasien</h1>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Pasien</h1>
                             <div className='flex items-center justify-between'>
-                                <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Pasien</Link>
+                                <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-purple-700 text-white'>New Pasien</Link>
                                 <div className='relative'>
                                     <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
                                     <input onChange={handleSearchName} placeholder='Search by NIK or No. Rm Pasien...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
@@ -203,17 +203,17 @@ export default function Pasien() {
                                 {Object.values(dataPasien).map((item, idx) =>(
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600] line-clamp-1'>{item.number_regristation? item.number_regristation : '-'}</h1>
+                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.number_regristation? item.number_regristation : '-'}</h1>
                                         </div>
                                         <div className='min-w-[150px] max-w-[150px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600] line-clamp-1'>{item.nik? item.nik : '-'}</h1>
+                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik? item.nik : '-'}</h1>
                                         </div>
                                         <div className='min-w-[200px] max-w-[200px]'>
                                         {localStorage.getItem('role') === 'Petugas Pendaftaran' ? (
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1 '>{item.fullname}</h1>
                                             
                                         ) : (
-                                            <button onClick={() => navigate('/rekam-medis', {state: {idPasien: item.id, namaPasien: item.fullname}})} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-blue-700'>{item.fullname}</button>
+                                            <button onClick={() => navigate('/rekam-medis', {state: {idPasien: item.id, namaPasien: item.fullname}})} className='text-[#737373] text-xs font-[600] line-clamp-1 underline hover:text-purple-700'>{item.fullname}</button>
                                         )}
                                         </div>
                                         <div className='min-w-[100px] max-w-[100px]'>
@@ -223,9 +223,9 @@ export default function Pasien() {
                                             <h1 className='text-[#737373]  text-xs font-semibold line truncate'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium repudiandae aliquam debitis reiciendis ad illum delectus veritatis exercitationem iste laborum modi fugiat, ullam ea error molestias adipisci obcaecati eligendi impedit!</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
-                                            <button onClick={() => openDetailPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Detail</button>
-                                            <button onClick={() => navigate('update', {state: {idPasien: item.id}})}  className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
-                                            <button onClick={() => actionHapusPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
+                                            <button onClick={() => openDetailPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Detail</button>
+                                            <button onClick={() => navigate('update', {state: {idPasien: item.id}})}  className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Edit</button>
+                                            <button onClick={() => actionHapusPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Hapus</button>
                                         </div>
                                     </div>
                                 ))}

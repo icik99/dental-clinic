@@ -16,6 +16,7 @@ import UpdatePasien from './pages/Pasien/Update';
 import Register from './pages/Register';
 import CobaOdontogram from './pages/CobaOdontogram';
 import KartuIuran from './pages/Payment/KartuIuran';
+import CetakRekamMedis from './pages/RekamMedis/Cetak';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route name='Invoice' path="/payment/invoice" element={<Invoice/>}/>
         <Route name='Kartu Iuran' path="/payment/kartu-iuran" element={<KartuIuran/>}/>
         <Route name='Rekam Medis' path="/rekam-medis" element={<RekamMedis/>}/>
+        <Route name='Cetak Rekam Medis' path="/rekam-medis/cetak" element={<CetakRekamMedis/>}/>
         <Route name='Create Rekam Medis' path="/rekam-medis/create" element={<CreateRekamMedis/>}/>
         <Route name='Update Rekam Medis' path="/rekam-medis/update" element={<UpdateRekamMedis/>}/>
         {/* <Route name='Coba Odontogram' path="/cobaOdontogram" element={<CobaOdontogram/>}/> */}

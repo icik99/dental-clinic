@@ -10,7 +10,7 @@ export default function Invoice() {
 
         const options = {
             margin: [10, 10, 10, 10], // margin: top, right, bottom, left (in mm)
-            filename: 'invoice.pdf',
+            filename: `Invoice ${dataInvoice.fullname} - ${dataInvoice.createdAt} .pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -54,17 +54,21 @@ export default function Invoice() {
             </div>
             <div  className='m-10 p-5 border-4 rounded-xl h-full'>
                 <div id='pdf-content'>
-                    <div className='flex items-center justify-between'>
-                        <div>
-                            <h1 className='text-4xl'>Invoice</h1>
-                            <h1 className='text-4xl font-semibold'>Sinar Akbar Dental Clinic</h1>
+                    <div className='flex items-center justify-center gap-10 border-b-2 border-purple-600 pb-5'>
+                        <img className='w-50 h-32' src={Logo} alt="Logo" />
+                        <div className='space-y-1'>
+                            <h1 className='text-center text-4xl font-semibold mb-2'>Sinar Akbar Dental Clinic</h1>
+                            <h1 className='text-center text-base font-semibold'>Jl. Watu Miring RT 3 RW 1, Desa Kapas</h1>
+                            <h1 className='text-center text-base font-semibold'>Kecamatan Kapas - Kabupaten Bojonegoro</h1>
+                            <h1 className='text-center text-base font-bold'>Buka Senin - Jumat Pukul 16.00 - 20.00 WIB</h1>
                         </div>
-                        <img className='w-50 h-32' src={Logo} alt="" />
                     </div>
-                    <div className='mt-6'>
-                        <h1>Nama: {dataInvoice?.fullname}</h1>
-                        <h1>Tanggal: {dataInvoice?.createdAt}</h1>
+                    <div className='mt-6 text-lg font-semibold'>
+                        <h1>No Rekam Medis: <span className='font-normal'>{dataInvoice?.noRm}</span></h1>
+                        <h1>Nama: <span className='font-normal'>{dataInvoice?.fullname}</span></h1>
+                        <h1>Tanggal: <span className='font-normal'>{dataInvoice?.createdAt}</span></h1>
                     </div>
+                    <h1 className='font-semibold text-4xl text-center'>INVOICE</h1>
                     <div className='mt-6'>
                         <h1 className='font-semibold text-xl mb-2'>Layanan</h1>
                         <table className='w-full'>

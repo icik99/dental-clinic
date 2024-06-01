@@ -10,7 +10,7 @@ export default function KartuIuran() {
     
         const options = {
             margin: 10,
-            filename: 'kartu Iuran .pdf',
+            filename: `Kartu Iuran ${dataInvoice.fullname} .pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -68,6 +68,7 @@ export default function KartuIuran() {
                         <h1>Nama Pasien: <span className='font-normal'>{dataInvoice?.fullname}</span></h1>
                         <h1>Alamat: <span className='font-normal'>{dataInvoice?.address}</span></h1>
                     </div>
+                    <h1 className='font-semibold text-4xl text-center'>KARTU IURAN / CICILAN</h1>
                     <div>
                         <table className='w-full mt-6'>
                             <thead>

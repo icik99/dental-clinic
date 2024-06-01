@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, onPrevChange, onNex
                 className={currentPage === page ? 'bg-white shadow-sm rounded-[3px] w-[35px] h-[35px] border-2 flex items-center justify-center' : 'bg-white shadow-sm rounded-[3px] w-[35px] h-[35px] border-2 bg-opacity-10 flex items-center justify-center'}
                 onClick={() => onPageChange(page)}
               >
-                  <h1 style={{alignItems: 'center', justifyContent: 'center', display: 'flex'}} className={currentPage === page ? 'text-white text-[14px] bg-blue-700 w-full h-full flex items-center justify-center' : 'text-[#003748] text-[14px]'}>{page}</h1>
+                  <h1 style={{alignItems: 'center', justifyContent: 'center', display: 'flex'}} className={currentPage === page ? 'text-white text-[14px] bg-purple-700 w-full h-full flex items-center justify-center' : 'text-[#003748] text-[14px]'}>{page}</h1>
               </button>
             ))}
             {endPage < totalPages && (

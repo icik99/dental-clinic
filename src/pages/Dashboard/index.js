@@ -105,13 +105,13 @@ const Dashboard = () => {
             <h1 className="font-semibold mb-10 pl-4">Pilih Status Pasien: </h1>
             <button
               onClick={() => navigate("/pasien")}
-              className="rounded-md p-16 border bg-slate-200 text-3xl font-semibold shadow"
+              className="rounded-md p-16 border bg-purple-200 text-3xl font-semibold shadow"
             >
               Pasien Lama
             </button>
             <button
               onClick={() => navigate("/pasien/create")}
-              className="rounded-md p-16 border bg-slate-700 text-3xl font-semibold text-white shadow"
+              className="rounded-md p-16 border bg-purple-700 text-3xl font-semibold text-white shadow"
             >
               Pasien Baru
             </button>
@@ -269,11 +269,10 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className='flex items-center justify-between mt-[20px]'>
-                <h1 className="text-2xl text-slate-black font-medium">   Data Kunjungan Pasien </h1>
+                <h1 className="text-2xl text-purple-black font-medium">   Data Kunjungan Pasien </h1>
                 <div className="flex items-center justify-end gap-10 ">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-3">
-                      <label className="block text-sm font-medium text-gray-700">Start</label>
                       <input
                         type="date"
                         value={startDate}
@@ -282,7 +281,7 @@ const Dashboard = () => {
                       />
                     </div>
                     <div className="flex items-center gap-3">
-                      <label className="block text-sm font-medium text-gray-700">End</label>
+                      <label className="block text-sm font-medium text-gray-700">s/d</label>
                       <input
                         type="date"
                         value={endDate}
@@ -337,7 +336,7 @@ const Dashboard = () => {
                     className="flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t"
                   >
                     <div className="min-w-[100px] max-w-[100px]">
-                      <h1 className="text-[#0B63F8] text-xs font-[600]">
+                      <h1 className="text-purple-800 text-xs font-[600]">
                         {item.number_regristation}
                       </h1>
                     </div>
@@ -358,7 +357,7 @@ const Dashboard = () => {
                     </div>
                     {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
                       <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
-                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]">
+                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
                           Lihat Catatan Perawatan
                         </button>
                       </div>
@@ -366,7 +365,7 @@ const Dashboard = () => {
                     <div className="w-full space-x-2 flex justify-center items-center">
                       <button
                         onClick={() => openDetailRekamMedis(item.id)}
-                        className="w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]"
+                        className="w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]"
                       >Detail
                       </button>
                     </div>

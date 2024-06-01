@@ -23,6 +23,9 @@ export default function Payment() {
     const [totalPages, setTotalPages] = useState('')
     const [nominalBayar, setNominalBayar] = useState('')
     const [dataPasien, setDataPasiem] = useState('')
+    const [pasien, setPasien] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
 
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -55,8 +58,8 @@ export default function Payment() {
 
     const getPayment = async () => {
         try {
-            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage)
-            console.log(response)
+            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage, startDate, endDate, pasien)
+            console.log(response, 'getPayment')
             setCurrentPage(parseInt(response.data.currentPages, 10))
             setTotalPages(response.data.totalPages)
             setDataPayment(response.data.data)
@@ -80,7 +83,7 @@ export default function Payment() {
     }
     const debouncedSearchName = debounce(async(name) => {
         try {
-            const response = await Api.GetPayment(localStorage.getItem('token'), name, currentPage)
+            const response = await Api.GetPayment(localStorage.getItem('token'), name, currentPage, '','','')
             setDataPayment(response.data.data)
             setCurrentPage(response.data.currentPages)
             setTotalPages(response.data.totalPages)
@@ -159,6 +162,10 @@ export default function Payment() {
         setRefresh(false)
         getPasien()
     }, [refresh])
+    
+    useEffect(() => {
+        getPayment()
+    }, [pasien, startDate, endDate])
 
   return (
     <div>
@@ -184,14 +191,14 @@ export default function Payment() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setEditStatus(!editStatus)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={updatePayment} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                        <button onClick={() => setEditStatus(!editStatus)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={updatePayment} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Save</button>
                     </div>
 
                 </div>
             }
         />
-        <div className='min-h-screen bg-[#F2F2F2] overflow-auto'>
+        <div className='min-h-screen bg-[#F2F2F2] overflow-auto scrollbar-hide'>
             <div className='flex w-full'>
                 <div className='w-fit'>
                     <Sidebar />
@@ -199,18 +206,21 @@ export default function Payment() {
                 <div className='w-full p-10 '>
                     <div className='space-y-4'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Pembayaran</h1>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Pembayaran</h1>
                             <div className='relative'>
                                 <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                <input onChange={handleSearchName} placeholder='Search by Name...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                <input onChange={handleSearchName} placeholder='Search by NIK and No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                             </div>
-                            <div className='mt-[44px] overflow-auto scrollbar-hide bg-white'>
+                            <div className='mt-[44px]  bg-white'>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
-                                        <h1 className='text-black text-xs font-semibold'>No Transaksi</h1>
+                                        <h1 className='text-black text-xs font-semibold'>No. RM Pasien</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                        <h1 className='text-black text-xs font-semibold'>NIK</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
@@ -232,9 +242,12 @@ export default function Payment() {
                                 {Object.values(dataPayment).map((item, idx) => (
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.invoice ? item.invoice : '-'}</h1>
+                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[180px] max-w-[180px]'>
+                                        <div className='min-w-[100px] max-w-[100px]'>
+                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
                                         </div>
                                         <div className='min-w-[180px] max-w-[180px]'>
@@ -252,17 +265,17 @@ export default function Payment() {
                                         <div className='w-full space-x-2 flex items-center justify-center'>
                                             {item.status === '0' ? (
                                                 <>
-                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
-                                                    <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-slate-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
-                                                    <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
                                                 </>
                                                 
                                             )}
-                                            <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-slate-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
+                                            <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
                                             
                                         </div>
                                     </div>
@@ -278,16 +291,16 @@ export default function Payment() {
                         </div>
                         </div>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[40px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekapitulasi Biaya Pemeriksaan</h1>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Rekapitulasi Biaya Pemeriksaan</h1>
                             <div className='flex items-center gap-4'>
                                 <h1 className='font-semibold'>Tanggal Pemeriksaan</h1>
-                                <input type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
+                                <input onChange={(e) => setStartDate(e.target.value)} type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
                                 <h1 className='font-semibold'>s/d</h1>
-                                <input type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
+                                <input onChange={(e) => setEndDate(e.target.value)} type='date' className='mt-1 block w-full p-2 rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm' />
                             </div>
                             <div>
                                 <h1 className='font-semibold mb-2'>Pilih Pasien</h1>
-                                <select value={status} onChange={(e) => setStatus(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
+                                <select  onChange={(e) => setPasien(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
                                     <option value="">Pilih Pasien...</option>
                                     {Object.values(dataPasien).map((item, idx) => (
                                         <option value={item.id}>{item.fullname}</option>
@@ -316,7 +329,7 @@ export default function Payment() {
                                 </div>
                                 </div>
                             <div className='space-x-5 pt-7 flex items-center justify-end'>
-                                <button onClick={''} className='py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg'>
+                                <button onClick={''} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
                                     Rekap
                                 </button>
                             </div>

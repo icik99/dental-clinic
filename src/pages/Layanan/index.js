@@ -216,8 +216,8 @@ export default function Layanan() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setAddLayanan(!addLayanan)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={tambahLayanan} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Create</button>
+                        <button onClick={() => setAddLayanan(!addLayanan)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={tambahLayanan} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Create</button>
                     </div>
 
                 </div>
@@ -245,8 +245,8 @@ export default function Layanan() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setAddObat(!addObat)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={tambahObat} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Create</button>
+                        <button onClick={() => setAddObat(!addObat)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={tambahObat} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Create</button>
                     </div>
 
                 </div>
@@ -275,8 +275,8 @@ export default function Layanan() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setEditLayanan(!editLayanan)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={updateLayanan} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                        <button onClick={() => setEditLayanan(!editLayanan)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={updateLayanan} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Save</button>
                     </div>
 
                 </div>
@@ -305,8 +305,8 @@ export default function Layanan() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setEditObat(!editObat)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={updateObat} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                        <button onClick={() => setEditObat(!editObat)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={updateObat} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Save</button>
                     </div>
 
                 </div>
@@ -320,8 +320,8 @@ export default function Layanan() {
                     <div className='w-full p-10'>
                     <div>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Layanan</h1>
-                            <button onClick={() => setAddLayanan(!addLayanan)} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>Tambah Layanan Baru</button>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Layanan</h1>
+                            <button onClick={() => setAddLayanan(!addLayanan)} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-purple-700 text-white'>Tambah Layanan Baru</button>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
@@ -348,9 +348,9 @@ export default function Layanan() {
                                         <div className='min-w-[100px] max-w-[100px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.price}</h1>
                                         </div>
-                                        <div className='w-full space-x-2'>
-                                            <button onClick={() => openEditLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
-                                            <button onClick={() => actionHapusLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
+                                        <div className='w-full flex justify-center space-x-2'>
+                                            <button onClick={() => openEditLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Edit</button>
+                                            <button onClick={() => actionHapusLayanan(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Hapus</button>
                                         </div>
                                     </div>
                                 ))}
@@ -359,8 +359,8 @@ export default function Layanan() {
                     </div>
                     <div className='mt-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Obat</h1>
-                            <button onClick={() => setAddObat(!addObat)} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>Tambah Obat Baru</button>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Obat</h1>
+                            <button onClick={() => setAddObat(!addObat)} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-purple-700 text-white'>Tambah Obat Baru</button>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
@@ -387,9 +387,9 @@ export default function Layanan() {
                                         <div className='min-w-[100px] max-w-[100px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.price}</h1>
                                         </div>
-                                        <div className='w-full space-x-2'>
-                                            <button onClick={() => openEditObat(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Edit</button>
-                                            <button onClick={() => actionHapusObat(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'> Hapus</button>
+                                        <div className='w-full flex justify-center space-x-2'>
+                                            <button onClick={() => openEditObat(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Edit</button>
+                                            <button onClick={() => actionHapusObat(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Hapus</button>
                                         </div>
                                     </div>
                                 ))}

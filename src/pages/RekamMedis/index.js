@@ -307,8 +307,8 @@ export default function RekamMedis() {
                         </div>
                     </div>
                     <div className='ml-[560px] flex items-start justify-end gap-3 w-1/4'>
-                        <button onClick={() => setKoreksiRekamMedis(!koreksiRekamMedis)}  className="py-2 px-5 border rounded-md border-blue-700  w-[100px] text-blue-700 text-lg">Cancel</button>
-                        <button onClick={catatanRekamMedis} className="py-2 px-5 border rounded-md bg-blue-700 w-[100px] text-white text-lg">Save</button>
+                        <button onClick={() => setKoreksiRekamMedis(!koreksiRekamMedis)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Cancel</button>
+                        <button onClick={catatanRekamMedis} className="py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg">Save</button>
                     </div>
 
                 </div>
@@ -326,14 +326,14 @@ export default function RekamMedis() {
                     </div>
                     <div className='w-full p-10'>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
-                            <h1 className='text-2xl text-slate-black font-medium mb-[40px]'>Rekam Medis {params.state? params.state.namaPasien : 'Pasien'}</h1>
+                            <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Rekam Medis {params.state? params.state.namaPasien : 'Pasien'}</h1>
 
                                 {params.state === null ? (
                                     <div className='flex items-center justify-between gap-2'>
                                         <div className='flex items-center justify-end gap-3'>
-                                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Rekam Medis</Link>
+                                            <Link to={'create'} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-purple-700 text-white'>New Rekam Medis</Link>
                                             <button onClick={exportToExcel} className='flex items-center justify-center gap-2 border-2  px-3 py-2 rounded-md shadow-sm font-semibold'>
-                                                <FaFileExport className='text-blue-700 font-extrabold'/>
+                                                <FaFileExport className='text-purple-700 font-extrabold'/>
                                                 <h1 className='text-sm'>Export Data</h1>
                                             </button>
                                         </div>
@@ -344,7 +344,7 @@ export default function RekamMedis() {
 
                                     </div>
                                 ) : (
-                                    <button onClick={() => navigate('create', {state: {idPasien: params.state.idPasien}})} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-blue-700 text-white'>New Record</button>
+                                    <button onClick={() => navigate('create', {state: {idPasien: params.state.idPasien}})} className='px-3 py-2 border rounded-md shadow-sm text-sm bg-purple-700 text-white'>New Record</button>
                                 )}
                             <table className='w-full space-y-[10px] '>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
@@ -375,10 +375,10 @@ export default function RekamMedis() {
                                 {Object.values(dataRekamMedis).map((item, idx) => (
                                     <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                         <div className='min-w-[100px] max-w-[100px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.number_regristation? item.number_regristation : '-' }</h1>
+                                            <h1 className='text-purple-800 text-xs font-[600]'>{item.number_regristation? item.number_regristation : '-' }</h1>
                                         </div>
                                         <div className='min-w-[150px] max-w-[150px]'>
-                                            <h1 className='text-[#0B63F8] text-xs font-[600]'>{item.nik? item.nik : '-' }</h1>
+                                            <h1 className='text-purple-800 text-xs font-[600]'>{item.nik? item.nik : '-' }</h1>
                                         </div>
                                         <div className='min-w-[110px] max-w-[110px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.date? moment(item.date).format('DD MMMM YYYY') : '-' }</h1>
@@ -400,9 +400,9 @@ export default function RekamMedis() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.description? item.description : '-' }</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
-                                            <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 text-white rounded-[9px]'> Detail </button>
-                                            <button onClick={() => actionDeleteRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Hapus</button>
-                                            <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-slate-600 rounded-[9px] text-white'>Koreksi</button>
+                                            <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]'> Detail </button>
+                                            <button onClick={() => navigate('cetak', {state: {idRekamMedis: item.id}})} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Cetak</button>
+                                            <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Koreksi</button>
                                         </div>
                                     </div>
                                 ))}

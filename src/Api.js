@@ -169,8 +169,8 @@ class Api {
 
     // Payment
 
-    static GetPayment(token, keyword, page, startDate, endDate) {
-        let path = `invoice?search=${keyword}&page=${page}`;
+    static GetPayment(token, search, page, startDate, endDate, patientId) {
+        let path = `invoice?search=${search}&page=${page}&startDate=${startDate}&endDate=${endDate}&patientId=${patientId}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -212,7 +212,7 @@ class Api {
     }
 
     static GetLayanan(token, keyword) {
-        let path = `medicine`;
+        let path = `layanan`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
