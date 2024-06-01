@@ -14,6 +14,7 @@ import { FaFileExport } from "react-icons/fa"
 import { debounce } from 'lodash';
 import Pagination from '../../components/Pagination';
 import { BiSearch } from 'react-icons/bi';
+import Odontogram from '../../components/NewOdontogram/odontogram';
 
 export default function RekamMedis() {
     const [dataExport, setDataExport] = useState('')
@@ -24,7 +25,7 @@ export default function RekamMedis() {
     const [koreksiRekamMedis, setKoreksiRekamMedis] = useState(false)
     const [dataServiceRekamMedis, setDataServiceRekamMedis] = useState('')
     const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState('')
-    const [dataOdontogram, setDataOdontogram] = useState([])
+    const [dataOdontogram, setDataOdontogram] = useState('')
     const [idRekamMedis, setIdRekamMedis] = useState('')
     const [refresh, setRefresh] = useState('')
     const [revisiRekamMedis, setRevisiRekamMedis] = useState('')
@@ -139,9 +140,10 @@ export default function RekamMedis() {
         setDetailRekamMedis(!detailRekamMedis)
         try {
             const response = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
+            console.log('response by id',response)
             setDataDetailRekamMedis(response.data.data)
             setDataOdontogram(response.data.data.odontogram)
-
+            console.log(dataOdontogram, 'dataOdontogram')
         } catch (error) {
             console.log(error)
         }
@@ -239,8 +241,10 @@ export default function RekamMedis() {
                             </div>
                         </div>
                         <div>
-                            <h1 className='mt-5 text-lg'>Keterangan Odontogram</h1> 
+                            <h1 className='mt-5 text-lg'>Gambar Odontogram</h1> 
                             <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
+                            <h1 className='mt-5 text-lg'>Keterangan:</h1> 
+
                             <div className='mt-5'>
                                     <table>
                                         <thead>
@@ -251,7 +255,7 @@ export default function RekamMedis() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataOdontogram.map((item, idx) => (
+                                            {Object.values(dataOdontogram).map((item, idx) => (
                                                 <tr key={idx}>
                                                     <td className='border p-2'>{idx+1}</td>
                                                     <td className='border p-2'>{item.nomorGigi}</td>

@@ -22,7 +22,7 @@ export default function Register() {
             toast.success('Berhasil Create Akun, Silahkan Login untuk Masuk ke Dashboard!')
             navigate('/')
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data.message)
         }
     }
     return (
@@ -41,6 +41,7 @@ export default function Register() {
                                 <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                                 <select  onChange={(e) => setRole(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Username...">
                                     <option value="">Select Role...</option>
+                                    <option value="admin">Admin</option>
                                     <option value="Petugas Pendaftaran">Petugas Pendaftaran</option>
                                     <option value="Petugas Rekam Medis">Petugas Rekam Medis</option>
                                     <option value="Petugas Kasir">Petugas Kasir</option>

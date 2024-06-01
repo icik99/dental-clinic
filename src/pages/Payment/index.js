@@ -122,18 +122,18 @@ export default function Payment() {
         const dataExport = dataPayment;
 
         // Define custom headers for each table
-        const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan'];
+        const Headers = ['No Rm Pasien', 'Invoice ID', 'NIK', 'Nama Pasien', 'Tanggal', 'Pelayanan', 'Obat', 'Total Pembayaran'];
 
         // Create modified data arrays with custom headers
-        const rekamMedis = dataPayment.map(({ fullname, date, gender, phone, diagnosis, therapy, description, hasil}) => ({
-            'Employee Name': fullname ? fullname : '-',
-            'Date': moment(date).format('DD MMMM YYYY'),
-            'Jenis Kelamin': gender ? gender : '-',
-            'Nomor Telepon': phone? phone : '-',
-            'Diagnosis': diagnosis? diagnosis : '-',
-            'Terapi': therapy? therapy : '-',
-            'Keterangan': description? description : '-',
-            'Layanan': hasil? hasil : '-',
+        const rekamMedis = dataPayment.map(({noRm, invoice, nik,  fullname, createdAt, service, obat, total_payment}) => ({
+            'No Rm Pasien': noRm ? noRm : '-',
+            'NIK': nik ? nik : '-',
+            'Invoice ID': invoice ? invoice : '-',
+            'Nama Pasien': fullname ? fullname : '-',
+            'Tanggal': createdAt? createdAt : '-',
+            'Pelayanan': service ? service : '-',
+            'Obat': obat? obat : '-',
+            'Total Pembayaran': total_payment? total_payment : '-',
         }));
 
         // Create a new worksheet for each table
@@ -143,7 +143,7 @@ export default function Payment() {
         const workbook = XLSX.utils.book_new();
 
         // Add the worksheets to the workbook
-        XLSX.utils.book_append_sheet(workbook, worksheetGrade, 'Rekam Medis');
+        XLSX.utils.book_append_sheet(workbook, worksheetGrade, 'Rekap Pembayaran');
         // Generate Excel file buffer
         const excelBuffer = XLSX.write(workbook, {
             bookType: 'xlsx',
@@ -154,7 +154,7 @@ export default function Payment() {
         const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
         // Save the Excel file using FileSaver.js
-        saveAs(excelBlob, 'Rekam Medis.xlsx');
+        saveAs(excelBlob, `Rekap Pembayaran.xlsx`);
     };
 
     useEffect(() => {
@@ -211,7 +211,7 @@ export default function Payment() {
                                 <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
                                 <input onChange={handleSearchName} placeholder='Search by NIK and No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                             </div>
-                            <div className='mt-[44px]  bg-white'>
+                            <div className='mt-[44px] bg-white'>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
@@ -329,9 +329,16 @@ export default function Payment() {
                                 </div>
                                 </div>
                             <div className='space-x-5 pt-7 flex items-center justify-end'>
-                                <button onClick={''} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
-                                    Rekap
-                                </button>
+                                {selectedOption === 'excel' ? (
+                                    <button onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
+                                        Rekap
+                                    </button>
+
+                                ) : (
+                                    <button disabled onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-300 w-[100px] text-white text-lg cursor-not-allowed'>
+                                        Rekap
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

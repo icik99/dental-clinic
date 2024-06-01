@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
-import OdontogramOld from '../../../components/NewOdontogram/odontogram';
+import Odontogram from '../../../components/NewOdontogram/odontogram';
 
 export default function CreateRekamMedis() {
     const [dataOdontogram, setDataOdontogram] = useState([]);
@@ -190,7 +190,7 @@ export default function CreateRekamMedis() {
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
                                 {/* <Odontogram/> */}
                                 <div>
-                                <OdontogramOld
+                                <Odontogram
                                     tooth={(labelT, zoneT, idT) => {
                                         setDataOdontogram((oldArray) => [
                                         ...oldArray,
@@ -208,7 +208,7 @@ export default function CreateRekamMedis() {
                                             })
                                         );
                                     }}
-                                    />
+                                />
                                 </div>
                             </div>
 
