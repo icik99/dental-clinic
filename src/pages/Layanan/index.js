@@ -98,8 +98,8 @@ export default function Layanan() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(localStorage.getItem('token'))
-            console.log('data', response.data)
+            const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '')
+            console.log('data Layanan', response.data)
             setDataLayanan(response.data.data)
         } catch (error) {
             console.log(error)
@@ -108,8 +108,8 @@ export default function Layanan() {
 
     const getObat = async () => {
         try {
-            const response = await Api.GetObat(localStorage.getItem('token'))
-            console.log('data', response.data)
+            const response = await Api.GetObat(localStorage.getItem('token'), '', '', '')
+            console.log('data Obat', response.data)
             setDataObat(response.data.data)
         } catch (error) {
             console.log(error)

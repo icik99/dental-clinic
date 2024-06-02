@@ -106,7 +106,8 @@ export default function Payment() {
     const updatePayment = async () => {
         try {
             const data = {
-                status: status
+                status: status,
+                bayar: nominalBayar
             }
             const response = await Api.UpdatePayment(localStorage.getItem('token'), data, idPayment)
             setEditStatus(!editStatus)
@@ -114,6 +115,7 @@ export default function Payment() {
             toast.success('Pembayaran Berhasil di Update')
         } catch (error) {
             console.log(error)   
+            toast.error(error.response.data.message)
         }
     }
 
@@ -125,14 +127,14 @@ export default function Payment() {
         const Headers = ['No Rm Pasien', 'Invoice ID', 'NIK', 'Nama Pasien', 'Tanggal', 'Pelayanan', 'Obat', 'Total Pembayaran'];
 
         // Create modified data arrays with custom headers
-        const rekamMedis = dataPayment.map(({noRm, invoice, nik,  fullname, createdAt, service, obat, total_payment}) => ({
+        const rekamMedis = dataPayment.map(({noRm, invoice, nik,  fullname, createdAt, layanan, obat,  total_payment}) => ({
             'No Rm Pasien': noRm ? noRm : '-',
             'NIK': nik ? nik : '-',
             'Invoice ID': invoice ? invoice : '-',
             'Nama Pasien': fullname ? fullname : '-',
             'Tanggal': createdAt? createdAt : '-',
-            'Pelayanan': service ? service : '-',
-            'Obat': obat? obat : '-',
+            'Pelayanan': layanan ? formatServiceNames(layanan) : '-',
+            'Obat': obat? formatObatNames(obat) : '-',
             'Total Pembayaran': total_payment? total_payment : '-',
         }));
 
@@ -157,6 +159,20 @@ export default function Payment() {
         saveAs(excelBlob, `Rekap Pembayaran.xlsx`);
     };
 
+    const formatServiceNames = (param) => {
+        return param
+            .filter(service => service.type === 'service')
+            .map(service => service.name)
+            .join(', ');
+    };
+    
+    const formatObatNames = (param) => {
+        return param
+            .filter(service => service.type === 'obat')
+            .map(service => service.name)
+            .join(', ');
+    };
+
     useEffect(() => {
         getPayment()
         setRefresh(false)
@@ -171,7 +187,7 @@ export default function Payment() {
     <div>
         <Modal 
             activeModal={editStatus}
-            title={'Detail Rekam Medis'}
+            title={'Edit Status Pembayaran'}
             buttonClose={ () => setEditStatus(!editStatus)}
             width={'832px'}
             content= {
@@ -179,11 +195,7 @@ export default function Payment() {
                     <div className='bg-[#F8F8F8] rounded-[15px] px-[19px] py-[31px] w-[773px] text-[#737373] text-[14px] font-semibold space-y-3'>
                         <div className='flex items-center'>
                             <h1 className='w-1/2'>Status Pembayaran</h1>
-                            <select value={status} onChange={(e) => setStatus(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
-                                <option value="">Pilih Status Pembayaran</option>
-                                <option value="0">Belum Lunas</option>
-                                <option value="1">Lunas</option>
-                            </select>
+                            <input value={status === '0' ? 'Belum Lunas' : 'Lunas'} onChange={(e) => setStatus(e.target.value)} readOnly  className='px-4 py-2 border rounded-md  w-full cursor-not-allowed bg-slate-200' />
                         </div>
                         <div className='flex items-center'>
                             <h1 className='w-1/2'>Nominal Bayar</h1>
@@ -230,6 +242,9 @@ export default function Payment() {
                                         <h1 className='text-black text-xs font-semibold'>Obat</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Sisa Pembayaran</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
@@ -251,26 +266,29 @@ export default function Payment() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
                                         </div>
                                         <div className='min-w-[180px] max-w-[180px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.service ? item.service : '-'}</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan ? formatServiceNames(item.layanan) : '-'}</h1>
                                         </div>
                                         <div className='min-w-[180px] max-w-[180px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? item.obat : '-'}</h1>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? formatObatNames(item.obat) : '-'}</h1>
+                                        </div>
+                                        <div className='min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.sisa_pembayaran ? item.sisa_pembayaran : '0'}</h1>
                                         </div>
                                         <div className='min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
                                         </div>
                                         <div className='min-w-[120px] max-w-[120px]'>
-                                            <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Bayar' : 'Sudah Bayar'}</h1>
+                                            <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
                                             {item.status === '0' ? (
                                                 <>
-                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
                                                     <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Status </button>
+                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
                                                     <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
                                                 </>
                                                 

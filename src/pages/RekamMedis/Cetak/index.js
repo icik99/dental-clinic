@@ -78,13 +78,15 @@ export default function CetakRekaMedis() {
                         <div className="font-semibold">Deskripsi</div>
                         <div className="col-span-2">: {medicalRecord?.description}</div>
                         <div className="font-semibold">Layanan</div>
-                        <div className="col-span-2">: {medicalRecord.service? formatServiceNames(medicalRecord.service) : '-'}</div>
+                        <div className="col-span-2">: {medicalRecord.layanan? formatServiceNames(medicalRecord.layanan) : '-'}</div>
+                        <div className="font-semibold">Obat</div>
+                        <div className="col-span-2">: {medicalRecord.obat? formatServiceNames(medicalRecord.obat) : '-'}</div>
                         <div className="font-semibold">Terapi</div>
                         <div className="col-span-2">: {medicalRecord?.therapy}</div>
                         <div className="font-semibold">Riwayat Penyakit</div>
                         <div className="col-span-2">: {medicalRecord?.history_illness}</div>
                         <div className="font-semibold">Catatan Tambahan</div>
-                        <div className="col-span-2">: {medicalRecord?.koreksi}</div>
+                        <div className="col-span-2">: {medicalRecord.koreksi ? medicalRecord.koreksi : '-'}</div>
                     </div>
                     <div className='mt-20'>
                         <h1 className='text-md font-medium text-end mb-16'>Bojonegoro, <span>{medicalRecord?.date}</span></h1>

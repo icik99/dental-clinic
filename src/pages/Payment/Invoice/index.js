@@ -26,12 +26,14 @@ export default function Invoice() {
     const param = useLocation();
     const [dataInvoice, setDataInvoice] = useState('');
     const [dataPurchased, setDataPurchased] = useState('');
+    const [dataObatPurchased, setDataObatPurchased] = useState('');
 
     const getInvoice = async () => {
         try {
             const response = await Api.GetPaymentById(localStorage.getItem('token'), param.state.idInvoice);
             setDataInvoice(response.data.data[0]);
-            setDataPurchased(response.data.data[0].purchased);
+            setDataPurchased(response.data.data[0].layanan);
+            setDataObatPurchased(response.data.data[0].obat);
             console.log('data', response);
         } catch (error) {
             console.log(error);
@@ -101,7 +103,7 @@ export default function Invoice() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Object.values(dataPurchased).map((item, idx) => (
+                                {Object.values(dataObatPurchased).map((item, idx) => (
                                     <tr key={idx}>
                                         <td className='border p-2'>{idx + 1}.</td>
                                         <td className='border p-2'>{item?.name}</td>

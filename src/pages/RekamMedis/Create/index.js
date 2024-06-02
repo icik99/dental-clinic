@@ -49,8 +49,8 @@ export default function CreateRekamMedis() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(localStorage.getItem('token'))
-            console.log(response.data.data)
+            const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '')
+            console.log('Data Layanan',response.data.data)
             setDataLayanan(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
@@ -59,8 +59,8 @@ export default function CreateRekamMedis() {
 
     const getObat = async () => {
         try {
-            const response = await Api.GetObat(localStorage.getItem('token'))
-            console.log(response.data.data)
+            const response = await Api.GetObat(localStorage.getItem('token'), '','','')
+            console.log('Data Obat',response.data.data)
             setDataObat(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)

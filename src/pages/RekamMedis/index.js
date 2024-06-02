@@ -24,12 +24,13 @@ export default function RekamMedis() {
     const [dataRekamMedis, setDataRekamMedis] = useState('')
     const [koreksiRekamMedis, setKoreksiRekamMedis] = useState(false)
     const [dataServiceRekamMedis, setDataServiceRekamMedis] = useState('')
+    const [dataObatRekamMedis, setDataObatRekamMedis] = useState('')
     const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState('')
     const [dataOdontogram, setDataOdontogram] = useState('')
     const [idRekamMedis, setIdRekamMedis] = useState('')
     const [refresh, setRefresh] = useState('')
     const [revisiRekamMedis, setRevisiRekamMedis] = useState('')
-    const navigate = useNavigate()
+    const navigate = useNavigate()  
 
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState('')
@@ -65,12 +66,10 @@ export default function RekamMedis() {
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
                 setDataServiceRekamMedis(response.data.data.service)
-                console.log(dataRekamMedis, 'dataRekam Medis')
             } else {
                 const response = await Api.GetRekamMedisByPatient(localStorage.getItem('token'), params.state.idPasien)
                 setDataRekamMedis(response.data.data)
-                setDataServiceRekamMedis(response.data.data.service)
-                console.log(dataRekamMedis, 'dataRekam Medis')
+                console.log('Get Rekam Medis:', response.data.data)
             }
         } catch (error) {
             console.log(error)
@@ -195,8 +194,19 @@ export default function RekamMedis() {
     }
 
     const formatServiceNames = (param) => {
-        return param.map(service => service.name).join(', ');
-      };
+        return param
+            .filter(service => service.type === 'service')
+            .map(service => service.name)
+            .join(', ');
+    };
+    
+    const formatObatNames = (param) => {
+        return param
+            .filter(service => service.type === 'obat')
+            .map(service => service.name)
+            .join(', ');
+    };
+    
 
     useEffect(() => {
         getRekamMedis()
@@ -235,8 +245,8 @@ export default function RekamMedis() {
                                 <h1>: {dataDetailRekamMedis.diagnosis ? dataDetailRekamMedis.diagnosis : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.therapy ? dataDetailRekamMedis.therapy : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.description ? dataDetailRekamMedis.description : '-'}</h1>
-                                <h1>: {dataDetailRekamMedis.service ? formatServiceNames(dataDetailRekamMedis.service) : '-'}</h1>
-                                <h1>: {dataDetailRekamMedis.obat ? formatServiceNames(dataDetailRekamMedis.obat) : '-'}</h1>
+                                <h1>: {dataDetailRekamMedis.layanan ? formatServiceNames(dataDetailRekamMedis.layanan) : '-'}</h1>
+                                <h1>: {dataDetailRekamMedis.obat ? formatObatNames(dataDetailRekamMedis.obat) : '-'}</h1>
                                 <h1>: {dataDetailRekamMedis.koreksi ? dataDetailRekamMedis.koreksi : '-'}</h1>
                             </div>
                         </div>
@@ -343,7 +353,7 @@ export default function RekamMedis() {
                                         </div>
                                         <div className='relative'>
                                             <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
-                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Telephone...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                            <input onChange={handleSearchName} placeholder='Search by NIK or No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                                         </div>
 
                                     </div>
@@ -394,10 +404,9 @@ export default function RekamMedis() {
                                         )}
                                         <div className='min-w-[200px] max-w-[200px]'>
                                             {params.state === null ? (
-                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.hasil? item.hasil : '-'}</h1>
-
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan? item.layanan : '-'}</h1>
                                             ) : (
-                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{formatServiceNames(item.service)}</h1>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.service? formatServiceNames(item.service) : '-'}</h1>
                                             )}
                                         </div>
                                         <div className='min-w-[150px] max-w-[150px]'>
