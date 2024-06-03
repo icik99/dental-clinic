@@ -43,6 +43,16 @@ class Api {
             }
         })
     }
+
+    static GetListKunjungan(token) {
+        let path = `list-kunjungan`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
     // Pasien
     static GetPasien(token, keyword, page) {
         let path = `patient?search=${keyword}&page=${page}`;
@@ -201,7 +211,7 @@ class Api {
     }
 
     static CreateLayanan(token, data) {
-        let path = `medicine`;
+        let path = `layanan`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'POST',
             data,
@@ -211,8 +221,8 @@ class Api {
         })
     }
 
-    static GetLayanan(token, keyword) {
-        let path = `layanan`;
+    static GetLayanan(token, page, keyword, sorting) {
+        let path = `layanan?page=${page}&search${keyword}=&sorting=${sorting}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -222,7 +232,7 @@ class Api {
     }
 
     static GetLayananById(token, id) {
-        let path = `medicine/${id}`;
+        let path = `layanan/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -232,7 +242,7 @@ class Api {
     }
 
     static UpdateLayanan(token, data, id) {
-        let path = `medicine/${id}`;
+        let path = `layanan/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'PUT',
             data,
@@ -243,7 +253,7 @@ class Api {
     }
 
     static DeleteLayanan(token, id) {
-        let path = `medicine/${id}`;
+        let path = `layanan/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'DELETE',
             headers: {
@@ -252,8 +262,8 @@ class Api {
         })
     }
 
-    static GetObat(token, keyword) {
-        let path = `medicine`;
+    static GetObat(token, page, keyword, sorting) {
+        let path = `obat?page=${page}&search${keyword}=&sorting=${sorting}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -262,8 +272,19 @@ class Api {
         })
     }
 
+    static CreateObat(token, data) {
+        let path = `obat`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'POST',
+            data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+    }
+
     static GetObatById(token, id) {
-        let path = `medicine/${id}`;
+        let path = `obat/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'GET',
             headers: {
@@ -273,7 +294,7 @@ class Api {
     }
 
     static UpdateObat(token, data, id) {
-        let path = `medicine/${id}`;
+        let path = `obat/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'PUT',
             data,
@@ -284,7 +305,7 @@ class Api {
     }
 
     static DeleteObat(token, id) {
-        let path = `medicine/${id}`;
+        let path = `obat/${id}`;
         return request(`${this.urlAPI()}${path}`, {
             method: 'DELETE',
             headers: {

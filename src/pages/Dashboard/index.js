@@ -28,8 +28,8 @@ const Dashboard = () => {
 
   const getRekamMedis = async () => {
     try {
-      const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
-      console.log(response)
+      const response = await Api.GetListKunjungan(localStorage.getItem("token"), '', '');
+      console.log('Data List Kunjungan',response)
       setDataRekamMedis(response.data.data);
       aggregatePatientData(response.data.data);
     } catch (error) {
@@ -65,7 +65,6 @@ const Dashboard = () => {
     setDetailRekamMedis(!detailRekamMedis);
     try {
       const response = await Api.GetRekamMedisById(localStorage.getItem("token"),id);
-      console.log('detail', response)
       setDataDetailRekamMedis(response.data.data);
       setDataOdontogram(response.data.data.odontogram)
     } catch (error) {
@@ -301,7 +300,7 @@ const Dashboard = () => {
                 <div className="flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]">
                   <div className="flex items-center gap-[15px] min-w-[100px] max-w-[100px]">
                     <h1 className="text-black text-xs font-semibold">
-                      No Registrasi
+                      No. Rekam Medis
                     </h1>
                   </div>
                   <div className="flex items-center gap-[15px] min-w-[150px] max-w-[150px]">
@@ -312,11 +311,6 @@ const Dashboard = () => {
                   <div className="flex items-center gap-[15px] min-w-[220px] max-w-[220px]">
                     <h1 className="text-black text-xs font-semibold">
                       Nama Pasien
-                    </h1>
-                  </div>
-                  <div className="flex items-center gap-[15px] min-w-[300px] max-w-[300px]">
-                    <h1 className="text-black text-xs font-semibold">
-                      Layanan
                     </h1>
                   </div>
                   {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
@@ -337,7 +331,7 @@ const Dashboard = () => {
                   >
                     <div className="min-w-[100px] max-w-[100px]">
                       <h1 className="text-purple-800 text-xs font-[600]">
-                        {item.number_regristation}
+                        {item.noRM}
                       </h1>
                     </div>
                     <div className="min-w-[150px] max-w-[150px]">
@@ -350,21 +344,16 @@ const Dashboard = () => {
                         {item.fullname}
                       </h1>
                     </div>
-                    <div className="min-w-[300px] max-w-[300px]">
-                      <h1 className="text-[#737373] text-xs font-[600] line-clamp-1">
-                        {item.hasil}
-                      </h1>
-                    </div>
                     {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
                       <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
-                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.id_patient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
+                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.idPatient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
                           Lihat Catatan Perawatan
                         </button>
                       </div>
                     )}
                     <div className="w-full space-x-2 flex justify-center items-center">
                       <button
-                        onClick={() => openDetailRekamMedis(item.id)}
+                        onClick={() => openDetailRekamMedis(item.idRM)}
                         className="w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]"
                       >Detail
                       </button>
