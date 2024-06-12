@@ -13,7 +13,7 @@ export default function Invoice() {
             filename: `Invoice ${dataInvoice.fullname} - ${dataInvoice.createdAt} .pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
         };
 
         html2pdf().from(element).set(options).save();
@@ -54,68 +54,84 @@ export default function Invoice() {
                     Klik Untuk Cetak Invoice
                 </button> */}
             </div>
-            <div  className='m-10 p-5 border-4 rounded-xl h-full'>
-                <div id='pdf-content'>
-                    <div className='flex items-center justify-center gap-10 border-b-2 border-purple-600 pb-5'>
-                        <img className='w-50 h-32' src={Logo} alt="Logo" />
-                        <div className='space-y-1'>
-                            <h1 className='text-center text-4xl font-semibold mb-2'>Sinar Akbar Dental Clinic</h1>
-                            <h1 className='text-center text-base font-semibold'>Jl. Watu Miring RT 3 RW 1, Desa Kapas</h1>
-                            <h1 className='text-center text-base font-semibold'>Kecamatan Kapas - Kabupaten Bojonegoro</h1>
-                            <h1 className='text-center text-base font-bold'>Buka Senin - Jumat Pukul 16.00 - 20.00 WIB</h1>
+            <div  className='m-10 p-5 border-4 rounded-xl '>
+                <div id='pdf-content' className='pb-10'>
+                    <div className='flex items-start justify-between gap-10 border-b-2 border-purple-600 pb-5'>
+                        <div className='flex'>
+                            <div className='flex justify-center'>
+                                <img className='w-24 h-2w-24' src={Logo} alt="Logo" />
+                            </div>
+                            <div>
+                                <div className='space-y-1'>
+                                    <h1 className='text-center text-2xl font-semibold mb-2'>Sinar Akbar Dental Clinic</h1>
+                                    <h1 className='text-center text-sm font-semibold'>Jl. Watu Miring RT 3 RW 1, Desa Kapas</h1>
+                                    <h1 className='text-center text-sm font-semibold'>Kecamatan Kapas - Kabupaten Bojonegoro</h1>
+                                    <h1 className='text-center text-sm font-bold'>Buka Senin - Jumat Pukul 16.00 - 20.00 WIB</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='text-sm'>
+                            <h1>Petugas: <span className='font-normal'>{localStorage.getItem('role')}</span></h1>
+                            <h1>No Transaksi: <span className='font-normal'>{dataInvoice?.invoice}</span></h1>
+                            <h1>No RM: <span className='font-normal'>{dataInvoice?.noRm}</span></h1>
+                            <h1>Nama: <span className='font-normal'>{dataInvoice?.fullname}</span></h1>
+                            <h1>Tanggal: <span className='font-normal'>{dataInvoice?.createdAt}</span></h1>
+                            <h1>Alamat: <span className='font-normal'>{dataInvoice?.address}</span></h1>
                         </div>
                     </div>
-                    <div className='mt-6 text-lg font-semibold'>
-                        <h1>No Rekam Medis: <span className='font-normal'>{dataInvoice?.noRm}</span></h1>
-                        <h1>Nama: <span className='font-normal'>{dataInvoice?.fullname}</span></h1>
-                        <h1>Tanggal: <span className='font-normal'>{dataInvoice?.createdAt}</span></h1>
-                    </div>
-                    <h1 className='font-semibold text-4xl text-center'>INVOICE</h1>
-                    <div className='mt-6'>
-                        <h1 className='font-semibold text-xl mb-2'>Layanan</h1>
-                        <table className='w-full'>
-                            <thead>
-                                <tr>
-                                    <th className='border p-2'>No.</th>
-                                    <th className='border p-2'>Deskripsi</th>
-                                    <th className='border p-2'>Harga</th>
+                    <div className='mt-6 border-purple-600 border-b-2 pb-10'>
+                    <table className='w-full'>
+                        <thead>
+                            <tr>
+                                <th className='border p-2'>No.</th>
+                                <th className='border p-2'>Item Layanan & Obat</th>
+                                <th className='border p-2'>Harga Satuan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.values([...dataPurchased, ...dataObatPurchased]).map((item, idx) => (
+                                <tr key={idx}>
+                                    <td className='border p-2'>{idx + 1}.</td>
+                                    <td className='border p-2'>{item?.name}</td>
+                                    <td className='border p-2'>Rp. {item?.price}</td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {Object.values(dataPurchased).map((item, idx) => (
-                                    <tr key={idx}>
-                                        <td className='border p-2'>{idx + 1}.</td>
-                                        <td className='border p-2'>{item?.name}</td>
-                                        <td className='border p-2'>Rp. {item?.price}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                            ))}
+                        </tbody>
+                    </table>
+
                     </div>
-                    <div className='mt-6'>
-                        <h1 className='font-semibold text-xl mb-2'>Obat</h1>
-                        <table className='w-full'>
-                            <thead>
-                                <tr>
-                                    <th className='border p-2'>No.</th>
-                                    <th className='border p-2'>Deskripsi</th>
-                                    <th className='border p-2'>Harga</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {Object.values(dataObatPurchased).map((item, idx) => (
-                                    <tr key={idx}>
-                                        <td className='border p-2'>{idx + 1}.</td>
-                                        <td className='border p-2'>{item?.name}</td>
-                                        <td className='border p-2'>Rp. {item?.price}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className='mt-6'>
-                        <h1 className='text-lg font-medium text-end'>Total: Rp.{dataInvoice?.total_payment}</h1>
-                        <img className='w-40 h-20 -rotate-12' src={Lunas} alt="" />
+                    <div className='mt-6 flex items-end justify-between'>
+                        <div>
+                            <h1 className='mb-10'>Keterangan:</h1>
+                            <div className='flex items-center justify-center gap-10'>
+                                <div className='space-y-20'>
+                                    <h1>Hormat Kami</h1>
+                                    <h1>Drg. Mega Rafika Baroroh</h1>
+                                </div>
+                                <div className='space-y-20'>
+                                    <h1>Penerima</h1>
+                                    <h1>(.....................................)</h1>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-8'>
+                            <div className='grid col-span-3'>
+                                <h1>Total Akhir</h1>
+                                <h1>Sisa Pembayaran</h1>
+                                <h1>Status</h1>
+                            </div>
+                            <div className='col-span-1 '>
+                                <h1 className='text-center'>:</h1>
+                                <h1 className='text-center'>:</h1>
+                                <h1 className='text-center'>:</h1>
+                            </div>
+                            <div className='col-span-4'>
+                                <h1 className='text-start'>Rp.{dataInvoice?.total_payment}</h1>
+                                <h1 className='text-start'>Rp.{dataInvoice?.sisa_pembayaran}</h1>
+                                <h1 className='text-start font-bold'>{dataInvoice.status === '1' ? 'Lunas' : 'Belum Lunas'}</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

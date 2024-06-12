@@ -276,32 +276,10 @@ export default function RekamMedis() {
                                     </table>
                                 </div>
                         </div>
+                        <div className='flex items-center justify-end'>
+                            <button onClick={() => setDetailRekamMedis(!detailRekamMedis)}  className="py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg">Close</button>
+                        </div>
 
-                        {/* <div className='text-sm border-2 w-full rounded-md p-3 mt-5'>
-                            <h1 className='mb-3 text-[12px] font-medium'>Odontogram:</h1>
-                            <div className='p-2'>
-                            <Odontogram
-                                    tooth={(labelT, zoneT, idT) => {
-                                        setDataOdontogram((oldArray) => [
-                                        ...oldArray,
-                                        {
-                                            label: labelT,
-                                            nomorGigi: zoneT,
-                                            id: idT,
-                                        },
-                                        ]);
-                                    }}
-                                    rtooth={(id) => {
-                                        setDataOdontogram((current) =>
-                                            current.filter((obj) => {
-                                            return obj.id !== id;
-                                            })
-                                        );
-                                    }}
-                                    initialState={dataOdontogram}
-                                    />
-                            </div>
-                        </div> */}
                     </div>
 
                 </div>

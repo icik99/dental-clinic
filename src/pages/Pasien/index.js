@@ -220,7 +220,7 @@ export default function Pasien() {
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.gender}</h1>
                                         </div>
                                         <div className='flex items-center gap-[15px] min-w-[200px] max-w-[200px]'>
-                                            <h1 className='text-[#737373]  text-xs font-semibold line truncate'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium repudiandae aliquam debitis reiciendis ad illum delectus veritatis exercitationem iste laborum modi fugiat, ullam ea error molestias adipisci obcaecati eligendi impedit!</h1>
+                                            <h1 className='text-[#737373]  text-xs font-semibold line truncate'>{item.address || ''}</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>
                                             <button onClick={() => openDetailPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Detail</button>

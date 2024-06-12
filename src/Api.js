@@ -44,6 +44,16 @@ class Api {
         })
     }
 
+    static GetDashboard(token) {
+        let path = `dashboard`;
+        return request(`${this.urlAPI()}${path}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+    }
+
     static GetListKunjungan(token) {
         let path = `list-kunjungan`;
         return request(`${this.urlAPI()}${path}`, {

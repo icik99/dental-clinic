@@ -226,10 +226,10 @@ export default function Payment() {
                             <div className='mt-[44px] bg-white'>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
-                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
                                         <h1 className='text-black text-xs font-semibold'>No. RM Pasien</h1>
                                     </div>
-                                    <div className='flex items-center gap-[15px] min-w-[100px] max-w-[100px]'>
+                                    <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
                                         <h1 className='text-black text-xs font-semibold'>NIK</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
@@ -247,6 +247,9 @@ export default function Payment() {
                                     <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                     </div>
+                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Pendapatan</h1>
+                                    </div>
                                     <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
                                         <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                     </div>
@@ -256,28 +259,31 @@ export default function Payment() {
                                 </div>
                                 {Object.values(dataPayment).map((item, idx) => (
                                     <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
-                                        <div className='min-w-[100px] max-w-[100px]'>
+                                        <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
                                             <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[100px] max-w-[100px]'>
+                                        <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
                                             <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[130px] max-w-[130px]'>
+                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[180px] max-w-[180px]'>
+                                        <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan ? formatServiceNames(item.layanan) : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[180px] max-w-[180px]'>
+                                        <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? formatObatNames(item.obat) : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[130px] max-w-[130px]'>
+                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.sisa_pembayaran ? item.sisa_pembayaran : '0'}</h1>
                                         </div>
-                                        <div className='min-w-[130px] max-w-[130px]'>
+                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
                                         </div>
-                                        <div className='min-w-[120px] max-w-[120px]'>
+                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.pendapatan ? item.pendapatan : '-'}</h1>
+                                        </div>
+                                        <div className='line-clamp-1 truncate min-w-[120px] max-w-[120px]'>
                                             <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
                                         </div>
                                         <div className='w-full space-x-2 flex items-center justify-center'>

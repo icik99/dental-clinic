@@ -12,6 +12,7 @@ import 'chart.js/auto';
 
 const Dashboard = () => {
   const [dataRekamMedis, setDataRekamMedis] = useState([]);
+  const [dataCount, setDataCount] = useState('')
   const [detailRekamMedis, setDetailRekamMedis] = useState(false);
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
@@ -72,8 +73,19 @@ const Dashboard = () => {
     }
   };
 
+  const getCountDashboard = async () => {
+    try {
+      const res = await Api.GetDashboard(localStorage.getItem('token'))
+      setDataCount(res.data.data)
+      console.log(res, 'res')
+    } catch (error) {
+      
+    }
+  }
+
   useEffect(() => {
     getRekamMedis();
+    getCountDashboard()
   }, []);
 
   const chartData = {
@@ -250,7 +262,7 @@ const Dashboard = () => {
                           <h1 className="text-[22px]  font-semibold">Total Pasien</h1>
                         </div>
                         <p className="w-[full]  text-sm text-start font-semibold">
-                          Pasien yang telah terdaftar sebanyak ... orang
+                          Pasien yang telah terdaftar sebanyak {dataCount.patientToday || '0'} orang
                         </p>
                     </div>
                     <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl" >
@@ -258,7 +270,7 @@ const Dashboard = () => {
                           <h1 className="text-[22px]  font-semibold">Total Rekam Medis</h1>
                         </div>
                         <p className="w-[full]  text-sm text-start font-semibold">
-                          Rekam Medis yang terdata ada sebanyak ... rekam medis
+                          Rekam Medis yang terdata ada sebanyak {dataCount.totalRM || '0'} rekam medis
                         </p>
                     </div>
                 </div>
