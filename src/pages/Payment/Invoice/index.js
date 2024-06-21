@@ -106,7 +106,7 @@ export default function Invoice() {
                             <div className='flex items-center justify-center gap-10'>
                                 <div className='space-y-20'>
                                     <h1>Hormat Kami</h1>
-                                    <h1>Drg. Mega Rafika Baroroh</h1>
+                                    <h1>drg. Mega Rafika Baroroh</h1>
                                 </div>
                                 <div className='space-y-20'>
                                     <h1>Penerima</h1>

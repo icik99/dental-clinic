@@ -62,6 +62,7 @@ export default function RekamMedis() {
         try {
             if(params.state === null){
                 const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage);
+                console.log('Get Rekam Medis:', response.data.data)
                 setDataRekamMedis(response.data.data);
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
@@ -69,7 +70,6 @@ export default function RekamMedis() {
             } else {
                 const response = await Api.GetRekamMedisByPatient(localStorage.getItem('token'), params.state.idPasien)
                 setDataRekamMedis(response.data.data)
-                console.log('Get Rekam Medis:', response.data.data)
             }
         } catch (error) {
             console.log(error)
@@ -100,10 +100,10 @@ export default function RekamMedis() {
         const dataExport = dataRekamMedis;
 
         // Define custom headers for each table
-        const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan'];
+        const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan', 'Obat'];
 
         // Create modified data arrays with custom headers
-        const rekamMedis = dataRekamMedis.map(({ fullname, date, gender, phone, diagnosis, therapy, description, hasil}) => ({
+        const rekamMedis = dataRekamMedis.map(({ fullname, date, gender, phone, diagnosis, therapy, description, layanan, obat}) => ({
             'Employee Name': fullname ? fullname : '-',
             'Date': moment(date).format('DD MMMM YYYY'),
             'Jenis Kelamin': gender ? gender : '-',
@@ -111,7 +111,8 @@ export default function RekamMedis() {
             'Diagnosis': diagnosis? diagnosis : '-',
             'Terapi': therapy? therapy : '-',
             'Keterangan': description? description : '-',
-            'Layanan': hasil? hasil : '-',
+            'Layanan': layanan? layanan : '-',
+            'Obat': obat? obat : '-',
         }));
 
         // Create a new worksheet for each table

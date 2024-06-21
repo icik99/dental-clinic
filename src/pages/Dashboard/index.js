@@ -220,41 +220,33 @@ const Dashboard = () => {
             <Sidebar />
           </div>
           <div className="p-10 w-full ">
-            <div className="md:flex lg:flex-row md:gap-[40px] lg:gap-[40px] flex-col gap-[20px] items-start mb-10">
-              <Link
-                to={"/pasien"}
-                className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
-              >
-                <div className="flex items-center justify-between  mb-2">
-                  <h1 className="text-[22px] font-medium">Pasien</h1>
+            
+              {localStorage.getItem('role') === 'Petugas Pendaftaran' || localStorage.getItem('role') === 'admin' && (
+                <div className="md:flex lg:flex-row md:gap-[40px] lg:gap-[40px] flex-col gap-[20px] items-start mb-10">
+                  <Link
+                    to={"/pasien"}
+                    className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
+                  >
+                    <div className="flex items-center justify-between  mb-2">
+                      <h1 className="text-[22px] font-medium">Pasien</h1>
+                    </div>
+                    <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
+                      Lihat data dan rekam medis pasien
+                    </p>
+                  </Link>
+                  <button
+                    onClick={() => setModalAlert(!modalAlert)}
+                    className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h1 className="text-[22px] font-medium">Tambah Pasien</h1>
+                    </div>
+                    <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
+                      Tambah data pasien baru
+                    </p>
+                  </button>
                 </div>
-                <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
-                  Lihat data dan rekam medis pasien
-                </p>
-              </Link>
-              <button
-                onClick={() => setModalAlert(!modalAlert)}
-                className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h1 className="text-[22px] font-medium">Tambah Pasien</h1>
-                </div>
-                <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
-                  Tambah data pasien baru
-                </p>
-              </button>
-              {/* <Link
-                to={"/odontogram"}
-                className="py-[40px] px-[30px] bg-white w-full border-2 shadow-sm"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <h1 className="text-[22px] font-medium">Odontogram</h1>
-                </div>
-                <p className="w-[280px] opacity-40 text-black text-sm text-start font-normal">
-                  Mengetahui kondisi dan rekam gigi pasien
-                </p>
-              </Link> */}
-            </div>
+              )}
             <div className="flex items-center justify-between gap-10">
                 <div className="w-full">
                     <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl mb-10" >
@@ -262,7 +254,7 @@ const Dashboard = () => {
                           <h1 className="text-[22px]  font-semibold">Total Pasien</h1>
                         </div>
                         <p className="w-[full]  text-sm text-start font-semibold">
-                          Pasien yang telah terdaftar sebanyak {dataCount.patientToday || '0'} orang
+                          Pasien yang telah mendaftar hari ini sebanyak {dataCount.patientToday || '0'} orang
                         </p>
                     </div>
                     <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl" >
@@ -325,16 +317,18 @@ const Dashboard = () => {
                       Nama Pasien
                     </h1>
                   </div>
-                  {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
-                    <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
-                      <h1 className="text-black text-xs font-semibold">
-                        Catatan Perawatan
-                      </h1>
-                    </div>
+                  {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' && (
+                    <>
+                      <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
+                        <h1 className="text-black text-xs font-semibold">
+                          Catatan Perawatan
+                        </h1>
+                      </div>
+                      <div className="flex items-center justify-center gap-[15px] w-full">
+                        <h1 className="text-black text-xs font-semibold">Action</h1>
+                      </div>
+                    </>
                   )}
-                  <div className="flex items-center justify-center gap-[15px] w-full">
-                    <h1 className="text-black text-xs font-semibold">Action</h1>
-                  </div>
                 </div>
                 {Object.values(dataRekamMedis).map((item, idx) => (
                   <div
@@ -356,20 +350,22 @@ const Dashboard = () => {
                         {item.fullname}
                       </h1>
                     </div>
-                    {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' &&(
-                      <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
-                        <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.idPatient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
-                          Lihat Catatan Perawatan
-                        </button>
-                      </div>
+                    {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' && (
+                      <>
+                        <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
+                          <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.idPatient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
+                            Lihat Catatan Perawatan
+                          </button>
+                        </div>
+                        <div className="w-full space-x-2 flex justify-center items-center">
+                          <button
+                            onClick={() => openDetailRekamMedis(item.idRM)}
+                            className="w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]"
+                          >Detail
+                          </button>
+                        </div>
+                      </>
                     )}
-                    <div className="w-full space-x-2 flex justify-center items-center">
-                      <button
-                        onClick={() => openDetailRekamMedis(item.idRM)}
-                        className="w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]"
-                      >Detail
-                      </button>
-                    </div>
                   </div>
                 ))}
               </table>

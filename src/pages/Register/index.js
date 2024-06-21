@@ -36,6 +36,7 @@ export default function Register() {
                             Sinar Akbar Dental Clinic
                             <img className="w-20  h-20 rounded-full mr-2" src={Logo} alt="logo" />
                         </div>
+                        <h1 className='font-semibold text-center pb-2 border-b-2'>Registrasi Akun Baru</h1>
                         <div className="space-y-4 md:space-y-6">
                             <div>
                                 <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>

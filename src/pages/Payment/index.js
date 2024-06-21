@@ -223,7 +223,7 @@ export default function Payment() {
                                 <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
                                 <input onChange={handleSearchName} placeholder='Search by NIK and No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                             </div>
-                            <div className='mt-[44px] bg-white'>
+                            <div className='mt-[44px] bg-white overflow-auto'>
                             <table className='w-full space-y-[10px]'>
                                 <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
                                     <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
@@ -231,6 +231,9 @@ export default function Payment() {
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
                                         <h1 className='text-black text-xs font-semibold'>NIK</h1>
+                                    </div>
+                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                        <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
                                     </div>
                                     <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
                                         <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
@@ -264,6 +267,9 @@ export default function Payment() {
                                         </div>
                                         <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
                                             <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
+                                        </div>
+                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.createdAt ? item.createdAt : '-'}</h1>
                                         </div>
                                         <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>

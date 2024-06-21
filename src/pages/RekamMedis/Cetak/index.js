@@ -90,7 +90,7 @@ export default function CetakRekaMedis() {
                     </div>
                     <div className='mt-20'>
                         <h1 className='text-md font-medium text-end mb-16'>Bojonegoro, <span>{medicalRecord?.date}</span></h1>
-                        <p className='text-end'>Drg. Mega Rafika Baroroh</p>
+                        <p className='text-end'>drg. Mega Rafika Baroroh</p>
                     </div>
                 </div>
             </div>

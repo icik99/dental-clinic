@@ -43,7 +43,7 @@ const LoginPage = () => {
                                 <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                 <input type="password" onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-purple-600 focus:border-purple-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-6" required="" />
                             </div>
-                            <h1 className='text-sm text-gray-900'>Belum punya akun? <span><Link to={'/register'} className=' hover:text-blue-700 font-semibold'>Daftarkan akun!</Link></span></h1>
+                            {/* <h1 className='text-sm text-gray-900'>Belum punya akun? <span><Link to={'/register'} className=' hover:text-blue-700 font-semibold'>Daftarkan akun!</Link></span></h1> */}
                             <button onClick={login}  className="w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Log in</button>
                         </div>
                     </div>
