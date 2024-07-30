@@ -48,9 +48,9 @@ export default function KartuIuran() {
                 <div>
                     <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2 mb-2' onClick={generatePDF}>Download PDF</button>
                 </div>
-                {/* <div>
-                    <button className='mx-auto bg-blue-600 text-white font-semibold px-4 py-2 mb-2 ml-2' onClick={printPage}>Klik Untuk Print Kartu Iuran</button>
-                </div> */}
+                <div>
+                    <button className='mx-auto bg-blue-600 text-white font-semibold px-4 py-2 mb-2 ml-2' onClick={printPage}>Print</button>
+                </div>
             </div>
             <div  className='mx-20 p-10 border-4 rounded-xl'>
                 <div id='pdf-content'>

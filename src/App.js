@@ -17,6 +17,9 @@ import Register from './pages/Register';
 import CobaOdontogram from './pages/CobaOdontogram';
 import KartuIuran from './pages/Payment/KartuIuran';
 import CetakRekamMedis from './pages/RekamMedis/Cetak';
+import Obat from './pages/Obat';
+import CetakKib from './pages/Pasien/Cetak';
+import InformContent from './pages/RekamMedis/InformContent';
 
 function App() {
   return (
@@ -32,15 +35,18 @@ function App() {
         <Route name='Register' path="/admin/register" element={<Register/>}/>
         <Route name='Payment' path="/payment" element={<Payment/>}/>
         <Route name='Pasien' path="/pasien" element={<Pasien/>}/>
+        <Route name='Pasien' path="/pasien/cetak" element={<CetakKib/>}/>
         <Route name='Create Pasien' path="/pasien/create" element={<CreatePasien/>}/>
         <Route name='Update Pasien' path="/pasien/update" element={<UpdatePasien/>}/>
         <Route name='Layanan' path="/layanan" element={<Layanan/>}/>
+        <Route name='Obat' path="/obat" element={<Obat/>}/>
         <Route name='Invoice' path="/payment/invoice" element={<Invoice/>}/>
         <Route name='Kartu Iuran' path="/payment/kartu-iuran" element={<KartuIuran/>}/>
         <Route name='Rekam Medis' path="/rekam-medis" element={<RekamMedis/>}/>
         <Route name='Cetak Rekam Medis' path="/rekam-medis/cetak" element={<CetakRekamMedis/>}/>
         <Route name='Create Rekam Medis' path="/rekam-medis/create" element={<CreateRekamMedis/>}/>
         <Route name='Update Rekam Medis' path="/rekam-medis/update" element={<UpdateRekamMedis/>}/>
+        <Route name='Inform Content Rekam Medis' path="/rekam-medis/inform-content" element={<InformContent/>}/>
         {/* <Route name='Coba Odontogram' path="/cobaOdontogram" element={<CobaOdontogram/>}/> */}
       </Routes>
     </div>

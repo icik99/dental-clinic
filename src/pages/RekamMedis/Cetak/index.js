@@ -36,15 +36,28 @@ export default function CetakRekaMedis() {
         return param.map(service => service.name).join(', ');
       };
 
+    const printContent = () => {
+        window.print();
+    };
+
     useEffect(() => {
         getMedicalRecord();
     }, []);
 
     return (
         <>
-            <div className='flex items-center justify-end mt-10'>
-                <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
+            <div className='flex items-center justify-center gap-3 mt-10'>
+                <button className=' bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
                     Download PDF
+                </button>
+                <button className=' bg-green-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
+                    Send to Whatsapp
+                </button>
+                <button className=' bg-yellow-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
+                    Send to Email
+                </button>
+                <button onClickCapture={printContent} className=' bg-blue-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
+                    Print
                 </button>
             </div>
             <div className='m-10 p-5 border-4 rounded-xl h-full w-fit'>

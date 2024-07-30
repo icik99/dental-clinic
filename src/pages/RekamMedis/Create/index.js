@@ -24,6 +24,13 @@ export default function CreateRekamMedis() {
     const [idPasien, setIdPasien] = useState('')
     const [dataPasien, setDataPasien] = useState('')
 
+    const [informContent, setInformContent] = useState(false);
+
+    // Handler untuk menghandle perubahan nilai checkbox
+    const handleCheckboxChange = (event) => {
+      setInformContent(event.target.checked);
+    };
+
 
     const createRekamMedis = async () => {
         try {
@@ -178,7 +185,7 @@ export default function CreateRekamMedis() {
                                                 <h2 className='font-medium'>Rp. {service.price.toLocaleString()}</h2>
                                             </div>
                                             <div className='flex items-center justify-center gap-1'>
-                                                <button className='p-2 border rounded-md bg-red-700 text-white text-lg' onClick={() => handleServiceChange(service.id, 'delete')} >
+                                                <button className='p-2 border rounded-md bg-red-700 text-white text-lg' onClick={() => handleServiceObatChange(service.id, 'delete')} >
                                                     <MdDelete />
                                                 </button>
                                             </div>
@@ -226,6 +233,19 @@ export default function CreateRekamMedis() {
                                 <h1 className='font-medium'>Keterangan</h1>
                                 <input onChange={(e) => setKeterangan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Keterangan....'/>
                             </div>
+                            <div className='text-sm  space-y-2 flex gap-2 items-center'>
+                                <h3 className='font-medium text-sm'>Inform Content</h3>
+                                <label>
+                                    <input
+                                    type="checkbox"
+                                    checked={informContent}
+                                    onChange={handleCheckboxChange}
+                                    />
+                                </label>
+                            </div>
+                            {/* {informContent&& (
+
+                            )} */}
 
                             <div className='space-x-5 pt-7'>
                                 <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg'>

@@ -70,6 +70,7 @@ export default function Invoice() {
                                 </div>
                             </div>
                         </div>
+
                         <div className='text-sm'>
                             <h1>Petugas: <span className='font-normal'>{localStorage.getItem('role')}</span></h1>
                             <h1>No Transaksi: <span className='font-normal'>{dataInvoice?.invoice}</span></h1>
@@ -79,6 +80,7 @@ export default function Invoice() {
                             <h1>Alamat: <span className='font-normal'>{dataInvoice?.address}</span></h1>
                         </div>
                     </div>
+                        <h1 className=' font-bold  text-center mt-3 mb-7 text-3xl'>Kwitansi</h1>
                     <div className='mt-6 border-purple-600 border-b-2 pb-10'>
                     <table className='w-full'>
                         <thead>
