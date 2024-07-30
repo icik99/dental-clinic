@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
 import Odontogram from '../../../components/NewOdontogram/odontogram';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 export default function CreateRekamMedis() {
     const [dataOdontogram, setDataOdontogram] = useState([]);
@@ -24,9 +26,25 @@ export default function CreateRekamMedis() {
     const [idPasien, setIdPasien] = useState('')
     const [dataPasien, setDataPasien] = useState('')
 
+    // Image Odontogram
+    var node = document.getElementById('my-node');
+    const [image, setImage] = useState("");
+
+    const getImage = () => {
+      htmlToImage.toPng(node)
+      .then(function (dataUrl) {
+          var img = new Image();
+          img.src = dataUrl;
+          setImage(img.src)
+    })
+      .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+      });
+    }
 
     const createRekamMedis = async () => {
         try {
+          getImage()
             const data = {
                 date: tanggal,
                 patient_id: params.state ? params.state.idPasien : idPasien,
@@ -35,7 +53,7 @@ export default function CreateRekamMedis() {
                 diagnosis: diagnosa,
                 therapy: terapi,
                 description: keterangan,
-                odontogram: dataOdontogram
+                odontogram: image
             }
             console.log(data, 'data')
             const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
@@ -189,7 +207,7 @@ export default function CreateRekamMedis() {
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
                                 {/* <Odontogram/> */}
-                                <div>
+                                <div id='my-node'>
                                 <Odontogram
                                     tooth={(labelT, zoneT, idT) => {
                                         setDataOdontogram((oldArray) => [
