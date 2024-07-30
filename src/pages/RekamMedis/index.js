@@ -8,13 +8,10 @@ import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 import moment from 'moment';
 import toast from 'react-hot-toast';
-import { OdontogramGambar } from '../../assets';
-import { FaFileExport } from "react-icons/fa"
-;
+import { FaFileExport } from "react-icons/fa";
 import { debounce } from 'lodash';
 import Pagination from '../../components/Pagination';
 import { BiSearch } from 'react-icons/bi';
-import Odontogram from '../../components/NewOdontogram/odontogram';
 
 export default function RekamMedis() {
     const [dataExport, setDataExport] = useState('')
@@ -27,6 +24,7 @@ export default function RekamMedis() {
     const [dataObatRekamMedis, setDataObatRekamMedis] = useState('')
     const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState('')
     const [dataOdontogram, setDataOdontogram] = useState('')
+    const [odontogramGambar, setOdontogramGambar] = useState('')
     const [idRekamMedis, setIdRekamMedis] = useState('')
     const [refresh, setRefresh] = useState('')
     const [revisiRekamMedis, setRevisiRekamMedis] = useState('')
@@ -62,7 +60,6 @@ export default function RekamMedis() {
         try {
             if(params.state === null){
                 const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage);
-                console.log('Get Rekam Medis:', response.data.data)
                 setDataRekamMedis(response.data.data);
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
@@ -84,7 +81,6 @@ export default function RekamMedis() {
         if(params.state === null){
             try {
                 const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, currentPage)
-                console.log(response, 'searchResult')
                 setDataRekamMedis(response.data.data);
                 setDataServiceRekamMedis(response.data.data.service)
             } catch (error) {
@@ -140,10 +136,8 @@ export default function RekamMedis() {
         setDetailRekamMedis(!detailRekamMedis)
         try {
             const response = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
-            console.log('response by id',response)
             setDataDetailRekamMedis(response.data.data)
             setDataOdontogram(response.data.data.odontogram)
-            console.log(dataOdontogram, 'dataOdontogram')
         } catch (error) {
             console.log(error)
         }
@@ -164,7 +158,6 @@ export default function RekamMedis() {
         setIdRekamMedis(id)
         try {
             const res = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
-            console.log(res, 'databyid Koreksi')
             setRevisiRekamMedis(res.data.data.koreksi)
             setDataDetailRekamMedis(res.data.data)
 
@@ -253,7 +246,7 @@ export default function RekamMedis() {
                         </div>
                         <div>
                             <h1 className='mt-5 text-lg'>Gambar Odontogram</h1> 
-                            <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
+                            <img src={dataDetailRekamMedis.odontogram_gambar} className='p-4 border-2  mt-2' alt="" />
                             <h1 className='mt-5 text-lg'>Keterangan:</h1> 
 
                             <div className='mt-5'>

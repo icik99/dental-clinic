@@ -2,7 +2,7 @@ import request from "./utils/request";
 
 class Api {
   static urlAPI() {
-    return process.env.REACT_APP_BACKEND_PROD_URL;
+    return process.env.REACT_APP_BACKEND_URL;
     // return 'http://localhost:5003/'
   }
 
