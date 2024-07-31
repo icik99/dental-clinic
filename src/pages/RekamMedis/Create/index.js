@@ -5,15 +5,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Api from '../../../Api';
 import toast from 'react-hot-toast';
 import Odontogram from '../../../components/NewOdontogram/odontogram';
+import html2canvas from 'html2canvas';
 
 export default function CreateRekamMedis() {
     const [dataOdontogram, setDataOdontogram] = useState([]);
-    console.log(dataOdontogram, 'dataClicked')
 
     const params = useLocation()
     const navigate = useNavigate()
     const [selectedServices, setSelectedServices] = useState([]);
     const [selectedObatServices, setSelectedObatServices] = useState([]);
+
     // create state
     const [tanggal, setTanggal] = useState()
     const [diagnosa, setDiagnosa] = useState()
@@ -24,6 +25,23 @@ export default function CreateRekamMedis() {
     const [idPasien, setIdPasien] = useState('')
     const [dataPasien, setDataPasien] = useState('')
 
+
+      const getImage = async () => {
+        const node = document.getElementById('my-node');
+        if (!node) {
+            console.error('Node element not found');
+            return '';
+        }
+        try {
+            const canvas = await html2canvas(node);
+            const dataUrl = canvas.toDataURL('image/png');
+            return dataUrl;
+        } catch (error) {
+            console.error('Error generating image:', error);
+            return '';
+        }
+    };
+  
     const [informContent, setInformContent] = useState(false);
 
     // Handler untuk menghandle perubahan nilai checkbox
@@ -31,9 +49,9 @@ export default function CreateRekamMedis() {
       setInformContent(event.target.checked);
     };
 
-
     const createRekamMedis = async () => {
         try {
+          const dataURL = await getImage()
             const data = {
                 date: tanggal,
                 patient_id: params.state ? params.state.idPasien : idPasien,
@@ -42,9 +60,9 @@ export default function CreateRekamMedis() {
                 diagnosis: diagnosa,
                 therapy: terapi,
                 description: keterangan,
-                odontogram: dataOdontogram
+                odontogram: dataOdontogram,
+                odontogram_gambar: dataURL
             }
-            console.log(data, 'data')
             const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
             toast.success('Berhasil Create Rekam Medis')
             navigate(-1)
@@ -57,7 +75,6 @@ export default function CreateRekamMedis() {
     const getLayanan = async () => {
         try {
             const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '')
-            console.log('Data Layanan',response.data.data)
             setDataLayanan(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
@@ -67,7 +84,6 @@ export default function CreateRekamMedis() {
     const getObat = async () => {
         try {
             const response = await Api.GetObat(localStorage.getItem('token'), '','','')
-            console.log('Data Obat',response.data.data)
             setDataObat(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
@@ -78,7 +94,6 @@ export default function CreateRekamMedis() {
         try {
             const res = await Api.GetPasien(localStorage.getItem('token'), '', '')
             setDataPasien(res.data.data)
-            console.log(res, 'dataPasien')
         } catch (error) {
             console.log(error)
         }
@@ -86,7 +101,6 @@ export default function CreateRekamMedis() {
 
     const handleServiceChange = (serviceId, action) => {
         const selectedService = dataLayanan.find(service => service.id === serviceId);
-        console.log(selectedService, 'selectedService')
         if (action === 'add') {
         setSelectedServices([...selectedServices, selectedService]);
         } else if (action === 'delete') {
@@ -97,7 +111,6 @@ export default function CreateRekamMedis() {
 
     const handleServiceObatChange = (serviceId, action) => {
         const selectedObatService = dataObat.find(service => service.id === serviceId);
-        console.log(selectedObatService, 'selectedObatService')
         if (action === 'add') {
         setSelectedObatServices([...selectedObatServices, selectedObatService]);
         } else if (action === 'delete') {
@@ -196,7 +209,7 @@ export default function CreateRekamMedis() {
                             <div className='text-sm border-2 w-full rounded-md p-3'>
                                 <h1 className='mb-3 font-medium'>Odontogram:</h1>
                                 {/* <Odontogram/> */}
-                                <div>
+                                <div id='my-node'>
                                 <Odontogram
                                     tooth={(labelT, zoneT, idT) => {
                                         setDataOdontogram((oldArray) => [

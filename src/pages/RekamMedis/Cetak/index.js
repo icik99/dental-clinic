@@ -32,6 +32,16 @@ export default function CetakRekaMedis() {
         }
     };
 
+    const sendToWhatsApp = () => {
+        const noPasien = medicalRecord.phone;
+        const message = `Yth. ${medicalRecord.fullname},\n\nKami ingin menginformasikan bahwa hasil rekam medis Anda sudah siap. Silakan klik tautan berikut untuk mengunduh dokumen rekam medis Anda.\n\nTerima kasih atas perhatian Anda.\n\nSalam hormat,\nSinar Akbar Dental Clinic.`;
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${noPasien}?text=${encodedMessage}`;
+
+        window.open(url, '_blank');
+    };
+
+
     const formatServiceNames = (param) => {
         return param.map(service => service.name).join(', ');
       };
@@ -46,21 +56,19 @@ export default function CetakRekaMedis() {
 
     return (
         <>
-            <div className='flex items-center justify-center gap-3 mt-10'>
-                <button className=' bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
+            <div className='flex items-center justify-center gap-x-[200px] mt-10'>
+              <div>
+                <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
                     Download PDF
                 </button>
-                <button className=' bg-green-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
-                    Send to Whatsapp
+              </div>
+              <div>
+                <button className='mx-auto bg-green-600 text-white font-semibold px-4 py-2' onClick={sendToWhatsApp}>
+                    Kirim Ke WhatsApp Pasien
                 </button>
-                <button className=' bg-yellow-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
-                    Send to Email
-                </button>
-                <button onClickCapture={printContent} className=' bg-blue-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
-                    Print
-                </button>
+              </div>
             </div>
-            <div className='m-10 p-5 border-4 rounded-xl h-full w-fit'>
+            <div className='m-10 p-5 border-4 rounded-xl h-full w-fit mx-auto'>
                 <div id='pdf-content' className='h-[1000px] w-full'>
                     <div className='flex items-center justify-center gap-10 border-b-2 border-purple-600 pb-5'>
                         <img className='w-50 h-32' src={Logo} alt="Logo" />
