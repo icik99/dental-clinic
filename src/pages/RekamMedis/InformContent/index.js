@@ -63,54 +63,54 @@ export default function InformContent() {
                     </div>
                     <h2 className='text-center text-lg font-semibold mb-2'>LEMBAR PERSETUJUAN / PENOLAKAN TINDAKAN MEDIS</h2>
                     <p>Saya yang bertanda tangan di bawah ini :</p>
-                    <div className="grid grid-cols-3 gap-2 mt-2">
+                    <div className="grid grid-cols-3 gap-2 mt-2 text-sm">
+                        <div>Nama</div>
+                        <div className="col-span-2">: {medicalRecord?.namaKeluarga}</div>
+                        <div>Jenis Kelamin</div>
+                        <div className="col-span-2">: {medicalRecord?.jenisKelaminKeluarga}</div>
+                        <div>Alamat</div>
+                        <div className="col-span-2">: {medicalRecord?.alamatKeluarga}</div>
+                        <div>No. Telepon/HP</div>
+                        <div className="col-span-2">: {medicalRecord?.telpKeluarga}</div>
+                    </div>
+                    <p className='mt-4 text-sm'>Dengan ini sesungguhnya saya menyatakan:</p>
+                    <h3 className='text-center font-semibold my-2'>SETUJU / MENOLAK *)</h3>
+                    <p className='text-sm'>Untuk dilakukan tindakan medis berupa : {medicalRecord?.medicalAction}</p>
+                    <p className='mt-2 text-sm'>Terhadap diri saya sendiri / istri / suami / anak / ayah / ibu *) dengan</p>
+                    <div className="grid grid-cols-3 gap-2 mt-2 text-sm">
                         <div>Nama</div>
                         <div className="col-span-2">: {medicalRecord?.fullname}</div>
-                        <div>Jenis Kelamin</div>
+                        <div>enis Kelamin</div>
                         <div className="col-span-2">: {medicalRecord?.gender}</div>
                         <div>Alamat</div>
                         <div className="col-span-2">: {medicalRecord?.address}</div>
                         <div>No. Telepon/HP</div>
                         <div className="col-span-2">: {medicalRecord?.phone}</div>
-                    </div>
-                    <p className='mt-4'>Dengan ini sesungguhnya saya menyatakan:</p>
-                    <h3 className='text-center text-lg font-semibold my-2'>SETUJU / MENOLAK *)</h3>
-                    <p>Untuk dilakukan tindakan medis berupa : {medicalRecord?.medicalAction}</p>
-                    <p className='mt-2'>Terhadap diri saya sendiri / istri / suami / anak / ayah / ibu *) dengan</p>
-                    <div className="grid grid-cols-3 gap-2 mt-2">
-                        <div>Nama</div>
-                        <div className="col-span-2">: {medicalRecord?.patientName}</div>
-                        <div>Umur / Jenis Kelamin</div>
-                        <div className="col-span-2">: {medicalRecord?.patientAge} Tahun / {medicalRecord?.patientGender}</div>
-                        <div>Alamat</div>
-                        <div className="col-span-2">: {medicalRecord?.patientAddress}</div>
-                        <div>No. Telepon/HP</div>
-                        <div className="col-span-2">: {medicalRecord?.patientPhone}</div>
                         <div>No. Rekam Medis</div>
-                        <div className="col-span-2">: {medicalRecord?.patientMedicalRecord}</div>
+                        <div className="col-span-2">: {medicalRecord?.number_regristation}</div>
                     </div>
-                    <p className='mt-4'>Saya telah menyatakan dengan sesungguhnya dan tanpa paksaan bahwa saya:</p>
-                    <ol className='list-decimal list-inside'>
+                    <p className='mt-4 text-sm'>Saya telah menyatakan dengan sesungguhnya dan tanpa paksaan bahwa saya:</p>
+                    <ol className='list-decimal list-inside text-sm'>
                         <li>Telah diberikan informasi dan penjelasan serta peringatan akan risiko kemungkinan yang timbul apabila tidak dilakukan tindakan medis yang berupa {medicalRecord?.risks}</li>
                         <li>Telah saya pahami sepenuhnya informasi dan penjelasan yang diberikan dokter</li>
                         <li>Atas tanggung jawab dan risiko saya sendiri tetap setuju / menolak *) tindakan medis yang dianjurkan oleh dokter</li>
                     </ol>
-                    <p className='mt-2'>Demikian pernyataan ini saya buat dengan penuh kesadaran dan tanpa paksaan</p>
+                    <p className='mt-2 text-sm'>Demikian pernyataan ini saya buat dengan penuh kesadaran dan tanpa paksaan</p>
                     <div className='grid grid-cols-3 mt-10 mx-10'>
                         <div className='text-start'>
                             <p>Dokter</p>
-                            <div className='mt-5 w-full'></div>
-                            <p>(......................................)</p>
+                            <div className='mt-16 w-full'></div>
+                            <p>drg. Mega Rafika Baroroh</p>
                         </div>
                         <div className='col-span-2 text-right'>
                             <p>Yang Membuat Pernyataan</p>
-                            <div className='mt-5 w-full'></div>
-                            <p>(......................................)</p>
+                            <div className='mt-16 w-full'></div>
+                            <p>{medicalRecord?.namaKeluarga}</p>
                         </div>
                     </div>
                     <div className='text-center mt-10'>
                         <p>Saksi</p>
-                        <div className='mt-5 w-full'></div>
+                        <div className='mt-16 w-full'></div>
                         <p>(......................................)</p>
                     </div>
                 </div>

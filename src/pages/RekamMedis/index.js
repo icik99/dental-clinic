@@ -119,6 +119,7 @@ export default function RekamMedis() {
         setDetailRekamMedis(!detailRekamMedis)
         try {
             const response = await Api.GetRekamMedisById(localStorage.getItem('token'), id)
+            console.log(response, 'detailRm')
             setDataDetailRekamMedis(response.data.data)
             setDataOdontogram(response.data.data.odontogram)
         } catch (error) {
@@ -337,7 +338,7 @@ export default function RekamMedis() {
                                     <div className='flex items-center gap-[15px] min-w-[150px] max-w-[150px]'>
                                         <h1 className='text-black text-xs font-semibold'>Keterangan</h1>
                                     </div>
-                                    <div className=' w-full flex items-center justify-center'>
+                                    <div className=' w-full flex items-center justify-start'>
                                         <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
                                     </div>
                                 </div>
@@ -367,11 +368,13 @@ export default function RekamMedis() {
                                         <div className='min-w-[150px] max-w-[150px]'>
                                             <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.description? item.description : '-' }</h1>
                                         </div>
-                                        <div className='w-full space-x-2 flex items-center justify-center'>
+                                        <div className='w-full space-x-2 flex items-center justify-start'>
                                             <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]'> Detail </button>
                                             <button onClick={() => navigate('cetak', {state: {idRekamMedis: item.id}})} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Cetak</button>
                                             <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Koreksi</button>
-                                            <button onClick={() => navigate('inform-content', {state: {idRekamMedis: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Inform Content</button>
+                                            {item.statusInformContent === '1' && (
+                                                <button onClick={() => navigate('inform-content', {state: {idRekamMedis: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Inform Content</button>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

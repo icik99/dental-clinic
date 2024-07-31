@@ -108,6 +108,26 @@ export default function CreatePasien() {
                         </div>
                         <div className='flex items-center justify-between gap-4'>
                             <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kota</h1>
+                                <select onChange={(e) => setKota(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'>
+                                    <option value="">Select Kota...</option>
+                                </select>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kecamatan</h1>
+                                <select onChange={(e) => setKecamatan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'>
+                                    <option value="">Select Kecamatan...</option>
+                                </select>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kelurahan / Desa </h1>
+                                <select onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'>
+                                    <option value="">Select Kelurahan / Desa...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>RT</h1>
                                 <input onChange={(e) => setRt(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rt....'/>
                             </div>
@@ -117,20 +137,7 @@ export default function CreatePasien() {
                             </div>
                         </div>
                         <div className='flex items-center justify-between gap-4'>
-                            <div className=' w-full text-sm space-y-2'>
-                                <h1 className='font-medium'>Kelurahan / Desa </h1>
-                                <input onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'/>
-                            </div>
-                            <div className=' w-full text-sm space-y-2'>
-                                <h1 className='font-medium'>Kecamatan</h1>
-                                <input onChange={(e) => setKecamatan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'/>
-                            </div>
-                        </div>
-                        <div className='flex items-center justify-between gap-4'>
-                            <div className=' w-full text-sm space-y-2'>
-                                <h1 className='font-medium'>Kota</h1>
-                                <input onChange={(e) => setKota(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'/>
-                            </div>
+                            
                             <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>Kode Pos</h1>
                                 <input onChange={(e) => setKodePos(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kode Pos....'/>
