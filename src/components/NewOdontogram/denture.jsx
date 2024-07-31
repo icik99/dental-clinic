@@ -20,6 +20,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -63,6 +64,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -104,6 +106,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -145,6 +148,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -188,6 +192,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -231,6 +236,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -274,6 +280,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -317,6 +324,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -362,6 +370,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -405,6 +414,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -448,6 +458,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -491,6 +502,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -534,6 +546,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -577,6 +590,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -620,6 +634,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -663,6 +678,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -716,6 +732,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -759,6 +776,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -802,6 +820,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -845,6 +864,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -888,6 +908,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -933,6 +954,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -976,6 +998,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1019,6 +1042,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1062,6 +1086,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1105,6 +1130,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1158,6 +1184,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1201,6 +1228,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1244,6 +1272,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1287,6 +1316,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1330,6 +1360,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1375,6 +1406,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1418,6 +1450,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1461,6 +1494,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1504,6 +1538,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1547,6 +1582,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1600,6 +1636,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1643,6 +1680,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1686,6 +1724,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1729,6 +1768,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1772,6 +1812,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1815,6 +1856,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1858,6 +1900,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1901,6 +1944,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1946,6 +1990,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -1989,6 +2034,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2032,6 +2078,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2075,6 +2122,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2118,6 +2166,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2161,6 +2210,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2204,6 +2254,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
@@ -2247,6 +2298,7 @@ function Denture(props) {
                 <p
                   style={{
                     margin: 0,
+                    marginBottom: 10,
                     display: "flex",
                     justifyContent: "center",
                   }}
