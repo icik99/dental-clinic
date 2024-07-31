@@ -52,7 +52,7 @@ export default function CetakRekaMedis() {
 
     return (
         <>
-            <div className='flex bg-orange-500 items-center justify-center gap-x-[200px] mt-10'>
+            <div className='flex items-center justify-center gap-x-[200px] mt-10'>
               <div>
                 <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
                     Download PDF
@@ -64,7 +64,7 @@ export default function CetakRekaMedis() {
                 </button>
               </div>
             </div>
-            <div className='m-10 p-5 border-4 rounded-xl h-full w-fit'>
+            <div className='m-10 p-5 border-4 rounded-xl h-full w-fit mx-auto'>
                 <div id='pdf-content' className='h-[1000px] w-full'>
                     <div className='flex items-center justify-center gap-10 border-b-2 border-purple-600 pb-5'>
                         <img className='w-50 h-32' src={Logo} alt="Logo" />
