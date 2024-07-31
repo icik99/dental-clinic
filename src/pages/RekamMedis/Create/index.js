@@ -26,6 +26,11 @@ export default function CreateRekamMedis() {
 
     const [informContent, setInformContent] = useState(false);
 
+    const [namaKeluarga, setNamaKeluarga] = useState('')
+    const [jenisKelaminKeluarga, setJenisKelaminKeluarga] = useState('')
+    const [alamatKeluarga, setAlamatKeluarga] = useState('')
+    const [telpKeluarga, setTelpKeluarga] = useState('')
+
     // Handler untuk menghandle perubahan nilai checkbox
     const handleCheckboxChange = (event) => {
       setInformContent(event.target.checked);
@@ -33,24 +38,32 @@ export default function CreateRekamMedis() {
 
 
     const createRekamMedis = async () => {
-        try {
-            const data = {
-                date: tanggal,
-                patient_id: params.state ? params.state.idPasien : idPasien,
-                service : selectedServices,
-                obat : selectedObatServices,
-                diagnosis: diagnosa,
-                therapy: terapi,
-                description: keterangan,
-                odontogram: dataOdontogram
+        if (!informContent){
+            toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
+        } else {
+            try {
+                const data = {
+                    date: tanggal,
+                    patient_id: params.state ? params.state.idPasien : idPasien,
+                    service : selectedServices,
+                    obat : selectedObatServices,
+                    diagnosis: diagnosa,
+                    therapy: terapi,
+                    description: keterangan,
+                    odontogram: dataOdontogram,
+                    namaKeluarga: namaKeluarga,
+                    jenisKelaminKeluarga: jenisKelaminKeluarga,
+                    alamatKeluarga: alamatKeluarga,
+                    telpKeluarga: telpKeluarga
+                }
+                console.log(data, 'data')
+                const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
+                toast.success('Berhasil Create Rekam Medis')
+                navigate(-1)
+            } catch (error) {
+                console.log(error)
+                toast.error('Gagal Create Rekam Medis')
             }
-            console.log(data, 'data')
-            const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
-            toast.success('Berhasil Create Rekam Medis')
-            navigate(-1)
-        } catch (error) {
-            console.log(error)
-            toast.error('Gagal Create Rekam Medis')
         }
     }
 
@@ -243,9 +256,32 @@ export default function CreateRekamMedis() {
                                     />
                                 </label>
                             </div>
-                            {/* {informContent&& (
+                            {informContent && (
+                                <>
+                                <div className='text-sm space-y-2'>
+                                    <h1 className='font-medium text-lg underline'>Informasi Keluarga Pasien</h1>
+                                    <h1 className='font-medium'>Nama</h1>
+                                    <input onChange={(e) => setNamaKeluarga(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Nama....'/>
+                                </div>
 
-                            )} */}
+                                <div className='text-sm space-y-2'>
+                                    <h1 className='font-medium'>Jenis Kelamin</h1>
+                                    <select onChange={(e) => setJenisKelaminKeluarga(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Jenis Kelamin....'>
+                                        <option value="">Pilih Jenis Kelamin...</option>
+                                        <option value="Laki-Laki">Laki-Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
+                                <div className='text-sm space-y-2'>
+                                    <h1 className='font-medium'>Alamat</h1>
+                                    <input onChange={(e) => setAlamatKeluarga(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Alamat....'/>
+                                </div>
+                                <div className='text-sm space-y-2'>
+                                    <h1 className='font-medium'>No Telepon / HP</h1>
+                                    <input onChange={(e) => setTelpKeluarga(e.target.value)} type="number" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Telepon....'/>
+                                </div>
+                                </>
+                            )}
 
                             <div className='space-x-5 pt-7'>
                                 <button onClick={() => navigate(-1)} className='py-2 px-5 border rounded-md border-purple-700  w-[100px] text-purple-700 text-lg'>

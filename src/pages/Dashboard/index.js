@@ -30,7 +30,6 @@ const Dashboard = () => {
   const getRekamMedis = async () => {
     try {
       const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
-      console.log('Data List Kunjungan',response)
       setDataRekamMedis(response.data.data);
       aggregatePatientData(response.data.data);
     } catch (error) {
@@ -77,7 +76,6 @@ const Dashboard = () => {
     try {
       const res = await Api.GetDashboard(localStorage.getItem('token'))
       setDataCount(res.data.data)
-      console.log(res, 'res')
     } catch (error) {
       
     }
@@ -337,7 +335,7 @@ const Dashboard = () => {
                   >
                     <div className="min-w-[100px] max-w-[100px]">
                       <h1 className="text-purple-800 text-xs font-[600]">
-                        {item.noRM}
+                        {item.number_regristation}
                       </h1>
                     </div>
                     <div className="min-w-[150px] max-w-[150px]">
