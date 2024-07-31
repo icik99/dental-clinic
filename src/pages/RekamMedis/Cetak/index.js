@@ -32,6 +32,16 @@ export default function CetakRekaMedis() {
         }
     };
 
+    const sendToWhatsApp = () => {
+        const noPasien = medicalRecord.phone;
+        const message = `Yth. ${medicalRecord.fullname},\n\nKami ingin menginformasikan bahwa hasil rekam medis Anda sudah siap. Silakan klik tautan berikut untuk mengunduh dokumen rekam medis Anda.\n\nTerima kasih atas perhatian Anda.\n\nSalam hormat,\nSinar Akbar Dental Clinic.`;
+        const encodedMessage = encodeURIComponent(message);
+        const url = `https://wa.me/${noPasien}?text=${encodedMessage}`;
+
+        window.open(url, '_blank');
+    };
+
+
     const formatServiceNames = (param) => {
         return param.map(service => service.name).join(', ');
       };
@@ -42,10 +52,17 @@ export default function CetakRekaMedis() {
 
     return (
         <>
-            <div className='flex items-center justify-end mt-10'>
+            <div className='flex bg-orange-500 items-center justify-center gap-x-[200px] mt-10'>
+              <div>
                 <button className='mx-auto bg-red-600 text-white font-semibold px-4 py-2' onClick={generatePDF}>
                     Download PDF
                 </button>
+              </div>
+              <div>
+                <button className='mx-auto bg-green-600 text-white font-semibold px-4 py-2' onClick={sendToWhatsApp}>
+                    Kirim Ke WhatsApp Pasien
+                </button>
+              </div>
             </div>
             <div className='m-10 p-5 border-4 rounded-xl h-full w-fit'>
                 <div id='pdf-content' className='h-[1000px] w-full'>
