@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const getRekamMedis = async () => {
     try {
-      const response = await Api.GetListKunjungan(localStorage.getItem("token"), '', '');
+      const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
       console.log('Data List Kunjungan',response)
       setDataRekamMedis(response.data.data);
       aggregatePatientData(response.data.data);
@@ -254,7 +254,7 @@ const Dashboard = () => {
                           <h1 className="text-[22px]  font-semibold">Total Pasien</h1>
                         </div>
                         <p className="w-[full]  text-sm text-start font-semibold">
-                          Pasien yang telah mendaftar hari ini sebanyak {dataCount.patientToday || '0'} orang
+                          Pasien yang terdaftar {dataCount.totalPatient || '0'} orang
                         </p>
                     </div>
                     <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl" >
@@ -319,11 +319,11 @@ const Dashboard = () => {
                   </div>
                   {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' && (
                     <>
-                      <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
+                      {/* <div className="flex items-center justify-center gap-[15px] min-w-[220px] max-w-[220px]">
                         <h1 className="text-black text-xs font-semibold">
                           Catatan Perawatan
                         </h1>
-                      </div>
+                      </div> */}
                       <div className="flex items-center justify-center gap-[15px] w-full">
                         <h1 className="text-black text-xs font-semibold">Action</h1>
                       </div>
@@ -350,16 +350,16 @@ const Dashboard = () => {
                         {item.fullname}
                       </h1>
                     </div>
-                    {localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' && (
+                    {(localStorage.getItem('role') === 'Petugas Rekam Medis' || localStorage.getItem('role') === 'admin' || localStorage.getItem('role') === 'Petugas Pendaftaran') && (
                       <>
-                        <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
+                        {/* <div className="min-w-[220px] max-w-[220px] flex items-center justify-center">
                           <button onClick={() => navigate('/rekam-medis', {state: {idPasien : item.idPatient, namaPasien: item.fullname}})} className="w-[150px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]">
                             Lihat Catatan Perawatan
                           </button>
-                        </div>
+                        </div> */}
                         <div className="w-full space-x-2 flex justify-center items-center">
                           <button
-                            onClick={() => openDetailRekamMedis(item.idRM)}
+                            onClick={() => openDetailRekamMedis(item.id)}
                             className="w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]"
                           >Detail
                           </button>

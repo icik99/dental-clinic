@@ -26,6 +26,7 @@ export default function Payment() {
     const [pasien, setPasien] = useState('')
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
+    const [showFilteredTable, setShowFilteredTable] = useState(false)
 
     const [selectedOption, setSelectedOption] = useState('');
 
@@ -224,101 +225,101 @@ export default function Payment() {
                                 <input onChange={handleSearchName} placeholder='Search by NIK and No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
                             </div>
                             <div className='mt-[44px] bg-white overflow-auto'>
-                            <table className='w-full space-y-[10px]'>
-                                <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
-                                    <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
-                                        <h1 className='text-black text-xs font-semibold'>No. RM Pasien</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
-                                        <h1 className='text-black text-xs font-semibold'>NIK</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Pelayanan</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Obat</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Sisa Pembayaran</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Pendapatan</h1>
-                                    </div>
-                                    <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
-                                        <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
-                                    </div>
-                                    <div className=' w-full flex items-center justify-center'>
-                                        <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
-                                    </div>
-                                </div>
-                                {Object.values(dataPayment).map((item, idx) => (
-                                    <div className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
-                                        <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
-                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
+                                <table className='w-full space-y-[10px]'>
+                                    <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
+                                        <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
+                                            <h1 className='text-black text-xs font-semibold'>No. RM Pasien</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
-                                            <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
+                                            <h1 className='text-black text-xs font-semibold'>NIK</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.createdAt ? item.createdAt : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan ? formatServiceNames(item.layanan) : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Pelayanan</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? formatObatNames(item.obat) : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Obat</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.sisa_pembayaran ? item.sisa_pembayaran : '0'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Sisa Pembayaran</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
-                                            <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.pendapatan ? item.pendapatan : '-'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Pendapatan</h1>
                                         </div>
-                                        <div className='line-clamp-1 truncate min-w-[120px] max-w-[120px]'>
-                                            <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
+                                        <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
+                                            <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                         </div>
-                                        <div className='w-full space-x-2 flex items-center justify-center'>
-                                            {item.status === '0' ? (
-                                                <>
-                                                    <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
-                                                    <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
-                                                    <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                                </>
+                                        <div className=' w-full flex items-center justify-center'>
+                                            <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
+                                        </div>
+                                    </div>
+                                    {Object.values(dataPayment).map((item, idx) => (
+                                        <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
+                                            <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
+                                                <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
+                                                <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.createdAt ? item.createdAt : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan ? formatServiceNames(item.layanan) : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? formatObatNames(item.obat) : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.sisa_pembayaran ? item.sisa_pembayaran : '0'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.pendapatan ? item.pendapatan : '-'}</h1>
+                                            </div>
+                                            <div className='line-clamp-1 truncate min-w-[120px] max-w-[120px]'>
+                                                <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
+                                            </div>
+                                            <div className='w-full space-x-2 flex items-center justify-center'>
+                                                {item.status === '0' ? (
+                                                    <>
+                                                        <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
+                                                        <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
+                                                        <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                    </>
+                                                    
+                                                )}
+                                                <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
                                                 
-                                            )}
-                                            <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
-                                            
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </table>
-                            <Pagination
-                                currentPage={currentPage} 
-                                totalPages={totalPages} 
-                                onPageChange={handlePageChange}
-                                onPrevChange={handlePrevChange}
-                                onNextChange={handleNextChange}
-                            />
-                        </div>
+                                    ))}
+                                </table>
+                                <Pagination
+                                    currentPage={currentPage} 
+                                    totalPages={totalPages} 
+                                    onPageChange={handlePageChange}
+                                    onPrevChange={handlePrevChange}
+                                    onNextChange={handleNextChange}
+                                />
+                            </div>
                         </div>
                         <div className='border-2 bg-white rounded-lg p-10 space-y-[40px]'>
                             <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Rekapitulasi Biaya Pemeriksaan</h1>
@@ -360,17 +361,129 @@ export default function Payment() {
                                 </div>
                             <div className='space-x-5 pt-7 flex items-center justify-end'>
                                 {selectedOption === 'excel' ? (
-                                    <button onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
-                                        Rekap
-                                    </button>
+                                    <>
+                                        <button onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
+                                            Rekap
+                                        </button>
+                                        <button onClick={setShowFilteredTable(true)} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>Action</button>
+                                    </>
+
 
                                 ) : (
-                                    <button disabled onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-300 w-[100px] text-white text-lg cursor-not-allowed'>
-                                        Rekap
-                                    </button>
+                                    <>
+                                        <button disabled onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-300 w-[100px] text-white text-lg cursor-not-allowed'>
+                                            Rekap
+                                        </button>
+                                        <button onClick={() => setShowFilteredTable(true)} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>Action</button>
+                                    </>
                                 )}
                             </div>
                         </div>
+                        {showFilteredTable && (
+                            <div className='border-2 bg-white rounded-lg p-10 space-y-[20px]'>
+                                <h1 className='text-2xl text-purple-black font-medium mb-[40px]'>Rekap Pembayaran</h1>
+                                <div className='relative'>
+                                    <BiSearch className='absolute left-[14px] top-[10px] text-[#A8A8A8] text-lg'/>
+                                    <input onChange={handleSearchName} placeholder='Search by NIK and No. Rekam Medis...' className='h-[38px] text-[#A8A8A8] text-[10px] font-[500] pl-12 border rounded-[12px] py-2 w-full lg:w-[300px]'/>
+                                </div>
+                                <div className='mt-[44px] bg-white overflow-auto'>
+                                    <table className='w-full space-y-[10px]'>
+                                        <div className='flex items-center gap-3 bg-white px-[14px] py-[10px] rounded-[3px]'>
+                                            <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
+                                                <h1 className='text-black text-xs font-semibold'>No. RM Pasien</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[80px] max-w-[80px]'>
+                                                <h1 className='text-black text-xs font-semibold'>NIK</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Tanggal</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Nama Pasien</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Pelayanan</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[180px] max-w-[180px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Obat</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Sisa Pembayaran</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Total Pembayaran</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[130px] max-w-[130px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Pendapatan</h1>
+                                            </div>
+                                            <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
+                                                <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
+                                            </div>
+                                            <div className=' w-full flex items-center justify-center'>
+                                                <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
+                                            </div>
+                                        </div>
+                                        {Object.values(dataPayment).map((item, idx) => (
+                                            <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
+                                                <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
+                                                    <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
+                                                    <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.nik ? item.nik : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.createdAt ? item.createdAt : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.fullname ? item.fullname : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.layanan ? formatServiceNames(item.layanan) : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[180px] max-w-[180px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>{item.obat ? formatObatNames(item.obat) : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.sisa_pembayaran ? item.sisa_pembayaran : '0'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.total_payment ? item.total_payment : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[130px] max-w-[130px]'>
+                                                    <h1 className='text-[#737373] text-xs font-[600] line-clamp-1'>Rp. {item.pendapatan ? item.pendapatan : '-'}</h1>
+                                                </div>
+                                                <div className='line-clamp-1 truncate min-w-[120px] max-w-[120px]'>
+                                                    <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
+                                                </div>
+                                                <div className='w-full space-x-2 flex items-center justify-center'>
+                                                    {item.status === '0' ? (
+                                                        <>
+                                                            <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
+                                                            <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
+                                                            <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
+                                                        </>
+                                                        
+                                                    )}
+                                                    <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </table>
+                                    <Pagination
+                                        currentPage={currentPage} 
+                                        totalPages={totalPages} 
+                                        onPageChange={handlePageChange}
+                                        onPrevChange={handlePrevChange}
+                                        onNextChange={handleNextChange}
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

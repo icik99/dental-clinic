@@ -92,13 +92,7 @@ export default function RekamMedis() {
     }, 300)
 
     const exportToExcel = () => {
-        // Sample data array
-        const dataExport = dataRekamMedis;
-
-        // Define custom headers for each table
         const Headers = ['Employee Name', 'Date', 'Jenis Kelamin', 'Nomor Telepon', 'Diagnosis', 'Terapi', 'Keterangan', 'Layanan', 'Obat'];
-
-        // Create modified data arrays with custom headers
         const rekamMedis = dataRekamMedis.map(({ fullname, date, gender, phone, diagnosis, therapy, description, layanan, obat}) => ({
             'Employee Name': fullname ? fullname : '-',
             'Date': moment(date).format('DD MMMM YYYY'),
@@ -110,25 +104,14 @@ export default function RekamMedis() {
             'Layanan': layanan? layanan : '-',
             'Obat': obat? obat : '-',
         }));
-
-        // Create a new worksheet for each table
         const worksheetGrade = XLSX.utils.json_to_sheet(rekamMedis, { header: Headers });
-
-        // Create a new workbook
         const workbook = XLSX.utils.book_new();
-
-        // Add the worksheets to the workbook
         XLSX.utils.book_append_sheet(workbook, worksheetGrade, 'Rekam Medis');
-        // Generate Excel file buffer
         const excelBuffer = XLSX.write(workbook, {
             bookType: 'xlsx',
             type: 'array',
         });
-
-        // Convert buffer to Blob
         const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-        // Save the Excel file using FileSaver.js
         saveAs(excelBlob, 'Rekam Medis.xlsx');
     };
 
@@ -388,6 +371,7 @@ export default function RekamMedis() {
                                             <button onClick={() => openDetailRekamMedis(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 text-white rounded-[9px]'> Detail </button>
                                             <button onClick={() => navigate('cetak', {state: {idRekamMedis: item.id}})} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Cetak</button>
                                             <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Koreksi</button>
+                                            <button onClick={() => navigate('inform-content', {state: {idRekamMedis: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Inform Content</button>
                                         </div>
                                     </div>
                                 ))}

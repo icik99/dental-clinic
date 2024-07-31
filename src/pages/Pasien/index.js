@@ -226,6 +226,8 @@ export default function Pasien() {
                                             <button onClick={() => openDetailPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Detail</button>
                                             <button onClick={() => navigate('update', {state: {idPasien: item.id}})}  className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Edit</button>
                                             <button onClick={() => actionHapusPasien(item.id)} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'> Hapus</button>
+                                            <button onClick={() => navigate('cetak', {state: {idPasien: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Cetak KIB</button>
+
                                         </div>
                                     </div>
                                 ))}

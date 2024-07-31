@@ -46,6 +46,10 @@ export default function CetakRekaMedis() {
         return param.map(service => service.name).join(', ');
       };
 
+    const printContent = () => {
+        window.print();
+    };
+
     useEffect(() => {
         getMedicalRecord();
     }, []);

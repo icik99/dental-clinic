@@ -10,7 +10,7 @@ const LoginPage = () => {
 
     const navigate = useNavigate()
     
-    const login = async () => {
+    const login = async () => { 
         try {
             const response = await Api.Login(email, password)
             localStorage.setItem('token', response.data.accessToken)
@@ -19,7 +19,6 @@ const LoginPage = () => {
                 icon: '✨',
               });
         } catch (error) {
-            console.log(error)
             toast.error(error.response.data.msg)    
         }
     }

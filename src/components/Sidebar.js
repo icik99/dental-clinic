@@ -70,8 +70,14 @@ const Sidebar = () => {
 
                             <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
                                 <MdOutlineFeaturedPlayList />
-                                <h1 className={`hover:text-purple-600 text-base`}>Layanan</h1>
+                                <h1 className={`hover:text-purple-600 text-base`}>Daftar Layanan</h1>
                             </Link>
+
+                            <Link to={'/obat'} className={`${location.pathname === '/obat' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <MdOutlineFeaturedPlayList />
+                                <h1 className={`hover:text-purple-600 text-base`}>Daftar Obat</h1>
+                            </Link>
+
                             <Link to={'/payment'} className={`${location.pathname === '/payment' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
                                 <MdPayment />
                                 <h1 className={`hover:text-purple-600 text-base`}>Pembayaran</h1>
