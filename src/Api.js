@@ -2,7 +2,7 @@ import request from "./utils/request";
 
 class Api {
   static urlAPI() {
-    return process.env.REACT_APP_BACKEND_URL;
+    return process.env.REACT_APP_BACKEND_PROD_URL;
     // return 'http://localhost:5003/'
   }
 
@@ -265,6 +265,16 @@ class Api {
     let path = `layanan/${id}`;
     return request(`${this.urlAPI()}${path}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  static GetWilayah(token, kodeProvinsi, kodeKota, kodeKecamatan) {
+    let path = `wilayah?kodeProvinsi=${kodeProvinsi}&kodeKota=${kodeKota}&kodeKecamatan=${kodeKecamatan}`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
