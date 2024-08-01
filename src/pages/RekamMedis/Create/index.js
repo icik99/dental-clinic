@@ -55,9 +55,9 @@ export default function CreateRekamMedis() {
     };
 
     const createRekamMedis = async () => {
-        // if (!informContent){
-        //     toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
-        // } else {
+        if (!informContent){
+            toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
+        } else {
             try {
                 const data = {
                     date: tanggal,
@@ -82,7 +82,7 @@ export default function CreateRekamMedis() {
                 console.log(error)
                 toast.error('Gagal Create Rekam Medis')
             }
-        // }
+        }
     }
 
     const getLayanan = async () => {

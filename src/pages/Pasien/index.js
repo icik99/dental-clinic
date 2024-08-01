@@ -124,6 +124,7 @@ export default function Pasien() {
                                 <h1>Tempat Tanggal Lahir</h1>
                                 <h1>Alamat KTP</h1>
                                 <h1>Alamat Domisili</h1>
+                                <h1>Provinsi</h1>
                                 <h1>Kota</h1>
                                 <h1>Kecamatan</h1>
                                 <h1>Kelurahan</h1>
@@ -143,6 +144,7 @@ export default function Pasien() {
                                 <h1>: {dataDetailPasien? dataDetailPasien.place_birth : '-'}, {dataDetailPasien.date_birth}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.alamatKTP : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.address : '-'}</h1>
+                                <h1>: {dataDetailPasien? dataDetailPasien.provinsi : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.kota : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.kecamatan : '-'}</h1>
                                 <h1>: {dataDetailPasien? dataDetailPasien.kelurahan : '-'}</h1>

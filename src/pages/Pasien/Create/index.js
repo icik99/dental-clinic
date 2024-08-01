@@ -236,17 +236,12 @@ export default function CreatePasien() {
                                     ))}
                                 </select>
                             </div>
-                            <div className=' w-full text-sm space-y-2'>
-                                <h1 className='font-medium'>Kelurahan / Desa </h1>
-                                <select onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'>
-                                    <option value="">Select Kelurahan / Desa...</option>
-                                    {Object.values(dataKelurahan).map((item, idx) => (
-                                        <option key={idx} value={item.kodeKelurahan}>{item.namaKelurahan}</option>
-                                    ))}
-                                </select>
-                            </div>
                         </div>
                         <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kelurahan / Desa </h1>
+                                <input onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....' />
+                            </div>
                             <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>RT</h1>
                                 <input onChange={(e) => setRt(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rt....'/>

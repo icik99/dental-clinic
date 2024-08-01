@@ -27,6 +27,16 @@ export default function UpdatePasien() {
     const [kodePos, setKodePos] = useState()
     const [rt, setRt] = useState()
     const [rw, setRw] = useState()
+    const [dataProvinsi, setDataProvinsi] = useState([])
+    const [dataKota, setDataKota] = useState([])
+    const [dataKecamatan, setDataKecamatan] = useState([])
+    const [dataKelurahan, setDataKelurahan] = useState([])
+    const [idProvinsi, setIdProvinsi] = useState('')
+    const [idKota, setIdKota] = useState('')
+    const [idKecamatan, setIdKecamatan] = useState('')
+    const [idKelurahan, setIdKelurahan] = useState('')
+    const [provinsi, setProvinsi] = useState()
+
     
 
     const getPasienById = async () => {
@@ -50,6 +60,7 @@ export default function UpdatePasien() {
             setKodePos(response.data.data.kodePos)
             setRt(response.data.data.rt)
             setRw(response.data.data.rw)
+            console.log(response.data.data)
         } catch (error) {
             console.log(error)
         }
@@ -73,6 +84,7 @@ export default function UpdatePasien() {
                 kecamatan: kecamatan,
                 kelurahan: kelurahan,
                 kota: kota,
+                provinsi: provinsi,
                 kodePos: kodePos,
                 rt: rt,
                 rw: rw
@@ -86,16 +98,98 @@ export default function UpdatePasien() {
             toast.error('Gagal Update Pasien')
         }
     }
+    const getDataWilayah = async () => {
+        try {
+            const res = await Api.GetWilayah(localStorage.getItem('token'), '', '', '')
+            setDataProvinsi(res.data)
+        } catch (error) {
+            
+        }
+    }
+
+    const handleSelectProvinsi = (e) => {
+        const selectedOption = dataProvinsi.find(
+          (data) => data.kodeProvinsi === e.target.value
+        );
+        if (selectedOption) {
+          setIdProvinsi(selectedOption.kodeProvinsi);
+          setProvinsi(selectedOption.namaProvinsi);
+        } else {
+          setIdProvinsi('')
+          setProvinsi('')
+        }
+    };
+
+    const getKota = async () => {
+        try {
+            const res = await Api.GetWilayah(localStorage.getItem('token'), idProvinsi, '', '')
+            setDataKota(res.data)
+        } catch (error) { 
+        }
+    }
+
+    const handleSelectKota = (e) => {
+        const selectedOption = dataKota.find(
+          (data) => data.kodeKota === e.target.value
+        );
+        if (selectedOption) {
+          setIdKota(selectedOption.kodeKota);
+          setKota(selectedOption.namaKota);
+        } else {
+          setIdKota('')
+          setKota('')
+        }
+    };
+
+    const getKecamatan = async () => {
+        try {
+            const res = await Api.GetWilayah(localStorage.getItem('token'), idProvinsi, idKota, '')
+            setDataKecamatan(res.data)
+        } catch (error) { 
+        }
+    }
+
+    const handleSelectKecamatan = (e) => {
+        const selectedOption = dataKecamatan.find(
+          (data) => data.kodeKecamatan === e.target.value
+        );
+        if (selectedOption) {
+          setIdKecamatan(selectedOption.kodeKecamatan);
+          setKecamatan(selectedOption.namaKecamatan);
+        } else {
+          setIdKecamatan('')
+          setKecamatan('')
+        }
+    };
+
+    const getKelurahan = async () => {
+        try {
+            const res = await Api.GetWilayah(localStorage.getItem('token'), idProvinsi, idKota, idKecamatan)
+            setDataKelurahan(res.data)
+        } catch (error) { 
+        }
+    }
+
+    useEffect(() => {
+        getDataWilayah()
+    }, [])
+
+    useEffect(() => {
+        getKota()
+    }, [idProvinsi, provinsi])
+
+    useEffect(() => {
+        getKecamatan()
+    }, [idKota, kota])
+
+    useEffect(() => {
+        getKelurahan()
+    }, [kecamatan, idKecamatan])
 
     useEffect(() => {
         getPasienById()
     }, [])
 
-    // if (!nama) {
-    //     return(
-    //         <h1 className='h-screen flex text-2xl font-medium'>Loading...</h1>
-    //     )
-    // }
 
   return (
     <div>
@@ -146,25 +240,38 @@ export default function UpdatePasien() {
                         </div>
                         <div className='flex items-center justify-between gap-4'>
                             <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Provinsi</h1>
+                                <select onChange={handleSelectProvinsi} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'>
+                                    <option value="">Select Provinsi...</option>
+                                    {Object.values(dataProvinsi).map((item, idx) => (
+                                        <option key={idx} value={item.kodeProvinsi}>{item.namaProvinsi}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>Kota</h1>
-                                <select value={kota} onChange={(e) => setKota(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'>
+                                <select onChange={handleSelectKota} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kota....'>
                                     <option value="">Select Kota...</option>
+                                    {Object.values(dataKota).map((item, idx) => (
+                                        <option key={idx} value={item.kodeKota}>{item.namaKota}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>Kecamatan</h1>
-                                <select value={kecamatan} onChange={(e) => setKecamatan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'>
+                                <select onChange={handleSelectKecamatan} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kecamatan....'>
                                     <option value="">Select Kecamatan...</option>
-                                </select>
-                            </div>
-                            <div className=' w-full text-sm space-y-2'>
-                                <h1 className='font-medium'>Kelurahan / Desa </h1>
-                                <select value={kelurahan} onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....'>
-                                    <option value="">Select Kelurahan / Desa...</option>
+                                    {Object.values(dataKecamatan).map((item, idx) => (
+                                        <option key={idx} value={item.kodeKecamatan}>{item.namaKecamatan}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
                         <div className='flex items-center justify-between gap-4'>
+                            <div className=' w-full text-sm space-y-2'>
+                                <h1 className='font-medium'>Kelurahan / Desa </h1>
+                                <input value={kelurahan} onChange={(e) => setKelurahan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Kelurahan....' />
+                            </div>
                             <div className=' w-full text-sm space-y-2'>
                                 <h1 className='font-medium'>RT</h1>
                                 <input value={rt} onChange={(e) => setRt(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Rt....'/>
