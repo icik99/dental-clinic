@@ -3,6 +3,8 @@ import html2pdf from 'html2pdf.js';
 import { useLocation } from 'react-router-dom';
 import Api from '../../../Api';
 import { Logo } from '../../../assets';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function CetakRekaMedis() {
     const generatePDF = () => {
@@ -19,6 +21,23 @@ export default function CetakRekaMedis() {
         html2pdf().from(element).set(options).save();
     };
 
+    const generatePDFFile = async () => {
+        const element = document.getElementById('pdf-content');
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL('image/jpeg');
+
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210; // width of A4 in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+        const pdfBlob = pdf.output('blob');
+
+        const file = new File([pdfBlob], `RM ${medicalRecord?.fullname} ${medicalRecord?.date}.pdf`, { type: 'application/pdf' });
+
+        return file;
+    };
+
     const param = useLocation();
     const [medicalRecord, setMedicalRecord] = useState('');
 
@@ -32,13 +51,18 @@ export default function CetakRekaMedis() {
         }
     };
 
-    const sendToWhatsApp = () => {
+    const sendToWhatsApp = async () => {
         const noPasien = medicalRecord.phone;
-        const message = `Yth. ${medicalRecord.fullname},\n\nKami ingin menginformasikan bahwa hasil rekam medis Anda sudah siap. Silakan klik tautan berikut untuk mengunduh dokumen rekam medis Anda.\n\nTerima kasih atas perhatian Anda.\n\nSalam hormat,\nSinar Akbar Dental Clinic.`;
-        const encodedMessage = encodeURIComponent(message);
-        const url = `https://wa.me/${noPasien}?text=${encodedMessage}`;
+        const pdfFile = await generatePDFFile();
 
-        window.open(url, '_blank');
+        try {
+            const formData = new FormData();
+            formData.append('pdf', pdfFile);
+
+            await Api.SendToWhatsApp(localStorage.getItem('token'), noPasien, formData);
+        } catch (error) {
+            console.error('Error sending to WhatsApp:', error.message);
+        }
     };
 
 

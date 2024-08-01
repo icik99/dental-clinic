@@ -1,8 +1,9 @@
 import request from "./utils/request";
+import axios from "axios";
 
 class Api {
   static urlAPI() {
-    return process.env.REACT_APP_BACKEND_PROD_URL;
+    return process.env.REACT_APP_BACKEND_URL;
     // return 'http://localhost:5003/'
   }
 
@@ -331,6 +332,17 @@ class Api {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  static SendToWhatsApp(token, phone, formData) {
+    let path = `send-wa?phone=${phone}`;
+    return axios.post(`${this.urlAPI()}${path}`, formData, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+    .then(response => console.log('Response data:', response.data))
+    .catch(error => console.error('Error:', error));
   }
 }
 
