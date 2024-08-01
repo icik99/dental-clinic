@@ -59,6 +59,7 @@ export default function CreateRekamMedis() {
             toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
         } else {
             try {
+                const dataURL = await getImage()
                 const data = {
                     date: tanggal,
                     patient_id: params.state ? params.state.idPasien : idPasien,
@@ -72,7 +73,8 @@ export default function CreateRekamMedis() {
                     jenisKelaminKeluarga: jenisKelaminKeluarga,
                     alamatKeluarga: alamatKeluarga,
                     telpKeluarga: telpKeluarga,
-                    statusInformContent: informContent
+                    statusInformContent: informContent,
+                    odontogram_gambar: dataURL
                 }
                 console.log(data, 'data')
                 const response = await Api.CreateRekamMedis(localStorage.getItem('token'), data)
