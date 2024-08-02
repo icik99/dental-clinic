@@ -55,9 +55,9 @@ export default function CreateRekamMedis() {
     };
 
     const createRekamMedis = async () => {
-        if (!informContent){
-            toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
-        } else {
+        // if (!informContent){
+        //     toast.error('Wajib meminta persetujuan keluarga pasien dengan mencentang dan mengisi inform content!')
+        // } else {
             try {
                 const dataURL = await getImage()
                 const data = {
@@ -84,7 +84,7 @@ export default function CreateRekamMedis() {
                 console.log(error)
                 toast.error('Gagal Create Rekam Medis')
             }
-        }
+        // }
     }
 
     const getLayanan = async () => {
@@ -262,7 +262,7 @@ export default function CreateRekamMedis() {
                                 <input onChange={(e) => setKeterangan(e.target.value)} type="text" className='w-full border outline-none shadow-md px-2 py-2 rounded-md' placeholder='Keterangan....'/>
                             </div>
                             <div className='text-sm  space-y-2 flex gap-2 items-center'>
-                                <h3 className='font-medium text-sm'>Inform Content</h3>
+                                <h3 className='font-medium text-sm'>Inform Consern</h3>
                                 <label>
                                     <input
                                     type="checkbox"

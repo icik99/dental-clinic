@@ -12,6 +12,7 @@ import { FaFileExport } from "react-icons/fa";
 import { debounce } from 'lodash';
 import Pagination from '../../components/Pagination';
 import { BiSearch } from 'react-icons/bi';
+import { TbRuler2 } from 'react-icons/tb';
 
 export default function RekamMedis() {
     const [dataExport, setDataExport] = useState('')
@@ -64,9 +65,11 @@ export default function RekamMedis() {
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
                 setDataServiceRekamMedis(response.data.data.service)
+                console.log(response, 'resRM')
             } else {
                 const response = await Api.GetRekamMedisByPatient(localStorage.getItem('token'), params.state.idPasien)
                 setDataRekamMedis(response.data.data)
+                console.log(response, 'resRM')
             }
         } catch (error) {
             console.log(error)
@@ -373,7 +376,7 @@ export default function RekamMedis() {
                                             <button onClick={() => navigate('cetak', {state: {idRekamMedis: item.id}})} className='w-[50px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Cetak</button>
                                             <button onClick={() => openCatatanRekamMedis(item.id)} className='w-[70px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Koreksi</button>
                                             {item.statusInformContent === '1' && (
-                                                <button onClick={() => navigate('inform-content', {state: {idRekamMedis: item.id}})} className='w-[100px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Inform Content</button>
+                                                <button onClick={() => navigate('inform-content', {state: {idRekamMedis: item.id}})} className='w-[120px] text-xs p-2 font-medium bg-purple-600 rounded-[9px] text-white'>Inform Consern</button>
                                             )}
                                         </div>
                                     </div>
