@@ -12,7 +12,6 @@ import { FaFileExport } from "react-icons/fa";
 import { debounce } from 'lodash';
 import Pagination from '../../components/Pagination';
 import { BiSearch } from 'react-icons/bi';
-import { TbRuler2 } from 'react-icons/tb';
 
 export default function RekamMedis() {
     const [dataExport, setDataExport] = useState('')
@@ -233,7 +232,8 @@ export default function RekamMedis() {
                         </div>
                         <div>
                             <h1 className='mt-5 text-lg'>Gambar Odontogram</h1> 
-                            <img src={dataDetailRekamMedis.odontogram_gambar} className='p-4 border-2  mt-2' alt="" />
+                            {/* <img src={dataDetailRekamMedis.odontogram_gambar} className='p-4 border-2  mt-2' alt="" /> */}
+                            <img src={odontogramGambar }alt="" />
                             <h1 className='mt-5 text-lg'>Keterangan:</h1> 
 
                             <div className='mt-5'>

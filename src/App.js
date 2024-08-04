@@ -20,6 +20,7 @@ import CetakRekamMedis from './pages/RekamMedis/Cetak';
 import Obat from './pages/Obat';
 import CetakKib from './pages/Pasien/Cetak';
 import InformContent from './pages/RekamMedis/InformContent';
+import UserManagement from './pages/UserManagement';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route name='Obat' path="/obat" element={<Obat/>}/>
         <Route name='Invoice' path="/payment/invoice" element={<Invoice/>}/>
         <Route name='Kartu Iuran' path="/payment/kartu-iuran" element={<KartuIuran/>}/>
+        <Route name='User Management' path="/user-management" element={<UserManagement/>}/>
         <Route name='Rekam Medis' path="/rekam-medis" element={<RekamMedis/>}/>
         <Route name='Cetak Rekam Medis' path="/rekam-medis/cetak" element={<CetakRekamMedis/>}/>
         <Route name='Create Rekam Medis' path="/rekam-medis/create" element={<CreateRekamMedis/>}/>

@@ -344,6 +344,54 @@ class Api {
     .then(response => console.log('Response data:', response.data))
     .catch(error => console.error('Error:', error));
   }
+
+  static GetUserManagement(token, page, keyword, sorting) {
+    let path = `user-management?page=${page}&search${keyword}=&sorting=${sorting}`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  static GetUserManagementById(token, id) {
+    let path = `user-management/${id}`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  static DeleteUserManagement(token, id) {
+    let path = `user-management/${id}`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  static UpdateUserManagement(token, data, id) {
+    let path = `user-management/${id}`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  static CreateUserManagement(token, data) {
+    let path = `user-management`;
+    return request(`${this.urlAPI()}${path}`, {
+      method: "POST",
+      data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
 
 export default Api;

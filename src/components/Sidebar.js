@@ -4,6 +4,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { MdPeopleOutline, MdPayment, MdOutlineFeaturedPlayList } from "react-icons/md";
 import { CiMedicalClipboard } from "react-icons/ci";
 import Api from '../Api';
+import { FaUsers } from 'react-icons/fa';
 
 const Sidebar = () => {
     const [display, setDisplay] = useState(true)
@@ -68,6 +69,12 @@ const Sidebar = () => {
                                 <h1 className={`hover:text-purple-600 text-base`}>Rekam Medis</h1>
                             </Link>
 
+
+                            <Link to={'/payment'} className={`${location.pathname === '/payment' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <MdPayment />
+                                <h1 className={`hover:text-purple-600 text-base`}>Pembayaran</h1>
+                            </Link>
+                            <div className='border border-purple-600'></div>
                             <Link to={'/layanan'} className={`${location.pathname === '/layanan' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
                                 <MdOutlineFeaturedPlayList />
                                 <h1 className={`hover:text-purple-600 text-base`}>Daftar Layanan</h1>
@@ -77,10 +84,9 @@ const Sidebar = () => {
                                 <MdOutlineFeaturedPlayList />
                                 <h1 className={`hover:text-purple-600 text-base`}>Daftar Obat</h1>
                             </Link>
-
-                            <Link to={'/payment'} className={`${location.pathname === '/payment' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
-                                <MdPayment />
-                                <h1 className={`hover:text-purple-600 text-base`}>Pembayaran</h1>
+                            <Link to={'/user-management'} className={`${location.pathname === '/user-management' && 'font-semibold border-purple-600 border-l-4 text-purple-600'} flex gap-2 items-center justify-start font-[450] text-[16px] text-start px-4 py-2 w-full`}>
+                                <FaUsers />
+                                <h1 className={`hover:text-purple-600 text-base`}>User Management</h1>
                             </Link>
                         </>
                     )}
