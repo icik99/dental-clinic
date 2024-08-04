@@ -59,7 +59,8 @@ export default function CetakRekaMedis() {
             const formData = new FormData();
             formData.append('pdf', pdfFile);
 
-            await Api.SendToWhatsApp(localStorage.getItem('token'), noPasien, formData);
+            const response = await Api.SendToWhatsApp(localStorage.getItem('token'), noPasien, formData);
+            window.location.replace(response)
         } catch (error) {
             console.error('Error sending to WhatsApp:', error.message);
         }

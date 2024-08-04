@@ -341,7 +341,9 @@ class Api {
             Authorization: `Bearer ${token}`,
         }
     })
-    .then(response => console.log('Response data:', response.data))
+    .then((response) => {
+        return response.data.fileUrl
+      })
     .catch(error => console.error('Error:', error));
   }
 
