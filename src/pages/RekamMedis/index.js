@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { OdontogramGambar } from '../../assets';
 import Sidebar from '../../components/Sidebar'
 import Modal from '../../components/Modal';
 import ModalDelete from '../../components/ModalDelete';
@@ -232,8 +233,8 @@ export default function RekamMedis() {
                         </div>
                         <div>
                             <h1 className='mt-5 text-lg'>Gambar Odontogram</h1> 
+                            <img src={OdontogramGambar} className='p-4 border-2  mt-2' alt="" />
                             {/* <img src={dataDetailRekamMedis.odontogram_gambar} className='p-4 border-2  mt-2' alt="" /> */}
-                            <img src={odontogramGambar }alt="" />
                             <h1 className='mt-5 text-lg'>Keterangan:</h1> 
 
                             <div className='mt-5'>
