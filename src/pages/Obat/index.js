@@ -6,6 +6,7 @@ import ModalDelete from '../../components/ModalDelete'
 import Api from '../../Api'
 
 import toast from 'react-hot-toast'
+import Pagination from '../../components/Pagination'
 
 export default function Obat() {
     const [addObat, setAddObat] = useState(false)
@@ -17,6 +18,8 @@ export default function Obat() {
     const [idObat, setIdObat] = useState()
     const [dataObat, setDataObat] = useState('')
     const [refresh, setRefresh] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState('')
 
 
     const hapusObat = async () => {
@@ -58,9 +61,11 @@ export default function Obat() {
 
     const getObat = async () => {
         try {
-            const response = await Api.GetObat(localStorage.getItem('token'), '', '', '')
+            const response = await Api.GetObat(localStorage.getItem('token'), currentPage, '', '')
             console.log('data Obat', response.data)
             setDataObat(response.data.data)
+            setTotalPages(response.data.totalPages)
+            setCurrentPage(parseInt(response.data.currentPages, 10))
         } catch (error) {
             console.log(error)
         }
@@ -97,6 +102,29 @@ export default function Obat() {
             console.log(error)
         }
     }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setRefresh(true)
+    };
+    
+    const handlePrevChange = () => {
+        if(currentPage === 1) {
+            setCurrentPage(1)
+        } else {
+            setCurrentPage(currentPage - 1);
+        }
+        setRefresh(true)
+    };
+    
+    const handleNextChange = () => {
+        if(currentPage === totalPages) {
+            setCurrentPage(totalPages)
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
+        setRefresh(true)
+    };
 
     useEffect(() => {
         getObat()
@@ -214,6 +242,13 @@ export default function Obat() {
                                     </div>
                                 ))}
                             </table>
+                            <Pagination
+                                currentPage={currentPage} 
+                                totalPages={totalPages} 
+                                onPageChange={handlePageChange}
+                                onPrevChange={handlePrevChange}
+                                onNextChange={handleNextChange}
+                            />
                         </div>
                     </div>
 

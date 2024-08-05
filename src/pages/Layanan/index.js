@@ -6,6 +6,7 @@ import ModalDelete from '../../components/ModalDelete'
 import Api from '../../Api'
 
 import toast from 'react-hot-toast'
+import Pagination from '../../components/Pagination'
 
 export default function Layanan() {
     const [addLayanan, setAddLayanan] = useState(false)
@@ -17,6 +18,33 @@ export default function Layanan() {
     const [idLayanan, setIdLayanan] = useState()
     const [dataLayanan, setDataLayanan] = useState('')
     const [refresh, setRefresh] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState('')
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setRefresh(true)
+    };
+    
+    const handlePrevChange = () => {
+        if(currentPage === 1) {
+            setCurrentPage(1)
+        } else {
+            setCurrentPage(currentPage - 1);
+        }
+        setRefresh(true)
+    };
+
+    console.log(currentPage, 'currentpage')
+    
+    const handleNextChange = () => {
+        if(currentPage === totalPages) {
+            setCurrentPage(totalPages)
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
+        setRefresh(true)
+    };
 
     const hapusLayanan = async () => {
         try {
@@ -56,9 +84,11 @@ export default function Layanan() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '')
+            const response = await Api.GetLayanan(localStorage.getItem('token'), currentPage, '', '')
             console.log('data Layanan', response.data)
             setDataLayanan(response.data.data)
+            setTotalPages(response.data.totalPages)
+            setCurrentPage(response.data.currentPages)
         } catch (error) {
             console.log(error)
         }
@@ -209,6 +239,13 @@ export default function Layanan() {
                                     </div>
                                 ))}
                             </table>
+                            <Pagination
+                                currentPage={currentPage} 
+                                totalPages={totalPages} 
+                                onPageChange={handlePageChange}
+                                onPrevChange={handlePrevChange}
+                                onNextChange={handleNextChange}
+                            />
                         </div>
                     </div>
 
