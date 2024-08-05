@@ -9,6 +9,7 @@ import { BiSearch } from "react-icons/bi";
 import { debounce } from "lodash";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import Pagination from "../../components/Pagination";
 
 const Dashboard = () => {
   const [dataRekamMedis, setDataRekamMedis] = useState([]);
@@ -17,11 +18,38 @@ const Dashboard = () => {
   const [modalAlert, setModalAlert] = useState(false);
   const [dataDetailRekamMedis, setDataDetailRekamMedis] = useState("");
   const [dataOdontogram, setDataOdontogram] = useState([])
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [refresh, setRefresh] = useState(false);
   const [patientStats, setPatientStats] = useState([]);
+  const [dataPasien, setDataPasien] = useState([])
   const navigate = useNavigate()
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState('')
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        setRefresh(true)
+    };
+    
+    const handlePrevChange = () => {
+        if(currentPage === 1) {
+            setCurrentPage(1)
+        } else {
+            setCurrentPage(currentPage - 1);
+        }
+        setRefresh(true)
+    };
+    
+    const handleNextChange = () => {
+        if(currentPage === totalPages) {
+            setCurrentPage(totalPages)
+        } else {
+            setCurrentPage(currentPage + 1);
+        }
+        setRefresh(true)
+    };
 
   const formatServiceNames = (param) => {
     return param.map(service => service.name).join(', ');
@@ -29,13 +57,16 @@ const Dashboard = () => {
 
   const getRekamMedis = async () => {
     try {
-      const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', '');
+      const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage, startDate, endDate);
       setDataRekamMedis(response.data.data);
       aggregatePatientData(response.data.data);
+      setCurrentPage(parseInt(response.data.currentPages, 10))
+      setTotalPages(response.data.totalPages)
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const handleSearchName = (e) => {
     const searchName = e.target.value
@@ -44,7 +75,7 @@ const Dashboard = () => {
 
   const debouncedSearchName = debounce(async(name) => {
     try {
-      const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, '')
+      const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, '', '', '')
       setDataRekamMedis(response.data.data);
       aggregatePatientData(response.data.data);
     } catch (error) {
@@ -54,12 +85,21 @@ const Dashboard = () => {
 
   const aggregatePatientData = (data) => {
     const monthlyData = Array(12).fill(0);
+    const currentYear = moment().year(); // Mendapatkan tahun saat ini
+  
     data.forEach(record => {
-      const month = moment(record.date).month();
-      monthlyData[month]++;
+      const recordDate = moment(record.date);
+      const recordYear = recordDate.year(); // Mendapatkan tahun dari data
+  
+      if (recordYear === currentYear) { // Memastikan data dari tahun saat ini
+        const month = recordDate.month(); // Mendapatkan bulan dari data
+        monthlyData[month]++;
+      }
     });
+  
     setPatientStats(monthlyData);
   };
+  
 
   const openDetailRekamMedis = async (id) => {
     setDetailRekamMedis(!detailRekamMedis);
@@ -84,7 +124,8 @@ const Dashboard = () => {
   useEffect(() => {
     getRekamMedis();
     getCountDashboard()
-  }, []);
+    setRefresh(false)
+  }, [startDate, endDate, refresh]);
 
   const chartData = {
     labels: [
@@ -93,7 +134,7 @@ const Dashboard = () => {
     ],
     datasets: [
       {
-        label: 'Total Patients',
+        label: 'Total Kunjungan',
         data: patientStats,
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
@@ -252,7 +293,7 @@ const Dashboard = () => {
                           <h1 className="text-[22px]  font-semibold">Total Pasien</h1>
                         </div>
                         <p className="w-[full]  text-sm text-start font-semibold">
-                          Pasien yang terdaftar {dataCount.totalPatient || '0'} orang
+                          Pasien yang terdaftar ada sebanyak {dataCount.totalPatient || '0'} orang
                         </p>
                     </div>
                     <div className="py-[40px] px-[30px] border-teal-200 bg-white w-full border-2 rounded-xl shadow-xl" >
@@ -265,7 +306,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="bg-white border-2 p-6 rounded shadow-sm w-full">
-                  <h1 className="font-medium text-[22px] mb-4">Total Pasien per Bulan</h1>
+                  <h1 className="font-medium text-[22px] mb-4">Total Kunjungan Pasien per Bulan</h1>
                   <Bar data={chartData} />
                 </div>
             </div>
@@ -368,6 +409,13 @@ const Dashboard = () => {
                 ))}
               </table>
             </div>
+            <Pagination
+                currentPage={currentPage} 
+                totalPages={totalPages} 
+                onPageChange={handlePageChange}
+                onPrevChange={handlePrevChange}
+                onNextChange={handleNextChange}
+            />
           </div>
         </div>
       </div>

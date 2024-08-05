@@ -60,7 +60,7 @@ export default function RekamMedis() {
     const getRekamMedis = async () => {
         try {
             if(params.state === null){
-                const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage);
+                const response = await Api.GetRekamMedis(localStorage.getItem("token"), '', currentPage, '','');
                 setDataRekamMedis(response.data.data);
                 setCurrentPage(parseInt(response.data.currentPages, 10))
                 setTotalPages(response.data.totalPages)
@@ -83,7 +83,7 @@ export default function RekamMedis() {
     const debouncedSearchName = debounce(async(name) => {
         if(params.state === null){
             try {
-                const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, currentPage)
+                const response = await Api.GetRekamMedis(localStorage.getItem('token'), name, currentPage, '','')
                 setDataRekamMedis(response.data.data);
                 setDataServiceRekamMedis(response.data.data.service)
             } catch (error) {
