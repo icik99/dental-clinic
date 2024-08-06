@@ -27,7 +27,7 @@ export default function Payment() {
     const [startDate, setStartDate] = useState('')
     const [endDate, setEndDate] = useState('')
     const [showFilteredTable, setShowFilteredTable] = useState(false)
-
+    const [dataPaymentRekap, setDataPaymentRekap] = useState([])
     const [selectedOption, setSelectedOption] = useState('');
 
     const handleOptionChange = (e) => {
@@ -59,11 +59,21 @@ export default function Payment() {
 
     const getPayment = async () => {
         try {
-            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage, startDate, endDate, pasien)
+            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage, '', '', '')
             console.log(response, 'getPayment')
             setCurrentPage(parseInt(response.data.currentPages, 10))
             setTotalPages(response.data.totalPages)
             setDataPayment(response.data.data)
+        } catch (error) {
+            console.log(error)   
+        }
+    }
+
+    const getPaymentRekap = async () => {
+        try {
+            const response  = await Api.GetPayment(localStorage.getItem('token'), '', currentPage, startDate, endDate, pasien)
+            console.log(response, 'getPayment')
+            setDataPaymentRekap(response.data.data)
         } catch (error) {
             console.log(error)   
         }
@@ -122,13 +132,13 @@ export default function Payment() {
 
     const exportToExcel = () => {
         // Sample data array
-        const dataExport = dataPayment;
+        const dataExport = dataPaymentRekap;
 
         // Define custom headers for each table
         const Headers = ['No Rm Pasien', 'Invoice ID', 'NIK', 'Nama Pasien', 'Tanggal', 'Pelayanan', 'Obat', 'Total Pembayaran'];
 
         // Create modified data arrays with custom headers
-        const rekamMedis = dataPayment.map(({noRm, invoice, nik,  fullname, createdAt, layanan, obat,  total_payment}) => ({
+        const rekamMedis = dataPaymentRekap.map(({noRm, invoice, nik,  fullname, createdAt, layanan, obat,  total_payment}) => ({
             'No Rm Pasien': noRm ? noRm : '-',
             'NIK': nik ? nik : '-',
             'Invoice ID': invoice ? invoice : '-',
@@ -182,6 +192,7 @@ export default function Payment() {
     
     useEffect(() => {
         getPayment()
+        getPaymentRekap()
     }, [pasien, startDate, endDate])
 
   return (
@@ -419,11 +430,8 @@ export default function Payment() {
                                             <div className='flex items-center gap-[15px] min-w-[120px] max-w-[120px]'>
                                                 <h1 className='text-black text-xs font-semibold'>Status Pembayaran</h1>
                                             </div>
-                                            <div className=' w-full flex items-center justify-center'>
-                                                <h1 className='text-black text-xs text-center font-semibold'>Action</h1>
-                                            </div>
                                         </div>
-                                        {Object.values(dataPayment).map((item, idx) => (
+                                        {Object.values(dataPaymentRekap).map((item, idx) => (
                                             <div key={idx} className='flex items-center gap-3 bg-white px-[14px] py-[8px] rounded-[3px] border-t'>
                                                 <div className='line-clamp-1 truncate min-w-[80px] max-w-[80px]'>
                                                     <h1 className='text-purple-800 text-xs font-[600] line-clamp-1'>{item.noRm ? item.noRm : '-'}</h1>
@@ -455,32 +463,9 @@ export default function Payment() {
                                                 <div className='line-clamp-1 truncate min-w-[120px] max-w-[120px]'>
                                                     <h1 className={`${item.status === '0' ? 'text-red-500' : 'text-green-500' } text-xs font-bold line-clamp-1`}>{item.status === '0' ? 'Belum Lunas' : 'Lunas'}</h1>
                                                 </div>
-                                                <div className='w-full space-x-2 flex items-center justify-center'>
-                                                    {item.status === '0' ? (
-                                                        <>
-                                                            <button onClick={() => openEditPayment(item.id)} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
-                                                            <button disabled onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <button disabled onClick={() => openEditPayment(item.id)} className={` bg-purple-300 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Edit Tagihan </button>
-                                                            <button onClick={() => navigate('/payment/invoice', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[100px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak invoice </button>
-                                                        </>
-                                                        
-                                                    )}
-                                                    <button onClick={() => navigate('/payment/kartu-iuran', {state: {idInvoice: item.id}})} className={` bg-purple-600 w-[120px] text-xs p-2 font-medium text-white rounded-[9px]`}> Cetak Kartu Iuran</button>
-                                                    
-                                                </div>
                                             </div>
                                         ))}
                                     </table>
-                                    <Pagination
-                                        currentPage={currentPage} 
-                                        totalPages={totalPages} 
-                                        onPageChange={handlePageChange}
-                                        onPrevChange={handlePrevChange}
-                                        onNextChange={handleNextChange}
-                                    />
                                 </div>
                             </div>
                         )}
