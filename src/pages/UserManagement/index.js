@@ -90,11 +90,13 @@ export default function UserManagement() {
 
     const openEditUserManagement = async (id) => {
         setEditUserManagement(!editUserManagement)
+        setIdUserManagement(id)
         try {
             const response = await Api.GetUserManagementById(localStorage.getItem('token'), id)
-            console.log(response, 'detail User')
             setDataDetailUserManagement(response.data.data)
             setUsername(response.data.data.username)
+            setFullname(response.data.data.fullname)
+            setEmail(response.data.data.email)
             setRole(response.data.data.role)
             setPassword(response.data.data.password)
         } catch (error) {
@@ -128,7 +130,7 @@ export default function UserManagement() {
             setRefresh(true)
         } catch (error) {
             console.log(error)
-            toast.error('Gagal Tambah User')
+            toast.error(error.response.data.message || 'Something went wrong')
         }
     }
 
@@ -141,13 +143,14 @@ export default function UserManagement() {
                 email: email,
                 fullname: fullname,
             }
+            console.log(data, 'DATA YANG DIKIRIM')
             const res = await Api.UpdateUserManagement(localStorage.getItem('token'), data, idUserManagement)
             toast.success('Sukses Edit User')
             setEditUserManagement(!editUserManagement)
             setRefresh(true)
         } catch (error) {
             console.log(error)
-            toast.error('Gagal Edit User')
+            toast.error(error.response.data.message || 'Something went wrong')
         }
     }
 
