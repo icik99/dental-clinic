@@ -191,9 +191,8 @@ export default function Payment() {
     }, [refresh])
     
     useEffect(() => {
-        getPayment()
         getPaymentRekap()
-    }, [pasien, startDate, endDate])
+    }, [pasien, startDate, endDate, selectedOption])
 
   return (
     <div>
@@ -345,7 +344,7 @@ export default function Payment() {
                                 <select  onChange={(e) => setPasien(e.target.value)} className='px-4 py-2 border rounded-md  w-full'>
                                     <option value="">Pilih Pasien...</option>
                                     {Object.values(dataPasien).map((item, idx) => (
-                                        <option value={item.id}>{item.fullname}</option>
+                                        <option key={idx} value={item.id}>{item.fullname}</option>
                                     ))}
                                 </select>
                             </div>
@@ -353,30 +352,30 @@ export default function Payment() {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">Action</label>
                                     <div className="mt-2 space-y-2">
-                                    <div className="flex items-center">
-                                        <input
-                                        type="radio"
-                                        id="excel"
-                                        name="option"
-                                        value="excel"
-                                        checked={selectedOption === 'excel'}
-                                        onChange={handleOptionChange}
-                                        className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                                        />
-                                        <label htmlFor="excel" className="ml-3 block text-sm font-medium text-gray-700">
-                                        Export to Excel
-                                        </label>
-                                    </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                id="excel"
+                                                name="option"
+                                                value="excel"
+                                                checked={selectedOption === 'excel'}
+                                                onChange={handleOptionChange}
+                                                className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                            />
+                                            <label htmlFor="excel" className="ml-3 block text-sm font-medium text-gray-700">
+                                                Export to Excel
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
+                            </div>
                             <div className='space-x-5 pt-7 flex items-center justify-end'>
                                 {selectedOption === 'excel' ? (
                                     <>
                                         <button onClick={exportToExcel} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>
                                             Rekap
                                         </button>
-                                        <button onClick={setShowFilteredTable(true)} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>Action</button>
+                                        <button onClick={() => setShowFilteredTable(true)} className='py-2 px-5 border rounded-md bg-purple-700 w-[100px] text-white text-lg'>Action</button>
                                     </>
 
 

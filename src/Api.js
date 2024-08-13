@@ -125,8 +125,8 @@ class Api {
       },
     });
   }
-  static GetRekamMedis(token, keyword, page) {
-    let path = `rekam-medis?search=${keyword}&page=${page}`;
+  static GetRekamMedis(token, keyword, page, startDate, endDate) {
+    let path = `rekam-medis?search=${keyword}&page=${page}&startDate=${startDate}&endDate=${endDate}`;
     return request(`${this.urlAPI()}${path}`, {
       method: "GET",
       headers: {
@@ -231,8 +231,8 @@ class Api {
     });
   }
 
-  static GetLayanan(token, page, keyword, sorting) {
-    let path = `layanan?page=${page}&search${keyword}=&sorting=${sorting}`;
+  static GetLayanan(token, page, keyword, sorting, limit) {
+    let path = `layanan?page=${page}&search${keyword}=&sorting=${sorting}&limit=${limit}`;
     return request(`${this.urlAPI()}${path}`, {
       method: "GET",
       headers: {
@@ -282,8 +282,8 @@ class Api {
     });
   }
 
-  static GetObat(token, page, keyword, sorting) {
-    let path = `obat?page=${page}&search${keyword}=&sorting=${sorting}`;
+  static GetObat(token, page, keyword, sorting, limit) {
+    let path = `obat?page=${page}&search${keyword}=&sorting=${sorting}&limit=${limit}`;
     return request(`${this.urlAPI()}${path}`, {
       method: "GET",
       headers: {

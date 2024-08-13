@@ -89,7 +89,7 @@ export default function CreateRekamMedis() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '')
+            const response = await Api.GetLayanan(localStorage.getItem('token'), '', '', '', 10000)
             setDataLayanan(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)
@@ -98,7 +98,7 @@ export default function CreateRekamMedis() {
 
     const getObat = async () => {
         try {
-            const response = await Api.GetObat(localStorage.getItem('token'), '','','')
+            const response = await Api.GetObat(localStorage.getItem('token'), '','','', 10000)
             setDataObat(response.data.data.map(({ name, price, id }) => ({ name, price, id })))
         } catch (error) {
             console.log(error)

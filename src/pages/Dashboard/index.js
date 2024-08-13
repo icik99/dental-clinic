@@ -68,6 +68,8 @@ const Dashboard = () => {
   };
 
 
+
+
   const handleSearchName = (e) => {
     const searchName = e.target.value
     debouncedSearchName(searchName)
@@ -125,6 +127,16 @@ const Dashboard = () => {
     getRekamMedis();
     getCountDashboard()
     setRefresh(false)
+  }, [refresh]);
+
+  // Membuat fungsi debounce
+  const debouncedGetRekamMedis = debounce(getRekamMedis, 300); // menunda eksekusi 300ms
+
+  useEffect(() => {
+    debouncedGetRekamMedis(); // memanggil fungsi yang telah di-debounce
+    return () => {
+      debouncedGetRekamMedis.cancel(); // membatalkan eksekusi debounce saat komponen unmount atau dependensi berubah
+    };
   }, [startDate, endDate, refresh]);
 
   const chartData = {

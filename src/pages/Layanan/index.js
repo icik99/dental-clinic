@@ -84,7 +84,7 @@ export default function Layanan() {
 
     const getLayanan = async () => {
         try {
-            const response = await Api.GetLayanan(localStorage.getItem('token'), currentPage, '', '')
+            const response = await Api.GetLayanan(localStorage.getItem('token'), currentPage, '', '', 10)
             console.log('data Layanan', response.data)
             setDataLayanan(response.data.data)
             setTotalPages(response.data.totalPages)

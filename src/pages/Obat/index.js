@@ -61,7 +61,7 @@ export default function Obat() {
 
     const getObat = async () => {
         try {
-            const response = await Api.GetObat(localStorage.getItem('token'), currentPage, '', '')
+            const response = await Api.GetObat(localStorage.getItem('token'), currentPage, '', '', 10)
             console.log('data Obat', response.data)
             setDataObat(response.data.data)
             setTotalPages(response.data.totalPages)
